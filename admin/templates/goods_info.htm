@@ -3,7 +3,14 @@
 {insert_scripts files="../js/utils.js,selectzone.js,colorselector.js"}
 <script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
 <link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
-
+<script charset="utf-8" src="../includes/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="../includes/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#editor_id');
+    });
+</script>
 {if $warning}
 <ul style="padding:0; margin: 0; list-style-type:none; color: #CC0000;">
   <li style="border: 1px solid #CC0000; background: #FFFFCC; padding: 10px; margin-bottom: 5px;" >{$warning}</li>
@@ -207,7 +214,7 @@
         <!-- 璇︾粏鎻忚堪 -->
         <table width="90%" id="detail-table" style="display:none">
           <tr>
-            <td>{$FCKeditor}</td>
+            <td><textarea id="editor_id" name="goods_desc" style="width:100%;height:300px;">{$goods_desc}</textarea></td>
           </tr>
         </table>
 
@@ -472,6 +479,7 @@
 
   function validate(goods_id)
   {
+      editor.sync();
       var validator = new Validator('theForm');
       var goods_sn  = document.forms['theForm'].elements['goods_sn'].value;
 

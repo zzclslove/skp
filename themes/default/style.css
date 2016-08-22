@@ -1204,8 +1204,11 @@ position:absolute; top:0px; right:0px;}
 .goods-spec-selector{display: inline-block;padding:5px}
 .goods-spec-selector input{vertical-align:middle;margin:0}
 .goods-spec-selector.selected{border: 1px solid #E80500;background: #FFE7E7;padding: 4px;}
-
-
+.table-attr th{border-right:1px solid #999;border-bottom:1px solid #999;}
+.table-attr .add{background:#fff;border-right:1px solid #999;border-bottom:1px solid #999;}
+.table-attr .odd{background: #ebf7ff;border-right:1px solid #999;border-bottom:1px solid #999;}
+.table-attr{border-left: 1px solid #999;border-top: 1px solid #999;}
+.table-attr .f1{color:#888}
 
 
 

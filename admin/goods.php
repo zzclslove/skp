@@ -415,6 +415,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
 
     /* 创建 html editor */
     create_html_editor('goods_desc', $goods['goods_desc']);
+    $smarty->assign('goods_desc',    $goods['goods_desc']);
 
     /* 模板赋值 */
     $smarty->assign('code',    $code);

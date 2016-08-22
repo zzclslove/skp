@@ -329,8 +329,8 @@ function get_attrlist()
     /* 查询条件 */
     $filter = array();
     $filter['goods_type'] = empty($_REQUEST['goods_type']) ? 0 : intval($_REQUEST['goods_type']);
-    $filter['sort_by']    = empty($_REQUEST['sort_by']) ? 'sort_order' : trim($_REQUEST['sort_by']);
-    $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
+    $filter['sort_by']    = 'sort_order';
+    $filter['sort_order'] = 'asc';
 
     $where = (!empty($filter['goods_type'])) ? " WHERE a.cat_id = '$filter[goods_type]' " : '';
 
