@@ -1,0 +1,66 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="foot-body">
+
+  <div class="site-server-box" data-site="site" data-spm="20">
+  	<div class="container">
+  		<div class="site-item"><i class="icon i-great">&nbsp;</i>
+  			<h3>Great Value</h3>
+  			<p>We offer competitive prices on our 100 million plus product range.</p>
+  		</div>
+  		<div class="site-item"><i class="icon i-delivery">&nbsp;</i>
+  			<h3>Worldwide Delivery</h3>
+  			<p>With sites in 5 languages, we ship to over 200 countries &amp; regions.</p>
+  		</div>
+  		<div class="site-item"><i class="icon i-payment">&nbsp;</i>
+  			<h3>Safe Payment</h3>
+  			<p>Pay with the world’s most popular and secure payment methods.</p>
+  		</div>
+  		<div class="site-item"><i class="icon i-confidence">&nbsp;</i>
+  			<h3>Shop with Confidence</h3>
+  			<p>Our Buyer Protection covers your purchase from click to delivery.</p>
+  		</div>
+  		<div class="site-item"><i class="icon i-help">&nbsp;</i>
+  			<h3>24/7 Help Center</h3>
+  			<p>Round-the-clock assistance for a smooth shopping experience.</p>
+  		</div>
+  	</div>
+  </div>
+
+  <div class="clear10"></div>
+  <!--底部导航 start-->
+ <!--{if $helps}-->
+    <!--
+    <div class="foot-help">
+      <!-- {foreach from=$helps item=help_cat name=foo} -->
+        {if $smarty.foreach.foo.iteration < 5}
+        <dl>
+          <dt class="xs-{$smarty.foreach.foo.iteration}">{$help_cat.cat_name}</dt>
+            <!-- {foreach from=$help_cat.article item=item} -->
+          <dd><a href="{$item.url}" target="_blank" title="{$item.title|escape:html}">{$item.short_title}</a></dd>
+          <!-- {/foreach} --> 
+        </dl>
+        {/if} 
+        <!-- {/foreach} --> 
+        <div class="foot-weixin">
+          <div class="weixin-txt">关注demo微信</div>
+          <div class="weixin-pic">
+            <img src="images/weixin.jpg">
+          </div>
+        </div>
+    </div>
+    -->
+    <!--{/if}--> 
+    
+   
+  <!--底部导航 end-->
+  <div class="blank"></div>
+  <!--版权 start-->
+<div class="footer_info"> © 2005-2016 zhanlanbeike.com 版权所有，并保留所有权利。<br />
+      {foreach from=$lang.p_y item=pv}{$pv}{/foreach}{$licensed}<br />
+    </div>
+  <div class="clear10"></div>
+</div>
+ 
+
+ 
+
