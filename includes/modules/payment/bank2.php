@@ -18,7 +18,7 @@ if (!defined('IN_ECS'))
     die('Hacking attempt');
 }
 
-$payment_lang = ROOT_PATH . 'languages/en_us/payment/bank.php';
+$payment_lang = ROOT_PATH . 'languages/en_us/payment/bank2.php';
 
 if (file_exists($payment_lang))
 {
@@ -62,11 +62,11 @@ if (isset($set_modules) && $set_modules == TRUE)
 /**
  * 类
  */
-class bank
+class bank2
 {
     function __construct()
     {
-        $this->bank();
+        $this->bank2();
     }
 
     /**
@@ -77,7 +77,7 @@ class bank
      *
      * @return void
      */
-    function bank()
+    function bank2()
     {
     }
 

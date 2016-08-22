@@ -598,6 +598,15 @@ function get_goods_info($goods_id)
         /* 获取商品销量 */
         $row['cum_sales']   = get_cum_sales($row['goods_id']);
 
+        $sql2 = 'SELECT img_url'.
+            ' FROM ' .$GLOBALS['ecs']->table('goods_gallery').
+            " WHERE goods_id = '$goods_id' ORDER BY img_id";
+        $img_list = $GLOBALS['db']->getAll($sql2);
+        foreach ($img_list AS $key => $img)
+        {
+            $row['image_list'][] = get_image_path($goods_id, $img_list[$key]['img_url']);
+        }
+
         return $row;
     }
     else

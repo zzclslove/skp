@@ -67,7 +67,8 @@ function reg(str){
         <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem -->
         <!--相册 END-->
         <div class="blank5"></div>
-        <!-- TemplateBeginEditable name="商品相册下广告（宽230px）" --> <!-- TemplateEndEditable --> </div>
+        <!-- TemplateBeginEditable name="商品相册下广告（宽230px）" --> <!-- TemplateEndEditable -->
+      </div>
       <!--商品图片和相册 end-->
       <div class="textInfo">
         <form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
@@ -254,7 +255,16 @@ function reg(str){
       </div>
     </div>
 
-
+    <div class="box">
+      <div class="box_1">
+        <h3><span class="text">Product Pictures</span></h3>
+        <div class="boxCenterList clearfix ie6">
+          <!-- {foreach from=$goods.image_list item=detail_image} -->
+            <p style="text-align:center;"><img src="{$detail_image}" /></p>
+          <!-- {/foreach}-->
+        </div>
+      </div>
+    </div>
 
     <div class="box clearfix">
       <div class="box_1 goods-boxg">
