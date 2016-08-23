@@ -63,9 +63,9 @@ $_LANG['affiliate_level'] = '推荐等级';
 
 $_LANG['msn'] = 'MSN';
 $_LANG['qq'] = 'QQ';
-$_LANG['home_phone'] = '家庭电话';
-$_LANG['office_phone'] = '办公电话';
-$_LANG['mobile_phone'] = '手机';
+$_LANG['home_phone'] = 'Home Phone';
+$_LANG['office_phone'] = 'Office Phone';
+$_LANG['mobile_phone'] = 'Mobile';
 
 $_LANG['notice_pay_points'] = '消费积分是一种站内货币，允许用户在购物时支付一定比例的积分。';
 $_LANG['notice_rank_points'] = '等级积分是一种累计的积分，系统根据该积分来判定用户的会员等级。';

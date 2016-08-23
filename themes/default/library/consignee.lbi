@@ -27,11 +27,11 @@
   </tr>
   <tr>
     <td bgcolor="#ffffff">State:</td>
-    <td bgcolor="#ffffff"><input name="state" type="text" class="inputBg" id="state_{$sn}" value="{$consignee.state|escape}" />{$lang.require_field}</td>
+    <td bgcolor="#ffffff"><input name="states" type="text" class="inputBg" id="states_{$sn}" value="{$consignee.states|escape}" />{$lang.require_field}</td>
   </tr>
   <tr>
     <td bgcolor="#ffffff">City:</td>
-    <td bgcolor="#ffffff"><input name="city" type="text" class="inputBg" id="state_{$sn}" value="{$consignee.city|escape}" />{$lang.require_field}</td>
+    <td bgcolor="#ffffff"><input name="city" type="text" class="inputBg" id="city_{$sn}" value="{$consignee.city|escape}" />{$lang.require_field}</td>
   </tr>
   <tr>
     <td bgcolor="#ffffff">{$lang.detailed_address}:</td>

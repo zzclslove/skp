@@ -238,7 +238,7 @@
 
                 </select></td>
               <td width="36%" bgcolor="#ffffff">&nbsp;<input name="act" value="merge_order" type="hidden" />
-              <input type="submit" name="Submit"  class="bnt_blue_1" style="border:none;"  value="{$lang.merge_order}" /></td>
+              <input type="submit" name="Submit"  class="bnt_blue_1" style="border:none;width:120px;" value="{$lang.merge_order}" /></td>
             </tr>
             <tr>
               <td bgcolor="#ffffff">&nbsp;</td>
@@ -493,7 +493,7 @@
               <tr>
                 <td colspan="4" align="center" bgcolor="#ffffff"><input type="hidden" name="act" value="save_order_address" />
                   <input type="hidden" name="order_id" value="{$order.order_id}" />
-                  <input type="submit" class="bnt_blue_2" value="{$lang.update_address}"  />
+                  <input style="width: 175px;" type="submit" class="bnt_blue_2" value="{$lang.update_address}"  />
                 </td>
               </tr>
             </table>
@@ -903,7 +903,7 @@
                     <input type="submit" name="submit" class="bnt_blue_1" value="{$lang.confirm_edit}" />
                     <input name="button" type="button" class="bnt_blue"  onclick="if (confirm('{$lang.confirm_drop_address}'))location.href='user.php?act=drop_consignee&id={$consignee.address_id}'" value="{$lang.drop}" />
                     <!-- {else} -->
-                    <input type="submit" name="submit" class="bnt_blue_2"  value="{$lang.add_address}"/>
+                    <input style="width: 180px;" type="submit" name="submit" class="bnt_blue_2"  value="{$lang.add_address}"/>
                     <!-- {/if} -->
                     <input type="hidden" name="act" value="act_edit_address" />
                     <input name="address_id" type="hidden" value="{$consignee.address_id}" />
