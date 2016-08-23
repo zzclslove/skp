@@ -392,20 +392,24 @@
             <tr>
               <td bgcolor="#ffffff">{$lang.consignee_name}:</td>
               <td bgcolor="#ffffff">{$consignee.consignee|escape}</td>
+            </tr>
+            <tr>
               <td bgcolor="#ffffff">{$lang.email_address}:</td>
               <td bgcolor="#ffffff">{$consignee.email|escape}</td>
             </tr>
-            <!-- {if $total.real_goods_count gt 0} -->
             <tr>
               <td bgcolor="#ffffff">{$lang.detailed_address}:</td>
-              <td bgcolor="#ffffff">{$consignee.address|escape} </td>
+              <td bgcolor="#ffffff">{$consignee.address|escape}, {$consignee.city|escape}, {$consignee.state|escape} </td>
+            </tr>
+            <tr>
               <td bgcolor="#ffffff">{$lang.postalcode}:</td>
               <td bgcolor="#ffffff">{$consignee.zipcode|escape}</td>
             </tr>
-            <!-- {/if} -->
             <tr>
               <td bgcolor="#ffffff">{$lang.phone}:</td>
               <td bgcolor="#ffffff">{$consignee.tel} </td>
+            </tr>
+            <tr>
               <td bgcolor="#ffffff">{$lang.backup_phone}:</td>
               <td bgcolor="#ffffff">{$consignee.mobile|escape}</td>
             </tr>

@@ -357,24 +357,6 @@ elseif ($_REQUEST['step'] == 'consignee')
         $smarty->assign('name_of_region',   array($_CFG['name_of_region_1'], $_CFG['name_of_region_2'], $_CFG['name_of_region_3'], $_CFG['name_of_region_4']));
         $smarty->assign('consignee_list', $consignee_list);
 
-        /* 取得每个收货地址的省市区列表 */
-        $province_list = array();
-        $city_list = array();
-        $district_list = array();
-        foreach ($consignee_list as $region_id => $consignee)
-        {
-            $consignee['country']  = isset($consignee['country'])  ? intval($consignee['country'])  : 0;
-            $consignee['province'] = isset($consignee['province']) ? intval($consignee['province']) : 0;
-            $consignee['city']     = isset($consignee['city'])     ? intval($consignee['city'])     : 0;
-
-            $province_list[$region_id] = get_regions(1, $consignee['country']);
-            $city_list[$region_id]     = get_regions(2, $consignee['province']);
-            $district_list[$region_id] = get_regions(3, $consignee['city']);
-        }
-        $smarty->assign('province_list', $province_list);
-        $smarty->assign('city_list',     $city_list);
-        $smarty->assign('district_list', $district_list);
-
         /* 返回收货人页面代码 */
         $smarty->assign('real_goods_count', exist_real_goods(0, $flow_type) ? 1 : 0);
     }
@@ -387,9 +369,8 @@ elseif ($_REQUEST['step'] == 'consignee')
             'address_id'    => empty($_POST['address_id']) ? 0  :   intval($_POST['address_id']),
             'consignee'     => empty($_POST['consignee'])  ? '' :   compile_str(trim($_POST['consignee'])),
             'country'       => empty($_POST['country'])    ? '' :   intval($_POST['country']),
-            'province'      => empty($_POST['province'])   ? '' :   intval($_POST['province']),
-            'city'          => empty($_POST['city'])       ? '' :   intval($_POST['city']),
-            'district'      => empty($_POST['district'])   ? '' :   intval($_POST['district']),
+            'state'         => empty($_POST['state'])      ? '' :   compile_str($_POST['state']),
+            'city'          => empty($_POST['city'])       ? '' :   compile_str($_POST['city']),
             'email'         => empty($_POST['email'])      ? '' :   compile_str($_POST['email']),
             'address'       => empty($_POST['address'])    ? '' :   compile_str($_POST['address']),
             'zipcode'       => empty($_POST['zipcode'])    ? '' :   compile_str(make_semiangle(trim($_POST['zipcode']))),

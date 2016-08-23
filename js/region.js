@@ -65,31 +65,32 @@ region.changed = function(obj, type, selName)
 region.response = function(result, text_result)
 {
   var sel = document.getElementById(result.target);
+  if(sel != null){
+    sel.length = 1;
+    sel.selectedIndex = 0;
+    sel.style.display = (result.regions.length == 0 && ! region.isAdmin && result.type + 0 == 3) ? "none" : '';
 
-  sel.length = 1;
-  sel.selectedIndex = 0;
-  sel.style.display = (result.regions.length == 0 && ! region.isAdmin && result.type + 0 == 3) ? "none" : '';
-
-  if (document.all)
-  {
-    sel.fireEvent("onchange");
-  }
-  else
-  {
-    var evt = document.createEvent("HTMLEvents");
-    evt.initEvent('change', true, true);
-    sel.dispatchEvent(evt);
-  }
-
-  if (result.regions)
-  {
-    for (i = 0; i < result.regions.length; i ++ )
+    if (document.all)
     {
-      var opt = document.createElement("OPTION");
-      opt.value = result.regions[i].region_id;
-      opt.text  = result.regions[i].region_name;
+      sel.fireEvent("onchange");
+    }
+    else
+    {
+      var evt = document.createEvent("HTMLEvents");
+      evt.initEvent('change', true, true);
+      sel.dispatchEvent(evt);
+    }
 
-      sel.options.add(opt);
+    if (result.regions)
+    {
+      for (i = 0; i < result.regions.length; i ++ )
+      {
+        var opt = document.createElement("OPTION");
+        opt.value = result.regions[i].region_id;
+        opt.text  = result.regions[i].region_name;
+
+        sel.options.add(opt);
+      }
     }
   }
 }

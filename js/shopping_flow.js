@@ -546,33 +546,6 @@ function checkConsignee(frm)
   var msg = new Array();
   var err = false;
 
-  if (frm.elements['country'] && frm.elements['country'].value == 0)
-  {
-    msg.push(country_not_null);
-    err = true;
-  }
-
-  if (frm.elements['province'] && frm.elements['province'].value == 0 && frm.elements['province'].length > 1)
-  {
-    err = true;
-    msg.push(province_not_null);
-  }
-
-  if (frm.elements['city'] && frm.elements['city'].value == 0 && frm.elements['city'].length > 1)
-  {
-    err = true;
-    msg.push(city_not_null);
-  }
-
-  if (frm.elements['district'] && frm.elements['district'].length > 1)
-  {
-    if (frm.elements['district'].value == 0)
-    {
-      err = true;
-      msg.push(district_not_null);
-    }
-  }
-
   if (Utils.isEmpty(frm.elements['consignee'].value))
   {
     err = true;
@@ -583,6 +556,24 @@ function checkConsignee(frm)
   {
     err = true;
     msg.push(invalid_email);
+  }
+
+  if (frm.elements['country'] && frm.elements['country'].value == 0)
+  {
+    msg.push(country_not_null);
+    err = true;
+  }
+
+  if (Utils.isEmpty(frm.elements['state'].value))
+  {
+    msg.push('State is Empty');
+    err = true;
+  }
+
+  if (Utils.isEmpty(frm.elements['city'].value))
+  {
+    msg.push('City is Empty');
+    err = true;
   }
 
   if (frm.elements['address'] && Utils.isEmpty(frm.elements['address'].value))
@@ -601,20 +592,6 @@ function checkConsignee(frm)
   {
     err = true;
     msg.push(tele_not_null);
-  }
-  else
-  {
-    if (!Utils.isTel(frm.elements['tel'].value))
-    {
-      err = true;
-      msg.push(tele_invaild);
-    }
-  }
-
-  if (frm.elements['mobile'] && frm.elements['mobile'].value.length > 0 && (!Utils.isTel(frm.elements['mobile'].value)))
-  {
-    err = true;
-    msg.push(mobile_invaild);
   }
 
   if (err)

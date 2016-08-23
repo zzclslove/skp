@@ -52,7 +52,7 @@
 
 <fieldset style="border:1px solid #DDEEF2">
   <legend style="background:#FFF">{$lang.shipping_area_regions}:</legend>
-  <table style="width:600px" align="center">
+  <table align="left">
   <tr>
     <td id="regionCell">
       {foreach from=$regions item=region key=id}
@@ -63,21 +63,21 @@
   <tr>
     <td>
         <span  style="vertical-align: top">{$lang.label_country} </span>
-        <select name="country" id="selCountries" onchange="region.changed(this, 1, 'selProvinces')" size="10" style="width:80px">
+        <select name="country" id="selCountries" onchange="region.changed(this, 1, 'selProvinces')" size="20" style="width:200px">
           {foreach from=$countries item=country}
           <option value="{$country.region_id}">{$country.region_name|escape:html}</option>
           {/foreach}
         </select>
         <span  style="vertical-align: top">{$lang.label_province} </span>
-        <select name="province" id="selProvinces" onchange="region.changed(this, 2, 'selCities')" size="10" style="width:80px">
+        <select name="province" id="selProvinces" onchange="region.changed(this, 2, 'selCities')" size="20" style="width:120px">
           <option value=''>{$lang.select_please}</option>
         </select>
         <span  style="vertical-align: top">{$lang.label_city} </span>
-        <select name="city" id="selCities" onchange="region.changed(this, 3, 'selDistricts')" size="10" style="width:80px">
+        <select name="city" id="selCities" onchange="region.changed(this, 3, 'selDistricts')" size="20" style="width:120px">
           <option value=''>{$lang.select_please}</option>
         </select>
         <span  style="vertical-align: top">{$lang.label_district}</span>
-        <select name="district" id="selDistricts" size="10" style="width:130px">
+        <select name="district" id="selDistricts" size="20" style="width:120px">
           <option value=''>{$lang.select_please}</option>
         </select>
         <span  style="vertical-align: top"><input type="button" value="+" class="button" onclick="addRegion()" /></span>
