@@ -389,7 +389,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         }
 
         /* 图片列表 */
-        $sql = "SELECT * FROM " . $ecs->table('goods_gallery') . " WHERE goods_id = '$goods[goods_id]'";
+        $sql = "SELECT * FROM " . $ecs->table('goods_gallery') . " WHERE goods_id = '$goods[goods_id]' ORDER BY img_order ASC";
         $img_list = $db->getAll($sql);
 
         /* 格式化相册图片路径 */
@@ -1128,6 +1128,16 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         foreach ($_POST['old_img_desc'] AS $img_id => $img_desc)
         {
             $sql = "UPDATE " . $ecs->table('goods_gallery') . " SET img_desc = '$img_desc' WHERE img_id = '$img_id' LIMIT 1";
+            $db->query($sql);
+        }
+    }
+
+    /* 增加自定义可修改商品相册排序 */
+    if (!$is_insert && isset($_POST['img_order']))
+    {
+        foreach ($_POST['img_order'] AS $img_id => $img_order)
+        {
+            $sql = "UPDATE " . $ecs->table('goods_gallery') . " SET img_order = '$img_order' WHERE img_id = '$img_id' LIMIT 1";
             $db->query($sql);
         }
     }

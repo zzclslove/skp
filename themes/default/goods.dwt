@@ -171,7 +171,7 @@ function reg(str){
               <dd style="width:auto;margin-right:15px;height:28px;line-height: 28px"> <strong>{$lang.number}：</strong>
                 <input name="number" type="text" id="number" value="1" size="4" onblur="changePrice()" style="border:1px solid #ccc;padding:3px"/>
               </dd>
-              <dd style="width:auto;height:28px;line-height: 28px"> <strong>{$lang.amount}：</strong><font id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
+              <dd style="width:auto;height:28px;line-height: 28px"> <strong>{$lang.amount}：</strong><font style="font-size:18px" id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
               <!--
               <dd class="ddR">
                 <!-- {if $cfg.use_integral} 购买此商品可使用积分-->

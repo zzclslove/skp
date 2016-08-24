@@ -17,12 +17,12 @@
       </div>
       <span onmouseover="moveRight()" onmousedown="clickRight()" onmouseup="moveRight()" onmouseout="scrollStop()" class="spanR"></span>
       <script>
-      function $gg(id){  
+      function $gg(id){
         return (document.getElementById) ? document.getElementById(id): document.all[id]
       }
-      
+
       var boxwidth=53;//跟图片的实际尺寸相符
-      
+
       var box=$gg("demo");
       var obox=$gg("demo1");
       var dulbox=$gg("demo2");
@@ -38,7 +38,7 @@
       var mData=0;
       var isStop = 1;
       var dir = 1;
-      
+
       function s(){
         if (!canroll) return;
         if (dir) {
@@ -60,15 +60,15 @@
         mData+=step;
         }
       }
-      
+
       obox.style.marginLeft=mData+"px";
-      
+
       if (isStop) return;
-      
+
       setTimeout(s,speed)
       }
-      
-      
+
+
       function moveLeft() {
           var wasStop = isStop;
           dir = 1;
@@ -78,7 +78,7 @@
             setTimeout(s,speed);
           }
       }
-      
+
       function moveRight() {
           var wasStop = isStop;
           dir = 0;
@@ -88,11 +88,11 @@
             setTimeout(s,speed);
           }
       }
-      
+
       function scrollStop() {
         isStop=1;
       }
-      
+
       function clickLeft() {
           var wasStop = isStop;
           dir = 1;
@@ -102,7 +102,7 @@
             setTimeout(s,speed);
           }
       }
-      
+
       function clickRight() {
           var wasStop = isStop;
           dir = 0;

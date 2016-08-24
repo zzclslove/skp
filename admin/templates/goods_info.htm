@@ -294,12 +294,13 @@
           <tr>
             <td>
               {foreach from=$img_list item=img key=i}
-              <div id="gallery_{$img.img_id}" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+              <div id="gallery_{$img.img_id}" style="float:left; text-align:left; border: 1px solid #DADADA; margin: 4px; padding:2px;">
                 <a href="javascript:;" onclick="if (confirm('{$lang.drop_img_confirm}')) dropImg('{$img.img_id}')">[-]</a><br />
                 <a href="goods.php?act=show_image&img_url={$img.img_url}" target="_blank">
                 <img src="../{if $img.thumb_url}{$img.thumb_url}{else}{$img.img_url}{/if}" {if $thumb_width neq 0}width="{$thumb_width}"{/if} {if $thumb_height neq 0}height="{$thumb_height}"{/if} border="0" />
                 </a><br />
-                <input type="text" value="{$img.img_desc|escape}" size="15" name="old_img_desc[{$img.img_id}]" />
+                描述<input type="text" value="{$img.img_desc|escape}" size="15" name="old_img_desc[{$img.img_id}]" /><br />
+                排序<input type="text" value="{$img.img_order}" size="5" name="img_order[{$img.img_id}]" />
               </div>
               {/foreach}
             </td>

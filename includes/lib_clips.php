@@ -301,7 +301,7 @@ function get_goodsinfo($goods_id)
     if (!empty($_SESSION['user_id']))
     {
         $row = array();
-        $sql = "SELECT ua.consignee, ua.email, ua.tel, ua.mobile ".
+        $sql = "SELECT ua.consignee, ua.email, ua.tel, ua.tel ".
                "FROM ".$GLOBALS['ecs']->table('user_address')." AS ua, ".$GLOBALS['ecs']->table('users')." AS u".
                " WHERE u.address_id = ua.address_id AND u.user_id = '$_SESSION[user_id]'";
         $row = $GLOBALS['db']->getRow($sql) ;
