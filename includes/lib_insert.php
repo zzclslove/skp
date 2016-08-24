@@ -166,7 +166,6 @@ function insert_ads($arr)
     }
     $ads = array();
     $position_style = '';
-
     foreach ($res AS $row)
     {
         if ($row['position_id'] != $arr['id'])

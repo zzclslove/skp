@@ -6,7 +6,7 @@
   <!-- {/if} -->
   <!--{foreach from=$hot_goods item=goods}-->
  <a class="goodsItem" href="{$goods.url}"> <div  class="img-box"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></div>
-    <div class="goods-brief">{$goods.name|escape:html}</div>
+    <div class="goods-brief"><span>{$goods.name|escape:html}<span></div>
   <div class="prices">
       <!-- {if $goods.promote_price neq ""} -->
     <font class="shop_s">{$lang.promote_price}<b>{$goods.promote_price}</b></font>
