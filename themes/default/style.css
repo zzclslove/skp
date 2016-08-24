@@ -763,12 +763,12 @@ position:absolute; top:0px; right:0px;}
 .category-body .Area .prclist .centerPadd .goodsItem:nth-child(4n){margin: 20px 0 0 0;}
 .category-body .Area .prclist .centerPadd .goodsItem .img-box{width: 220px; height: 220px;display: -webkit-box;     display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-pack: center;-ms-flex-pack: center;-webkit-justify-content: center;justify-content: center;-webkit-box-align: center;-ms-flex-align: center;-webkit-align-items: center;align-items: center; margin: 35px auto;}
 .category-body .Area .prclist .centerPadd .goodsItem .img-box img{max-width: 220px; max-height: 220px; border:none;}
-.category-body .Area .prclist .centerPadd .goodsItem .goods-info{width: 250px; border-top:1px solid #ccc; margin: 0 auto; padding: 20px 0;}
+.category-body .Area .prclist .centerPadd .goodsItem .goods-info{width: 250px; border-top:1px solid #ccc; margin: 0 auto; padding: 20px 0;position: relative;height: 110px}
 .category-body .Area .prclist .centerPadd .goodsItem .goods-info .goods-title{font-size: 16px; text-align: left;}
 .category-body .Area .prclist .centerPadd .goodsItem .goods-info .goods-title a{color: #333;}
 .category-body .Area .prclist .centerPadd .goodsItem .goods-info .goods-title a:hover{color: #d72426;}
-.category-body .Area .prclist .centerPadd .goodsItem .goods-info .goods-ms{text-align: left; color: #666; line-height: 23px; font-size: 13px; padding: 10px 0; height: 42px; overflow: hidden;}
-.category-body .Area .prclist .centerPadd .goodsItem .goods-info .price-box{padding-top: 15px;}
+.category-body .Area .prclist .centerPadd .goodsItem .goods-info .goods-ms{text-align: left; color: #999; line-height: 23px; font-size: 13px; padding:0; height: 42px; overflow: hidden;}
+.category-body .Area .prclist .centerPadd .goodsItem .goods-info .price-box{padding-top: 15px;position: absolute;bottom:0px;width: 250px;}
 .category-body .Area .prclist .centerPadd .goodsItem .goods-info .price-box .shop_s{float: left; font-size: 24px; font-weight: bold; padding-top: 10px;}
 .category-body .Area .prclist .centerPadd .goodsItem .goods-info .price-box .price-btn{display: block; width: 128px; height: 34px; line-height: 34px; border:1px solid #D72326; color: #D72326; float: right; font-size: 14px;}
 .category-body .Area .prclist .centerPadd .goodsItem .goods-info .price-box .price-btn:hover{background:#D72326; color: #fff; }
