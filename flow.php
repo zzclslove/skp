@@ -369,7 +369,7 @@ elseif ($_REQUEST['step'] == 'consignee')
             'address_id'    => empty($_POST['address_id']) ? 0  :   intval($_POST['address_id']),
             'consignee'     => empty($_POST['consignee'])  ? '' :   compile_str(trim($_POST['consignee'])),
             'country'       => empty($_POST['country'])    ? '' :   intval($_POST['country']),
-            'state'         => empty($_POST['state'])      ? '' :   compile_str($_POST['state']),
+            'states'         => empty($_POST['states'])    ? '' :   compile_str($_POST['states']),
             'city'          => empty($_POST['city'])       ? '' :   compile_str($_POST['city']),
             'email'         => empty($_POST['email'])      ? '' :   compile_str($_POST['email']),
             'address'       => empty($_POST['address'])    ? '' :   compile_str($_POST['address']),
@@ -379,7 +379,6 @@ elseif ($_REQUEST['step'] == 'consignee')
             'sign_building' => empty($_POST['sign_building']) ? '' :compile_str($_POST['sign_building']),
             'best_time'     => empty($_POST['best_time'])  ? '' :   compile_str($_POST['best_time']),
         );
-
         if ($_SESSION['user_id'] > 0)
         {
             include_once(ROOT_PATH . 'includes/lib_transaction.php');
@@ -474,6 +473,9 @@ elseif ($_REQUEST['step'] == 'checkout')
     }
 
     $_SESSION['flow_consignee'] = $consignee;
+
+    $sql = "select region_name from " . $ecs->table('region') . " where region_id = " . $consignee['country'];
+    $consignee['country_name'] = $db->getOne($sql);
     $smarty->assign('consignee', $consignee);
 
     /* 对商品信息赋值 */

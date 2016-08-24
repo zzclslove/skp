@@ -109,8 +109,8 @@
               {$shopping_money}<!-- {if $show_marketprice} -->，{$market_price_desc}<!-- {/if} -->
               </td>
               <td align="right" bgcolor="#ffffff">
-                <input type="button" value="{$lang.clear_cart}" class="bnt_blue_1" onclick="location.href='flow.php?step=clear'" />
-                <input name="submit" type="submit" class="bnt_blue_1" value="{$lang.update_cart}" />
+                <input style="width: 100px" type="button" value="{$lang.clear_cart}" class="bnt_blue_1" onclick="location.href='flow.php?step=clear'" />
+                <input style="width: 110px;" name="submit" type="submit" class="bnt_blue_1" value="{$lang.update_cart}" />
               </td>
             </tr>
           </table>
@@ -398,8 +398,12 @@
               <td bgcolor="#ffffff">{$consignee.email|escape}</td>
             </tr>
             <tr>
+              <td bgcolor="#ffffff">{$lang.country_province}:</td>
+              <td bgcolor="#ffffff">{$consignee.country_name|escape}</td>
+            </tr>
+            <tr>
               <td bgcolor="#ffffff">{$lang.detailed_address}:</td>
-              <td bgcolor="#ffffff">{$consignee.address|escape}, {$consignee.city|escape}, {$consignee.state|escape} </td>
+              <td bgcolor="#ffffff">{$consignee.address|escape}, {$consignee.city|escape}, {$consignee.states|escape} </td>
             </tr>
             <tr>
               <td bgcolor="#ffffff">{$lang.postalcode}:</td>
@@ -409,42 +413,38 @@
               <td bgcolor="#ffffff">{$lang.phone}:</td>
               <td bgcolor="#ffffff">{$consignee.tel} </td>
             </tr>
-            <tr>
-              <td bgcolor="#ffffff">{$lang.backup_phone}:</td>
-              <td bgcolor="#ffffff">{$consignee.mobile|escape}</td>
-            </tr>
           </table>
       </div>
      <div class="blank"></div>
     <!--{if $total.real_goods_count neq 0}-->
     <div class="flowBox">
-    <h6><span>{$lang.shipping_method}</span></h6>
-    <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" id="shippingTable">
-            <tr>
-              <th bgcolor="#ffffff" width="5%">&nbsp;</th>
-              <th bgcolor="#ffffff" width="25%">{$lang.name}</th>
-              <th bgcolor="#ffffff">{$lang.describe}</th>
-              <th bgcolor="#ffffff" width="15%">{$lang.fee}</th>
-              <th bgcolor="#ffffff" width="15%">{$lang.free_money}</th>
-              <th bgcolor="#ffffff" width="15%">{$lang.insure_fee}</th>
-            </tr>
-            <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
-            <tr>
-              <td bgcolor="#ffffff" valign="top"><input name="shipping" type="radio" value="{$shipping.shipping_id}" {if $order.shipping_id eq $shipping.shipping_id}checked="true"{/if} supportCod="{$shipping.support_cod}" insure="{$shipping.insure}" onclick="selectShipping(this)" />
-              </td>
-              <td bgcolor="#ffffff" valign="top"><strong>{$shipping.shipping_name}</strong></td>
-              <td bgcolor="#ffffff" valign="top">{$shipping.shipping_desc}</td>
-              <td bgcolor="#ffffff" align="right" valign="top">{$shipping.format_shipping_fee}</td>
-              <td bgcolor="#ffffff" align="right" valign="top">{$shipping.free_money}</td>
-              <td bgcolor="#ffffff" align="right" valign="top">{if $shipping.insure neq 0}{$shipping.insure_formated}{else}{$lang.not_support_insure}{/if}</td>
-            </tr>
-            <!-- {/foreach} 循环配送方式 -->
-            <tr>
-              <td colspan="6" bgcolor="#ffffff" align="right"><label for="ECS_NEEDINSURE">
-                <input name="need_insure" id="ECS_NEEDINSURE" type="checkbox"  onclick="selectInsure(this.checked)" value="1" {if $order.need_insure}checked="true"{/if} {if $insure_disabled}disabled="true"{/if}  />
-                {$lang.need_insure} </label></td>
-            </tr>
-          </table>
+      <h6><span>{$lang.shipping_method}</span></h6>
+      <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" id="shippingTable">
+        <tr>
+          <th bgcolor="#ffffff" width="5%">&nbsp;</th>
+          <th bgcolor="#ffffff" width="25%">{$lang.name}</th>
+          <th bgcolor="#ffffff">{$lang.describe}</th>
+          <th bgcolor="#ffffff" width="15%">{$lang.fee}</th>
+          <th bgcolor="#ffffff" width="15%">{$lang.free_money}</th>
+          <th bgcolor="#ffffff" width="15%">{$lang.insure_fee}</th>
+        </tr>
+        <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
+        <tr>
+          <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" valign="top"><input name="shipping" type="radio" value="{$shipping.shipping_id}" {if $order.shipping_id eq $shipping.shipping_id}checked="true"{/if} supportCod="{$shipping.support_cod}" insure="{$shipping.insure}" onclick="selectShipping(this)" />
+          </td>
+          <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" valign="top"><strong>{$shipping.shipping_name}</strong></td>
+          <td bgcolor="#ffffff" valign="top">{$shipping.shipping_desc}</td>
+          <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{$shipping.format_shipping_fee}</td>
+          <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{$shipping.free_money}</td>
+          <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{if $shipping.insure neq 0}{$shipping.insure_formated}{else}{$lang.not_support_insure}{/if}</td>
+        </tr>
+        <!-- {/foreach} 循环配送方式 -->
+        <tr>
+          <td colspan="6" bgcolor="#ffffff" align="right"><label for="ECS_NEEDINSURE">
+            <input name="need_insure" id="ECS_NEEDINSURE" type="checkbox"  onclick="selectInsure(this.checked)" value="1" {if $order.need_insure}checked="true"{/if} {if $insure_disabled}disabled="true"{/if}  />
+            {$lang.need_insure} </label></td>
+        </tr>
+      </table>
     </div>
     <div class="blank"></div>
         <!--{else}-->
@@ -464,10 +464,10 @@
             <!-- 循环支付方式 -->
             {if $payment.pay_code!='yunqi'}
             <tr>
-              <td valign="top" bgcolor="#ffffff"><input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/></td>
-              <td valign="top" bgcolor="#ffffff"><strong>{$payment.pay_name}</strong></td>
+              <td style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff"><input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/></td>
+              <td style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff"><strong>{$payment.pay_name}</strong></td>
               <td valign="top" bgcolor="#ffffff">{$payment.pay_desc}</td>
-              <td align="right" bgcolor="#ffffff" valign="top">{$payment.format_pay_fee}</td>
+              <td style="vertical-align: middle;text-align: center" align="right" bgcolor="#ffffff" valign="top">{$payment.format_pay_fee}</td>
             </tr>
             {else}
             <tr>
@@ -475,7 +475,6 @@
                 <input type="radio" id="yunqi_payment" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/></td>
               <td class="list-tit" valign="top" bgcolor="#ffffff">
                 <strong>{$payment.pay_name} <i style="display:inline-block;width: 70px ;text-align: center" id="payMethod">（支付宝）</i></strong>
-                
               </td>
               <td valign="top" bgcolor="#ffffff">{$payment.pay_desc}</td>
               <td align="right" bgcolor="#ffffff" valign="top">{$payment.format_pay_fee}</td>
