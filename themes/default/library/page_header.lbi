@@ -23,25 +23,8 @@ var process_request = "{$lang.process_request}";
     <div id="mainNav" class="clearfix maxmenu">
       <div class="m_left">
       <ul>
-        <li><a href="../index.php"{if $navigator_list.config.index eq 1} class="cur"{/if}>Home</a></li>
         <!-- {foreach name=nav_middle_list from=$navigator_list.middle item=nav} -->
-        <!-- {if $smarty.foreach.nav_middle_list.last}-->
-        <li><a href="{$nav.url}" 
-        
-          <!-- {if $nav.opennew eq 1} -->
-          target="_blank"
-          <!-- {/if} -->
-          >{$nav.name}</a></li>
-        <!-- {else} -->
-        <li><a href="{$nav.url}" 
-        
-          <!-- {if $nav.opennew eq 1} -->
-          target="_blank"
-          <!-- {/if} -->
-          >{$nav.name}</a></li>
-        <!-- {/if} -->
-        <!-- {if $nav.active eq 1} -->
-        <!-- {/if} -->
+        <li><a href="{$nav.url}">{$nav.name}</a></li>
         <!-- {/foreach} -->
       </ul>
       </div>
