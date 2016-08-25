@@ -885,10 +885,8 @@ class matrix
         //订单收货者信息
         $paramss['receiver_name'] = $order_info['consignee'];//姓名
         $paramss['receiver_phone'] = $order_info['tel'];//固定电话
-        $paramss['receiver_mobile'] = $order_info['mobile'];//移动电话
-        $paramss['receiver_state'] = $this->get_region($order_info['province'],1);//省
-        $paramss['receiver_city'] = $this->get_region($order_info['city'],2);//市
-        $paramss['receiver_district'] = $this->get_region($order_info['district'],3);//区
+        $paramss['receiver_states'] = $order_info['states'];//省
+        $paramss['receiver_city'] = $order_info['city'];//市
         $paramss['receiver_address'] = $order_info['address'];//详细地区
         $paramss['receiver_zip'] = $order_info['zipcode'];//邮编
 

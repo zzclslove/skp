@@ -465,8 +465,33 @@
             {if $payment.pay_code!='yunqi'}
             <tr>
               <td style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff"><input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/></td>
-              <td style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff"><strong>{$payment.pay_name}</strong></td>
-              <td valign="top" bgcolor="#ffffff">{$payment.pay_desc}</td>
+
+                  <!--{if $payment.pay_name eq "WesternUnion"}-->
+                <td class="checkout_paylist" style="vertical-align: middle;text-align: left" valign="top" bgcolor="#ffffff">
+                    <span style="background-position: 0 -371px;"></span><span><strong>{$payment.pay_name}</strong></span>
+                  <!--{elseif $payment.pay_name eq "MoneyGram"}-->
+                <td class="checkout_paylist" style="vertical-align: middle;text-align: left" valign="top" bgcolor="#ffffff">
+                    <span style="background-position: 0 -424px;"></span><span><strong>{$payment.pay_name}</strong></span>
+                  <!--{else}-->
+                <td class="checkout_paylist" style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff">
+                    <strong>{$payment.pay_name}</strong>
+                  <!--{/if}-->
+              </td>
+              <td valign="top" bgcolor="#ffffff">
+                  <!--{if $payment.pay_name eq "WesternUnion"}-->
+                  <span>First Name:</span> DEZHU <br>
+                  <span>Last Name:</span> YAO <br>
+                  <span>Country:</span> CHINA <br>
+                  <span>Address:</span> 8/F, No.614 Building, Bagua 1st Road, Futian District, Shenzhen
+                  <!--{elseif $payment.pay_name eq "MoneyGram"}-->
+                  <span>First Name:</span> DEZHU <br>
+                  <span>Last Name:</span> YAO <br>
+                  <span>Country:</span> CHINA <br>
+                  <span>Address:</span> 8/F, No.614 Building, Bagua 1st Road, Futian District, Shenzhen
+                  <!--{else}-->
+                  {$payment.pay_desc}
+                  <!--{/if}-->
+              </td>
               <td style="vertical-align: middle;text-align: center" align="right" bgcolor="#ffffff" valign="top">{$payment.format_pay_fee}</td>
             </tr>
             {else}
@@ -671,15 +696,53 @@
         <!-- {if $step eq "done"} -->
         <!-- 订单提交成功 -->
         <div class="flowBox" style="margin:30px auto 70px auto;">
-         <h6 style="text-align:center; height:30px; line-height:30px;">{$lang.remember_order_number}: <font style="color:red">{$order.order_sn}</font></h6>
-          <table width="99%" align="center" border="0" cellpadding="15" cellspacing="0" bgcolor="#fff" style="border:1px solid #ddd; margin:20px auto;" >
+         <h6 style="text-align:left; height:30px; line-height:30px;padding-left: 15px;">{$lang.remember_order_number}: <font style="color:red">{$order.order_sn}</font></h6>
+          <table width="99%" align="left" border="0" cellpadding="15" cellspacing="0" bgcolor="#fff" style="border:1px solid #ddd; margin:20px auto;" >
             <tr>
-              <td align="center" bgcolor="#FFFFFF">
-              <!--{if $order.shipping_name}-->{$lang.select_shipping}: <strong>{$order.shipping_name}</strong>，<!--{/if}-->{$lang.select_payment}: <strong>{$order.pay_name}</strong>。{$lang.order_amount}: <strong>{$total.amount_formated}</strong>
+              <td align="left" bgcolor="#FFFFFF">
+              <!--{if $order.shipping_name}--><p><span>{$lang.select_shipping}: </span><strong>{$order.shipping_name}</strong></p><!--{/if}-->
+                  <p><span>{$lang.select_payment}: </span><strong>{$order.pay_name}</strong></p>
+                  <p><span>{$lang.order_amount}: </span><strong>{$total.amount_formated}</strong></p>
               </td>
             </tr>
             <tr>
-              <td align="center" bgcolor="#FFFFFF">{$order.pay_desc}</td>
+              <td align="left" bgcolor="#FFFFFF">
+                  <!--{if $order.pay_name eq "WesternUnion"}-->
+                  <div style="border:1px solid #3C3C3C;padding:12px;width:840px;">
+                      <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>Western Union</b></p>
+                      <p style="margin-bottom: 15px;">
+                          <b>First Name:</b> YEFEI <br>
+                          <b>Last Name:</b> CHEN <br>
+                          <b>Country:</b> CHINA <br>
+                          <b>Address:</b> 2/F, TongJian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
+                      </p>
+                      <p style="margin-bottom: 15px;">
+                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@163.com</span> after you send payment through MoneyGram.
+                      </p>
+                      <p>
+                          We want to remind all customers that they are responsible for all local Western Union handling fees. Therefore, customers should confirm the total payment amount with their local Western Union.
+                      </p>
+                  </div>
+                  <!--{elseif $order.pay_name eq "MoneyGram"}-->
+                  <div style="border:1px solid #3C3C3C;padding:12px;width:840px;">
+                      <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>MoneyGram</b></p>
+                      <p style="margin-bottom: 15px;">
+                          <b>First Name:</b> DEZHU <br>
+                          <b>Last Name:</b> YAO <br>
+                          <b>Country:</b> CHINA <br>
+                          <b>Address:</b> 8/F, No.614 Building, Bagua 1st Road, Futian District, Shenzhen
+                      </p>
+                      <p style="margin-bottom: 15px;">
+                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@163.com</span> after you send payment through MoneyGram.
+                      </p>
+                      <p>
+                          We want to remind all customers that they are responsible for all local MoneyGram handling fees. Therefore, customers should confirm the total payment amount with their local MoneyGram.
+                      </p>
+                  </div>
+                  <!--{else}-->
+                  {$order.pay_desc}
+                  <!--{/if}-->
+              </td>
             </tr>
             <!-- {if $pay_online} -->
             <!-- 如果是线上支付则显示支付按钮 -->

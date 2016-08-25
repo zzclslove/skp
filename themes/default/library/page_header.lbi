@@ -23,8 +23,8 @@ var process_request = "{$lang.process_request}";
     <div id="mainNav" class="clearfix maxmenu">
       <div class="m_left">
       <ul>
-        <!-- {foreach name=nav_middle_list from=$navigator_list.middle item=nav} -->
-        <li><a href="{$nav.url}">{$nav.name}</a></li>
+        <!-- {foreach name=nav_middle_list from=$categories item=nav} -->
+        <li class="pos-{$smarty.foreach.nav_middle_list.iteration}"><a href="{$nav.url}">{$nav.name}</a></li>
         <!-- {/foreach} -->
       </ul>
       </div>

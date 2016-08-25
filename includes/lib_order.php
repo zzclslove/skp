@@ -1741,30 +1741,10 @@ function check_consignee_info($consignee, $flow_type)
         /* 如果存在实体商品 */
         $res = !empty($consignee['consignee']) &&
             !empty($consignee['country']) &&
+            !empty($consignee['states']) &&
+            !empty($consignee['city']) &&
             !empty($consignee['email']) &&
             !empty($consignee['tel']);
-
-        if ($res)
-        {
-            if (empty($consignee['province']))
-            {
-                /* 没有设置省份，检查当前国家下面有没有设置省份 */
-                $pro = get_regions(1, $consignee['country']);
-                $res = empty($pro);
-            }
-            elseif (empty($consignee['city']))
-            {
-                /* 没有设置城市，检查当前省下面有没有城市 */
-                $city = get_regions(2, $consignee['province']);
-                $res = empty($city);
-            }
-            elseif (empty($consignee['district']))
-            {
-                $dist = get_regions(3, $consignee['city']);
-                $res = empty($dist);
-            }
-        }
-
         return $res;
     }
     else

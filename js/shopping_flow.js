@@ -564,7 +564,7 @@ function checkConsignee(frm)
     err = true;
   }
 
-  if (Utils.isEmpty(frm.elements['state'].value))
+  if (Utils.isEmpty(frm.elements['states'].value))
   {
     msg.push('State is Empty');
     err = true;

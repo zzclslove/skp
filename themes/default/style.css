@@ -686,7 +686,7 @@ position:absolute; top:0px; right:0px;}
 .cart-yh a{color: #aaa; padding: 0 10px;}
 .nav-menu{height: 100px;border-bottom: 1px solid #ccc}
 .nav-menu .logo{float: left; width: 230px;}
-.nav-menu .maxmenu{float: left; width: 600px; height: auto; overflow: hidden; background: none;margin-left: 40px}
+.nav-menu .maxmenu{float: left; width: auto; height: auto; overflow: hidden; background: none;margin-left: 5px}
 .nav-menu .maxmenu .m_left{height: 70px;
     margin-top: 26px;
     padding: 0;}
@@ -1358,7 +1358,7 @@ position:absolute; top:0px; right:0px;}
     -webkit-font-smoothing: antialiased!important;
 }
 .maxmenu li a{
-    padding: 0 .8em!important;
+    padding: 0 13px!important;
     display: block!important;
     -moz-transition: color .2s ease-in-out;
     -o-transition: color .2s ease-in-out;
@@ -1368,7 +1368,19 @@ position:absolute; top:0px; right:0px;}
     z-index: 15;
     white-space: nowrap;
 }
+.checkout_paylist span:first-child {
+    width: 80px;
+    height: 50px;
+    background-image: url(images/paymethod_80.jpg);
+    margin-left: 15px;
+    margin-right: 10px;
+}
+.checkout_paylist span {
+    display: inline-block;
+    line-height: 50px;
+    vertical-align: middle;
 
+}
 
 
 

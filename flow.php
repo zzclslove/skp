@@ -331,7 +331,6 @@ elseif ($_REQUEST['step'] == 'consignee')
         /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
         $smarty->assign('country_list',       get_regions());
         $smarty->assign('shop_country',       $_CFG['shop_country']);
-        $smarty->assign('shop_province_list', get_regions(1, $_CFG['shop_country']));
 
         /* 获得用户所有的收货人信息 */
         if ($_SESSION['user_id'] > 0)
@@ -362,6 +361,7 @@ elseif ($_REQUEST['step'] == 'consignee')
     }
     else
     {
+
         /*
          * 保存收货人信息
          */
@@ -369,7 +369,7 @@ elseif ($_REQUEST['step'] == 'consignee')
             'address_id'    => empty($_POST['address_id']) ? 0  :   intval($_POST['address_id']),
             'consignee'     => empty($_POST['consignee'])  ? '' :   compile_str(trim($_POST['consignee'])),
             'country'       => empty($_POST['country'])    ? '' :   intval($_POST['country']),
-            'states'         => empty($_POST['states'])    ? '' :   compile_str($_POST['states']),
+            'states'         => empty($_POST['states'])      ? '' :   compile_str($_POST['states']),
             'city'          => empty($_POST['city'])       ? '' :   compile_str($_POST['city']),
             'email'         => empty($_POST['email'])      ? '' :   compile_str($_POST['email']),
             'address'       => empty($_POST['address'])    ? '' :   compile_str($_POST['address']),
@@ -391,7 +391,6 @@ elseif ($_REQUEST['step'] == 'consignee')
 
         /* 保存到session */
         $_SESSION['flow_consignee'] = stripslashes_deep($consignee);
-
         ecs_header("Location: flow.php?step=checkout\n");
         exit;
     }
@@ -1393,7 +1392,7 @@ elseif ($_REQUEST['step'] == 'done')
         'order_status'    => OS_UNCONFIRMED,
         'shipping_status' => SS_UNSHIPPED,
         'pay_status'      => PS_UNPAYED,
-        'agency_id'       => get_agency_by_regions(array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']))
+        'agency_id'       => get_agency_by_regions(array($consignee['country'], $consignee['states'], $consignee['city']))
         );
 
     /* 扩展信息 */

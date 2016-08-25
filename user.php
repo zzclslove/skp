@@ -890,6 +890,7 @@ elseif ($action == 'order_detail')
     }
 
     /* 订单 支付 配送 状态语言项 */
+    $smarty->assign('country_list',       get_regions());
     $order['order_status'] = $_LANG['os'][$order['order_status']];
     $order['pay_status'] = $_LANG['ps'][$order['pay_status']];
     $order['shipping_status'] = $_LANG['ss'][$order['shipping_status']];
@@ -1037,13 +1038,9 @@ elseif ($action == 'address_list')
     //取得国家列表，如果有收货人列表，取得省市区列表
     foreach ($consignee_list AS $region_id => $consignee)
     {
-        $consignee['country']  = isset($consignee['country'])  ? intval($consignee['country'])  : 0;
-        $consignee['province'] = isset($consignee['province']) ? intval($consignee['province']) : 0;
-        $consignee['city']     = isset($consignee['city'])     ? intval($consignee['city'])     : 0;
-
-        $province_list[$region_id] = get_regions(1, $consignee['country']);
-        $city_list[$region_id]     = get_regions(2, $consignee['province']);
-        $district_list[$region_id] = get_regions(3, $consignee['city']);
+        $consignee['country']  = isset($consignee['country'])  ? $consignee['country']  : 0;
+        $consignee['states'] = isset($consignee['states']) ? $consignee['states'] : '';
+        $consignee['city']     = isset($consignee['city']) ? $consignee['city']   : '';
     }
 
     /* 获取默认收货ID */
@@ -1053,10 +1050,7 @@ elseif ($action == 'address_list')
     $smarty->assign('real_goods_count', 1);
     $smarty->assign('shop_country',     $_CFG['shop_country']);
     $smarty->assign('shop_province',    get_regions(1, $_CFG['shop_country']));
-    $smarty->assign('province_list',    $province_list);
     $smarty->assign('address',          $address_id);
-    $smarty->assign('city_list',        $city_list);
-    $smarty->assign('district_list',    $district_list);
     $smarty->assign('currency_format',  $_CFG['currency_format']);
     $smarty->assign('integral_scale',   $_CFG['integral_scale']);
     $smarty->assign('name_of_region',   array($_CFG['name_of_region_1'], $_CFG['name_of_region_2'], $_CFG['name_of_region_3'], $_CFG['name_of_region_4']));
@@ -1075,9 +1069,8 @@ elseif ($action == 'act_edit_address')
         'user_id'    => $user_id,
         'address_id' => intval($_POST['address_id']),
         'country'    => isset($_POST['country'])   ? intval($_POST['country'])  : 0,
-        'province'   => isset($_POST['province'])  ? intval($_POST['province']) : 0,
-        'city'       => isset($_POST['city'])      ? intval($_POST['city'])     : 0,
-        'district'   => isset($_POST['district'])  ? intval($_POST['district']) : 0,
+        'states'     => isset($_POST['states'])    ? compile_str($_POST['states']) : 0,
+        'city'       => isset($_POST['city'])      ? compile_str($_POST['city'])     : 0,
         'address'    => isset($_POST['address'])   ? compile_str(trim($_POST['address']))    : '',
         'consignee'  => isset($_POST['consignee']) ? compile_str(trim($_POST['consignee']))  : '',
         'email'      => isset($_POST['email'])     ? compile_str(trim($_POST['email']))      : '',
@@ -2151,7 +2144,9 @@ elseif ($action == 'save_order_address')
         'address'   => isset($_POST['address'])   ? compile_str(trim($_POST['address']))    : '',
         'zipcode'   => isset($_POST['zipcode'])   ? compile_str(make_semiangle(trim($_POST['zipcode']))) : '',
         'tel'       => isset($_POST['tel'])       ? compile_str(trim($_POST['tel']))        : '',
-        'mobile'    => isset($_POST['mobile'])    ? compile_str(trim($_POST['mobile']))     : '',
+        'states'    => isset($_POST['states'])    ? compile_str(trim($_POST['states']))     : '',
+        'city'      => isset($_POST['city'])      ? compile_str(trim($_POST['city']))       : '',
+        'country'   => isset($_POST['country'])   ? intval($_POST['country'])               : '',
         'sign_building' => isset($_POST['sign_building']) ? compile_str(trim($_POST['sign_building'])) : '',
         'best_time' => isset($_POST['best_time']) ? compile_str(trim($_POST['best_time']))  : '',
         'order_id'  => isset($_POST['order_id'])  ? intval($_POST['order_id']) : 0
