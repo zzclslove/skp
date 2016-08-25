@@ -23,15 +23,48 @@
         -webkit-align-items: center;
         align-items: center;
     }
+    .swiper-button-next {
+        background-image: url(../images/bg_direction_nav.png);
+        right: 10px;
+        left: auto;
+        background-size: inherit;
+    }
+    .swiper-button-prev {
+        background-image: url(../images/bg_direction_nav.png);
+        right: auto;
+        left: 10px;
+        background-size: inherit;
+    }
+    .swiper-button-prev{
+        background-position: 0 0;
+    }
+    .swiper-button-prev:hover{
+        background-position:0 -100px
+    }
+    .swiper-button-next{
+        background-position: -53px 0;
+    }
+    .swiper-button-next:hover{
+        background-position:-53px -100px
+    }
+    .swiper-button-prev, .swiper-button-next {
+        position: absolute;
+        top: 50%;
+        width: 40px;
+        height: 93px;
+        margin-top: -46px;
+        z-index: 10;
+        cursor: pointer;
+    }
     </style>
 <div class="swiper-container swiper1">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">{insert name='ads' id=1 num=1}</div>
-            <div class="swiper-slide">{insert name='ads' id=2 num=1}</div>
-            <div class="swiper-slide">{insert name='ads' id=3 num=1}</div>
+            {insert name='ads' id=1 num=3}
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
 <script>
     var swiper = new Swiper('.swiper1', {
