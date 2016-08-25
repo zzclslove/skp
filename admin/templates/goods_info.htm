@@ -3,6 +3,7 @@
 {insert_scripts files="../js/utils.js,selectzone.js,colorselector.js"}
 <script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
 <link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 <script charset="utf-8" src="../includes/kindeditor/kindeditor.js"></script>
 <script charset="utf-8" src="../includes/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript">
@@ -273,6 +274,13 @@
         <!-- 灞炴€т笌瑙勬牸 -->
         {if $goods_type_list}
         <table width="90%" id="properties-table" style="display:none" align="center">
+            <tr>
+                <td class="label">属性JSON</td>
+                <td>
+                    <textarea id="pJSON" style="width:200px;height:35px;vertical-align: middle;"></textarea>
+                    <input id="setParam" value="设置属性" type="button">
+                </td>
+            </tr>
           <tr>
               <td class="label"><a href="javascript:showNotice('noticeGoodsType');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_goods_type}</td>
               <td>
@@ -286,6 +294,31 @@
             <td id="tbody-goodsAttr" colspan="2" style="padding:0">{$goods_attr_html}</td>
           </tr>
         </table>
+          <script>
+              $('#setParam').click(function(){
+                var paramJSON = $.parseJSON($('#pJSON').val());
+                $.each($('td.label'), function(index, item){
+                    for(var jj = 0; jj < paramJSON.length; jj++){
+                        var paramNameArray = paramJSON[jj].name.split('|');
+                        for(var kk = 0; kk < paramNameArray.length; kk++){
+                            if(paramNameArray[kk].toLowerCase() == jQuery(item).text().trim().toLowerCase()){
+                                $(item).next().find("input").each(function(ii, nn){
+                                    if($(nn).attr('type') == 'text'){
+                                        $(nn).val(paramJSON[jj].value);
+                                    }
+                                });
+                                $(item).next().find('textarea').val(paramJSON[jj].value);
+                                if(paramJSON[jj].value == 'yes'){
+                                    $(item).next().find('select').val("Yes");
+                                }else{
+                                    $(item).next().find('select').val("No");
+                                }
+                            }
+                        }
+                    }
+                });
+              });
+          </script>
         {/if}
 
         <!-- 鍟嗗搧鐩稿唽 -->

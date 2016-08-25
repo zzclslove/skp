@@ -1,0 +1,46 @@
+<html>
+<head>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script>
+var obj;
+var parray = [
+'Model','Design','SIM Quantity','SIM Types','Chipset','CPU','CPU Processor','OS System|OS','RAM','Additional Features','External Memory','Music Play'
+,'Sensor','Support Language|Support Languages','Types|Type','Band','WIFI','GPS','Bluetooth','Screen Size','Screen Type|Screen Types','Resolution','Screen Color'
+,'Camera Quantity','Front Camera','Back Camera','Video recording','Audio','Video','Picture','E-book','Ports','Battery Types','Battery Capacity'
+,'Talk Time','Standby Time','Internet use','Video playback','Audio playback','Size','Weight','Package Contents','One Package Weight','One Package Size','Qty per Carton','Carton Weight','Carton Size'
+];
+var result = [];
+$(document).ready(function(){
+	$('#btn').click(function(){
+		obj = $($('#html').val());
+		for(var i = 0; i < parray.length; i++){
+			$.each(obj.find('td'), function(index, item){
+				var parrayayy = parray[i].toLowerCase().split('|');
+				for(var j = 0; j < parrayayy.length; j++){
+					if($(item).text().toLowerCase().trim().replace('  ',' ') == parrayayy[j].toLowerCase()){
+						result.push({name:parray[i].toLowerCase(), value:$(item).next().text().trim()});
+					}
+				}
+			});
+		}
+		$('#json').val(JSON.stringify(result));
+	});
+});
+</script>
+</head>
+<body>
+<table>
+	<tr>
+		<td>html</td>
+		<td><textarea id="html" style="width:600px; height:200px"></textarea></td>
+		<td><input id="btn" type="button" value="»ñÈ¡JSON"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="2">
+			<textarea id="json" style="width:600px;height:200px"></textarea>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

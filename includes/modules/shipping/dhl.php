@@ -254,7 +254,7 @@ class dhl
                     100 * $this->configure['step6_fee'] +
                     200 * $this->configure['step7_fee'];
             }
-            return $fee;
+            return $fee * 0.1503;
         }
     }
     /**

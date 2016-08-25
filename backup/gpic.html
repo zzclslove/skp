@@ -1,0 +1,27 @@
+<html>
+<head>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script>
+var i = 1;
+$(document).ready(function(){
+	$("#btn").click(function(){
+		$('#img').attr('src', 'http://42.96.155.104/img/800/' + $('#itemNo').val() + '_' + i + '.jpg');
+		$('#btn').val('获取图片(' + i + ')');
+		i++;
+	});
+});
+</script>
+</head>
+<body>
+<table>
+	<tr>
+		<td>itemNo</td>
+		<td><input id="itemNo" type="text" value="" style="width:120px;height:30px;line-height:30px"></td>
+		<td><input id="btn" type="button" value="获取图片(1)"></td>
+	</tr>
+</table>
+<div>
+<img id="img" src="">
+</div>
+</body>
+</html>
