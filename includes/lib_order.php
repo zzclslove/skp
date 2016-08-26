@@ -76,7 +76,7 @@ function shipping_info($shipping_id)
  * @param   array   $region_id_list     收货人地区id数组（包括国家、省、市、区）
  * @return  array   配送方式数组
  */
-function available_shipping_list($region_id_list)
+function available_shipping_list($region_id_list, $weight)
 {
     $sql = 'SELECT s.shipping_id, s.shipping_code, s.shipping_name, ' .
                 's.shipping_desc, s.insure, s.support_cod, a.configure ' .
@@ -85,8 +85,24 @@ function available_shipping_list($region_id_list)
                 $GLOBALS['ecs']->table('area_region') . ' AS r ' .
             'WHERE r.region_id ' . db_create_in($region_id_list) .
             ' AND r.shipping_area_id = a.shipping_area_id AND a.shipping_id = s.shipping_id AND s.enabled = 1 ORDER BY s.shipping_order';
+    $shipping_list = $GLOBALS['db']->getAll($sql);
+    $result = array();
+    foreach ($shipping_list AS $key => $val){
+        $shipping_cfg = unserialize_config($val['configure']);
+        if(!empty($shipping_cfg['weight_limit'])){
+            if($shipping_cfg['weight_limit'] > 0){
+                if($shipping_cfg['weight_limit'] > $weight){
+                    $result[] =  $val;
+                }
+            }else{
+                $result[] =  $val;
+            }
+        }else{
+            $result[] =  $val;
+        }
+    }
 
-    return $GLOBALS['db']->getAll($sql);
+    return $result;
 }
 
 /**

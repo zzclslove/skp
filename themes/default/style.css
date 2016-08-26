@@ -770,10 +770,10 @@ position:absolute; top:0px; right:0px;}
 #ur_here .path div{line-height: 50px; height: 50px; padding: 0; background: none; font-size: 14px; color: #666;}
 #ur_here .path div a{color: #666;}
 .category-body .Area .guige{background: #fff; border:1px solid #d7d7d7;}
-.category-body .Area .guige .screeBox{padding:0; height: 39px; line-height: 38px; border-bottom:1px dashed #d7d7d7;}
-.category-body .Area .guige .screeBox strong{width: 110px; background: #fafafa; color: #333; text-align: center; text-indent: 0;}
+.category-body .Area .guige .screeBox{line-height: 38px; border-bottom:1px dashed #d7d7d7;position:relative;padding:0px 0px 0px 110px;background: #fafafa;}
+.category-body .Area .guige .screeBox strong{width: 110px; background: #fafafa; color: #333; text-align: center; text-indent: 0;display:block;position:absolute;left:0;top:0;z-index:100}
 .category-body .Area .guige .screeBox a{padding: 0 10px; margin: 0 10px; color: #005aa0;}
-.category-body .Area .guige .screeBox span{padding: 0 10px; margin: 0 10px; background: #d72426;}
+.category-body .Area .guige .screeBox span{padding: 0 10px; margin: 0; background: #d72426;}
 .category-body .Area .prclist .displaylist{background: #fff; border:1px solid #d7d7d7; padding: 0;}
 .category-body .Area .prclist .list-paixu a{display: block; float: left; margin: 0 5px;}
 .category-body .Area .prclist .centerPadd{background: none; border:none; }

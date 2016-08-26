@@ -31,7 +31,9 @@
     <!--{if $brands.1 || $price_grade.1 || $filter_attr_list}-->
     <div class="guige">
       <!--{if $brands.1}-->
-      <div class="screeBox"> <strong>{$lang.brand}：</strong>
+      <div class="screeBox">
+        <strong>{$lang.brand}：</strong>
+        <div style="padding-left: 20px;background-color:#fff">
         <!--{foreach from=$brands item=brand}-->
         <!-- {if $brand.selected} -->
         <span>{$brand.brand_name}</span>
@@ -39,10 +41,13 @@
         <a href="{$brand.url}">{$brand.brand_name}</a>
         <!-- {/if} -->
         <!--{/foreach}-->
+        </div>
       </div>
       <!--{/if}-->
       <!--{if $price_grade.1}-->
-      <div class="screeBox"> <strong>{$lang.price}：</strong>
+      <div class="screeBox">
+        <strong>{$lang.price}：</strong>
+        <div style="padding-left: 20px;background-color:#fff">
         <!--{foreach from=$price_grade item=grade}-->
         <!-- {if $grade.selected} -->
         <span>{$grade.price_range}</span>
@@ -50,10 +55,13 @@
         <a href="{$grade.url}">{$grade.price_range}</a>
         <!-- {/if} -->
         <!--{/foreach}-->
+        </div>
       </div>
       <!--{/if}-->
       <!--{foreach from=$filter_attr_list item=filter_attr}-->
-      <div class="screeBox"> <strong>{$filter_attr.filter_attr_name|escape:html} :</strong>
+      <div class="screeBox">
+        <strong>{$filter_attr.filter_attr_name|escape:html} :</strong>
+        <div style="padding-left: 20px;background-color:#fff">
         <!--{foreach from=$filter_attr.attr_list item=attr}-->
         <!-- {if $attr.selected} -->
         <span>{$attr.attr_value}</span>
@@ -61,6 +69,7 @@
         <a href="{$attr.url}">{$attr.attr_value}</a>
         <!-- {/if} -->
         <!--{/foreach}-->
+        </div>
       </div>
       <!--{/foreach}-->
       <div class="clear0"></div>

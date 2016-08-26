@@ -519,9 +519,9 @@ elseif ($_REQUEST['step'] == 'checkout')
     $smarty->assign('market_price_desc', sprintf($_LANG['than_market_price'], $total['formated_market_price'], $total['formated_saving'], $total['save_rate']));
 
     /* 取得配送列表 */
-    $region            = array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']);
-    $shipping_list     = available_shipping_list($region);
+    $region            = array($consignee['country']);
     $cart_weight_price = cart_weight_price($flow_type);
+    $shipping_list     = available_shipping_list($region, $cart_weight_price['weight']);
     $insure_disabled   = true;
     $cod_disabled      = true;
 
