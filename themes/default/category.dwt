@@ -9,6 +9,7 @@
 <!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
 <!-- {if $cat_style} -->
 <link href="{$cat_style}" rel="stylesheet" type="text/css" />
@@ -64,9 +65,9 @@
         <div style="padding-left: 20px;background-color:#fff">
         <!--{foreach from=$filter_attr.attr_list item=attr}-->
         <!-- {if $attr.selected} -->
-        <span>{$attr.attr_value}</span>
+        <span>{$attr.attr_value|replace:'Samsung Galaxy ':''}</span>
         <!-- {else} -->
-        <a href="{$attr.url}">{$attr.attr_value}</a>
+        <a href="{$attr.url}">{$attr.attr_value|replace:'Samsung Galaxy ':''}</a>
         <!-- {/if} -->
         <!--{/foreach}-->
         </div>
@@ -114,8 +115,6 @@
     <div class="goodsList">
       <!--{foreach name=goods_list from=$goods_list item=goods}-->
       <ul class="clearfix bgcolor"
-        
-      
       <!--{if $smarty.foreach.goods_list.index mod 2 eq 0}-->
       id=""
       <!--{else}-->

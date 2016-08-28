@@ -425,7 +425,6 @@
           <th bgcolor="#ffffff" width="25%">{$lang.name}</th>
           <th bgcolor="#ffffff">{$lang.describe}</th>
           <th bgcolor="#ffffff" width="15%">{$lang.fee}</th>
-          <th bgcolor="#ffffff" width="15%">{$lang.free_money}</th>
           <th bgcolor="#ffffff" width="15%">{$lang.insure_fee}</th>
         </tr>
         <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
@@ -435,7 +434,6 @@
           <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" valign="top"><strong>{$shipping.shipping_name}</strong></td>
           <td bgcolor="#ffffff" valign="top">{$shipping.shipping_desc}</td>
           <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{$shipping.format_shipping_fee}</td>
-          <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{$shipping.free_money}</td>
           <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{if $shipping.insure neq 0}{$shipping.insure_formated}{else}{$lang.not_support_insure}{/if}</td>
         </tr>
         <!-- {/foreach} 循环配送方式 -->
@@ -479,15 +477,15 @@
               </td>
               <td valign="top" bgcolor="#ffffff">
                   <!--{if $payment.pay_name eq "WesternUnion"}-->
-                  <span>First Name:</span> DEZHU <br>
-                  <span>Last Name:</span> YAO <br>
+                  <span>First Name:</span> YANGCHAO <br>
+                  <span>Last Name:</span> PENG <br>
                   <span>Country:</span> CHINA <br>
-                  <span>Address:</span> 8/F, No.614 Building, Bagua 1st Road, Futian District, Shenzhen
+                  <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
                   <!--{elseif $payment.pay_name eq "MoneyGram"}-->
-                  <span>First Name:</span> DEZHU <br>
-                  <span>Last Name:</span> YAO <br>
+                  <span>First Name:</span> YANGCHAO <br>
+                  <span>Last Name:</span> PENG <br>
                   <span>Country:</span> CHINA <br>
-                  <span>Address:</span> 8/F, No.614 Building, Bagua 1st Road, Futian District, Shenzhen
+                  <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
                   <!--{else}-->
                   {$payment.pay_desc}
                   <!--{/if}-->

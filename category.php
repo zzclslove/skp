@@ -59,11 +59,11 @@ $filter_attr = empty($filter_attr_str) ? '' : explode('.', $filter_attr_str);
 
 /* 排序、显示方式以及类型 */
 $default_display_type = $_CFG['show_order_type'] == '0' ? 'list' : ($_CFG['show_order_type'] == '1' ? 'grid' : 'text');
-$default_sort_order_method = $_CFG['sort_order_method'] == '0' ? 'DESC' : 'ASC';
-$default_sort_order_type   = $_CFG['sort_order_type'] == '0' ? 'shop_price' : ($_CFG['sort_order_type'] == '1' ? 'shop_price' : 'last_update');
+$default_sort_order_method = 'ASC';
+$default_sort_order_type   = 'sort_order';
 
-$sort  = (isset($_REQUEST['sort'])  && in_array(trim(strtolower($_REQUEST['sort'])), array('goods_id', 'shop_price', 'last_update'))) ? trim($_REQUEST['sort'])  : $default_sort_order_type;
-$order = (isset($_REQUEST['order']) && in_array(trim(strtoupper($_REQUEST['order'])), array('ASC', 'DESC')))                              ? trim($_REQUEST['order']) : $default_sort_order_method;
+$sort  = (isset($_REQUEST['sort'])  && in_array(trim(strtolower($_REQUEST['sort'])), array('goods_id', 'shop_price', 'sort_order'))) ? trim($_REQUEST['sort'])  : $default_sort_order_type;
+$order = (isset($_REQUEST['order']) && in_array(trim(strtoupper($_REQUEST['order'])), array('ASC', 'DESC'))) ? trim($_REQUEST['order']) : $default_sort_order_method;
 $display  = (isset($_REQUEST['display']) && in_array(trim(strtolower($_REQUEST['display'])), array('list', 'grid', 'text'))) ? trim($_REQUEST['display'])  : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
 $display  = in_array($display, array('list', 'grid', 'text')) ? $display : 'text';
 setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
@@ -290,7 +290,7 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
                     $temp_arrt_url_arr[$key] = $v['goods_id'];       //为url中代表当前筛选属性的位置变量赋值,并生成以‘.’分隔的筛选属性字符串
                     $temp_arrt_url = implode('.', $temp_arrt_url_arr);
 
-                    $all_attr_list[$key]['attr_list'][$temp_key]['attr_value'] = $v['attr_value'];
+                    $all_attr_list[$key]['attr_list'][$temp_key]['attr_value'] = str_replace("Samsung ","",$v['attr_value']);
                     $all_attr_list[$key]['attr_list'][$temp_key]['url'] = build_uri('category', array('cid'=>$cat_id, 'bid'=>$brand, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$temp_arrt_url), $cat['cat_name']);
 
                     if (!empty($filter_attr[$key]) AND $filter_attr[$key] == $v['goods_id'])

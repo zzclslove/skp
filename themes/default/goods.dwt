@@ -9,9 +9,17 @@
 <!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-{* 包含脚本文件 *}
+{insert_scripts files='transport.js,utils.js'}
 {insert_scripts files='jquery-3.1.0.min.js'}
+<script type="text/javascript">
+  $(function() {
+    window.__Object_toJSONString = Object.prototype.toJSONString;
+    delete Object.prototype.toJSONString;
+  });
+</script>
+{* 包含脚本文件 *}
 {insert_scripts files='common.js'}
 <script type="text/javascript">
 function $id(element) {
@@ -36,13 +44,12 @@ function reg(str){
   $id(str+"_h").className="none";
   $id(str+"_v").innerHTML=$id(str+"_h").getElementsByTagName("blockquote")[0].innerHTML;
 }
-
 </script>
 </head>
 <body>
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="goods-home">
-  
+
 
 <!--当前位置 start-->
 <div class="block box">
@@ -56,18 +63,13 @@ function reg(str){
     <!--商品详情start-->
     <div id="goodsInfo" class="clearfix">
       <!--商品图片和相册 start-->
-      <div class="imgInfo">
+      <div style="overflow: hidden">
+      <div class="imgInfo loaded">
         <!-- {if $pictures}-->
-        <a href="javascript:;" onclick="window.open('gallery.php?id={$goods.goods_id}'); return false;"> <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/> </a>
+        <img id="product_detail_img" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
         <!-- {else} -->
-        <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
+        <img id="product_detail_img" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
         <!-- {/if}-->
-        <div class="blank5"></div>
-        <!--相册 START-->
-        <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem -->
-        <!--相册 END-->
-        <div class="blank5"></div>
-        <!-- TemplateBeginEditable name="商品相册下广告（宽230px）" --> <!-- TemplateEndEditable -->
       </div>
       <!--商品图片和相册 end-->
       <div class="textInfo">
@@ -116,20 +118,19 @@ function reg(str){
              </dd>
             </li>
             <li class="clearfix">
-                <dd>
-                  <!-- {if $cfg.show_goodsweight} -->
-                  <strong>Sales: </strong>{$goods.cum_sales}
-                  <!-- {/if} -->
-                </dd>
+              <!--本店售价-->
+               <dd><strong>Price: </strong><font class="shop" id="ECS_SHOPPRICE">{$goods.shop_price_formated}</font> </dd>
                <dd>
                  <!-- {if $cfg.show_marketprice} 市场价格-->
                  <strong>Mark Price: </strong><font style="text-decoration: line-through;">{$goods.market_price}</font>
                  <!-- {/if} -->
                </dd>
             </li>
-            <li class="clearfix">
-              <!--本店售价-->
-              <dd><strong>Price: </strong><font class="shop" id="ECS_SHOPPRICE">{$goods.shop_price_formated}</font> </dd>
+            <li class="padd" style="border-bottom: 1px solid #ccc;padding-bottom: 10px;">
+            <div class="customer-service" title="Customer Service Email">
+              <div class="service-icon"><img src="images/services-email.png"></div>
+              <div class="service-email">chinarephone@126.com</div>
+            </div>
             </li>
             <!--{if $volume_price_list } -->
             <li class="padd">
@@ -167,26 +168,13 @@ function reg(str){
             <li class="padd loop" style="margin-bottom:5px; border-bottom:1px dashed #ccc;"> <strong>{$lang.goods_bonus}</strong><font class="shop">{$goods.bonus_money}</font><br />
             </li>
             <!-- {/if} -->
-            <li class="clearfix" style="padding-top:10px;">
-              <dd style="width:auto;margin-right:15px;height:28px;line-height: 28px"> <strong>{$lang.number}：</strong>
-                <input name="number" type="text" id="number" value="1" size="4" onblur="changePrice()" style="border:1px solid #ccc;padding:3px"/>
-              </dd>
-              <dd style="width:auto;height:28px;line-height: 28px"> <strong>{$lang.amount}：</strong><font style="font-size:18px" id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
-              <!--
-              <dd class="ddR">
-                <!-- {if $cfg.use_integral} 购买此商品可使用积分-->
-                <strong>{$lang.goods_integral}</strong><font class="f4">{$goods.integral} {$points_name}</font>
-                <!-- {/if} -->
-              </dd>
-              -->
-            </li>
             <!-- {if $goods.is_shipping} 为免运费商品则显示-->
             <li style="height:30px;padding-top:4px;"> {$lang.goods_free_shipping}<br />
             </li>
             <!-- {/if} -->
             <!-- {* 开始循环所有可选属性 *} -->
             <!-- {foreach from=$specification item=spec key=spec_key} -->
-            <li class="padd loop"> <strong style="display: block;padding-bottom:5px;">{$spec.name}:</strong>
+            <li class="padd loop" style="border-top:0;margin-top: 5px;"> <strong style="display: block;padding-bottom:5px;">{$spec.name}:</strong>
               <!-- {* 判断属性是复选还是单选 *} -->
               <!-- {if $spec.attr_type eq 1} -->
               <!-- {if $cfg.goodsattr_style eq 1} -->
@@ -215,6 +203,12 @@ function reg(str){
             </li>
             <!-- {/foreach} -->
             <!-- {* 结束循环可选属性 *} -->
+            <li class="clearfix" style="padding-top: 15px;margin-top: 20px;border-top: 1px solid #ccc;">
+              <dd style="width:auto;margin-right:15px;height:28px;line-height: 28px"> <strong style="font-size: 14px;color: #0a0a0a;">{$lang.number}：</strong>
+                <input name="number" type="text" id="number" value="1" size="4" onblur="changePrice()" style="border:1px solid #666;padding:3px"/>
+              </dd>
+              <dd style="width:auto;height:28px;line-height: 28px"> <strong style="font-size: 14px;color: #0a0a0a;">{$lang.amount}：</strong><font style="font-size:18px" id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
+            </li>
             <li class="padd" style="padding-top:20px;">
               <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -226,10 +220,25 @@ function reg(str){
                 </tr>
               </table>
             </li>
-
           </ul>
         </form>
       </div>
+      </div>
+      <!-- {if $pictures}-->
+      <div class="clearfix">
+        <div class="gallery">
+          <div id="demo">
+            <div id="demo1" style="float:left">
+              <ul>
+                <!-- {foreach from=$pictures item=picture}-->
+                <li><a href="javascript:;"><img dsrc="{$picture.img_url}" src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" alt="{$goods.goods_name}" class="B_blue" /></a></li>
+                <!--{/foreach}-->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- {/if}-->
     </div>
     <div class="blank"></div>
     <!--商品详情end-->
@@ -255,7 +264,7 @@ function reg(str){
         </div>
       </div>
     </div>
-
+    <!--
     <div class="box">
       <div class="box_1">
         <h3><span class="text">Product Description</span></h3>
@@ -264,7 +273,7 @@ function reg(str){
         </div>
       </div>
     </div>
-
+    -->
     <div class="box">
       <div class="box_1">
         <h3><span class="text">Product Pictures</span></h3>
@@ -290,6 +299,7 @@ function reg(str){
 </div>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body>
+{insert_scripts files='cloudzoom.js'}
 <script type="text/javascript">
 var goods_id = {$goods_id};
 var goodsattr_style = {$cfg.goodsattr_style|default:1};
@@ -340,5 +350,40 @@ function changePriceResponse(res)
   }
 }
 <!-- {/literal} -->
+$('#goodsInfo .gallery li').click(function(){
+  var self = $(this);
+  if(self.find('img').hasClass('loaded')){
+    $('#goodsInfo .imgInfo').html('<img id="product_detail_img" src="' + self.find('img').attr('dsrc') + '">');
+  }else{
+    $('#goodsInfo .imgInfo').removeClass('loaded');
+    var mainImage = new Image();
+    var imgSrc = self.find('img').attr('dsrc');
+    mainImage.src = imgSrc;
+    if(mainImage.complete){
+      $('#goodsInfo .imgInfo').html('<img id="product_detail_img" src="' + self.find('img').attr('dsrc') + '">');
+      $('#goodsInfo .imgInfo').addClass('loaded');
+      self.find('img').addClass('loaded');
+      cloudZoomMainImage()
+    }else{
+      $(mainImage).load(function(){
+        $('#goodsInfo .imgInfo').html('<img id="product_detail_img" src="' + self.find('img').attr('dsrc') + '">');
+        $('#goodsInfo .imgInfo').addClass('loaded');
+        self.find('img').addClass('loaded');
+        cloudZoomMainImage()
+      });
+    }
+  }
+});
+function cloudZoomMainImage(){
+  var zoomWidth = $('#goodsInfo .imgInfo img').width();
+  var zoomHeight = $('#goodsInfo .imgInfo img').height();
+  if($(window).width() > 767){
+    $('#product_detail_img').CloudZoom({
+      zoomWidth:zoomWidth,
+      zoomHeight:zoomHeight,
+      hoverIntentDelay:100
+    });
+  }
+}
 </script>
 </html>

@@ -55,7 +55,7 @@
   <!--底部导航 end-->
   <div class="blank"></div>
   <!--版权 start-->
-<div class="footer_info"> © 2005-2016 zhanlanbeike.com 版权所有，并保留所有权利。<br />
+<div class="footer_info"> © 2005-2016 chinarephone.com All rights reserved.<br />
       {foreach from=$lang.p_y item=pv}{$pv}{/foreach}{$licensed}<br />
     </div>
   <div class="clear10"></div>

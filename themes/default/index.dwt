@@ -46,7 +46,7 @@ if (Object.prototype.toJSONString){
           <div id="show_hot_area" class="clearfix goodsBox all_mid all_ms">
               <!-- {/if} -->
               <!--{foreach from=$hot_goods item=goods}-->
-              <a class="goodsItem" href="{$goods.url}"> <div  class="img-box"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></div>
+              <a class="goodsItem" href="{$goods.url}" target="_blank"> <div  class="img-box"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></div>
                   <span class="pricecsg"><i>{$goods.shop_price}</i><span></span></span>
                   <div class="goods-brief"><span>{$goods.name|escape:html}<span></div>
               </a>
