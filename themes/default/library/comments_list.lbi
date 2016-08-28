@@ -188,7 +188,7 @@ function submitComment(frm)
       return false;
    }
 
-   Ajax.call('comment.php', 'cmt=' + cmt.toJSONString(), commentResponse, 'POST', 'JSON');
+   Ajax.call('comment.php', 'cmt=' + objToJSONString(cmt), commentResponse, 'POST', 'JSON');
    return false;
 }
 

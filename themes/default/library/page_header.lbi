@@ -6,7 +6,7 @@ var process_request = "{$lang.process_request}";
 <div class="top-bar">
   <div class="fd_top fd_top1">
     <div class="bar-left">
-          <div class="top_menu1"> {insert_scripts files='transport.js,utils.js'} <font id="ECS_MEMBERZONE">{* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'} </font> </div>
+          <div class="top_menu1"> {insert_scripts files='jquery-3.1.0.min.js,transport.js,utils.js'} <font id="ECS_MEMBERZONE">{* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'} </font> </div>
     </div>
     <div class="bar-cart">
       <div class="fl cart-yh">

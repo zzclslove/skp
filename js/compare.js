@@ -46,7 +46,7 @@ Compare = {
     this.data = new Object();
     var cookieValue = document.getCookie("compareItems");
     if (cookieValue != null) {
-      this.data = cookieValue.parseJSON();
+      this.data = parseObjectToJSON(cookieValue);
     }
     if (!this.compareBox)
     {
@@ -64,7 +64,7 @@ Compare = {
       this.compareBox.appendChild(submitBtn);
       submitBtn.onclick = function() {
         var cookieValue = document.getCookie("compareItems");
-        var obj = cookieValue.parseJSON();
+        var obj = parseObjectToJSON(cookieValue);
         var url = document.location.href;
         url = url.substring(0,url.lastIndexOf('/')+1) + "compare.php";
         var i = 0;
@@ -130,7 +130,7 @@ Compare = {
   {
     var date = new Date();
     date.setTime(date.getTime() + 99999999);
-    document.setCookie("compareItems", this.data.toJSONString());
+    document.setCookie("compareItems", objToJSONString(this.data));
   },
   lastScrollY : 0
 }

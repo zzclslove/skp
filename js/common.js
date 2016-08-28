@@ -31,7 +31,7 @@ function addToCart(goodsId, parentId)
   goods.number   = number;
   goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
 
-  Ajax.call('flow.php?step=add_to_cart', 'goods=' + goods.toJSONString(), addToCartResponse, 'POST', 'JSON');
+  Ajax.call('flow.php?step=add_to_cart', 'goods=' + objToJSONString(goods), addToCartResponse, 'POST', 'JSON');
 }
 
 /**
@@ -862,7 +862,7 @@ function addPackageToCart(packageId)
   package_info.package_id = packageId
   package_info.number     = number;
 
-  Ajax.call('flow.php?step=add_package_to_cart', 'package_info=' + package_info.toJSONString(), addPackageToCartResponse, 'POST', 'JSON');
+  Ajax.call('flow.php?step=add_package_to_cart', 'package_info=' + objToJSONString(package_info), addPackageToCartResponse, 'POST', 'JSON');
 }
 
 /* *
@@ -1068,7 +1068,7 @@ function submit_div(goods_id, parentId)
   goods.number   = number;
   goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
 
-  Ajax.call('flow.php?step=add_to_cart', 'goods=' + goods.toJSONString(), addToCartResponse, 'POST', 'JSON');
+  Ajax.call('flow.php?step=add_to_cart', 'goods=' + objToJSONString(goods), addToCartResponse, 'POST', 'JSON');
 
   document.body.removeChild(docEle('speDiv'));
   document.body.removeChild(docEle('mask'));

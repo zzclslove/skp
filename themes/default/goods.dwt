@@ -11,14 +11,6 @@
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-{insert_scripts files='transport.js,utils.js'}
-{insert_scripts files='jquery-3.1.0.min.js'}
-<script type="text/javascript">
-  $(function() {
-    window.__Object_toJSONString = Object.prototype.toJSONString;
-    delete Object.prototype.toJSONString;
-  });
-</script>
 {* 包含脚本文件 *}
 {insert_scripts files='common.js'}
 <script type="text/javascript">
@@ -64,11 +56,11 @@ function reg(str){
     <div id="goodsInfo" class="clearfix">
       <!--商品图片和相册 start-->
       <div style="overflow: hidden">
-      <div class="imgInfo loaded">
+      <div id="product_detail_img" class="imgInfo loaded">
         <!-- {if $pictures}-->
-        <img id="product_detail_img" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
+        <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
         <!-- {else} -->
-        <img id="product_detail_img" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
+        <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
         <!-- {/if}-->
       </div>
       <!--商品图片和相册 end-->
@@ -353,23 +345,24 @@ function changePriceResponse(res)
 $('#goodsInfo .gallery li').click(function(){
   var self = $(this);
   if(self.find('img').hasClass('loaded')){
-    $('#goodsInfo .imgInfo').html('<img id="product_detail_img" src="' + self.find('img').attr('dsrc') + '">');
+    $('#goodsInfo .imgInfo').html('<img src="' + self.find('img').attr('dsrc') + '">');
+    cloudZoomMainImage();
   }else{
     $('#goodsInfo .imgInfo').removeClass('loaded');
     var mainImage = new Image();
     var imgSrc = self.find('img').attr('dsrc');
     mainImage.src = imgSrc;
     if(mainImage.complete){
-      $('#goodsInfo .imgInfo').html('<img id="product_detail_img" src="' + self.find('img').attr('dsrc') + '">');
+      $('#goodsInfo .imgInfo').html('<img src="' + self.find('img').attr('dsrc') + '">');
       $('#goodsInfo .imgInfo').addClass('loaded');
       self.find('img').addClass('loaded');
-      cloudZoomMainImage()
+      cloudZoomMainImage();
     }else{
       $(mainImage).load(function(){
-        $('#goodsInfo .imgInfo').html('<img id="product_detail_img" src="' + self.find('img').attr('dsrc') + '">');
+        $('#goodsInfo .imgInfo').html('<img src="' + self.find('img').attr('dsrc') + '">');
         $('#goodsInfo .imgInfo').addClass('loaded');
         self.find('img').addClass('loaded');
-        cloudZoomMainImage()
+        cloudZoomMainImage();
       });
     }
   }
@@ -378,7 +371,7 @@ function cloudZoomMainImage(){
   var zoomWidth = $('#goodsInfo .imgInfo img').width();
   var zoomHeight = $('#goodsInfo .imgInfo img').height();
   if($(window).width() > 767){
-    $('#product_detail_img').CloudZoom({
+    $('#product_detail_img img').CloudZoom({
       zoomWidth:zoomWidth,
       zoomHeight:zoomHeight,
       hoverIntentDelay:100

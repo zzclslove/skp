@@ -135,7 +135,7 @@
           goods.goods_id = goodsId;
           goods.number   = number;
           goods.parent   = 0;
-          Ajax.call('flow.php?step=add_to_cart', 'goods=' + goods.toJSONString(), collect_to_flow_response, 'POST', 'JSON');
+          Ajax.call('flow.php?step=add_to_cart', 'goods=' + objToJSONString(goods), collect_to_flow_response, 'POST', 'JSON');
         }
         function collect_to_flow_response(result)
         {
@@ -196,7 +196,7 @@
     goods.goods_id = goodsId;
     goods.number   = number;
     goods.parent   = parentId;
-    Ajax.call('flow.php?step=add_to_cart', 'goods=' + goods.toJSONString(), fittings_to_flow_response, 'POST', 'JSON');
+    Ajax.call('flow.php?step=add_to_cart', 'goods=' + objToJSONString(goods), fittings_to_flow_response, 'POST', 'JSON');
   }
   function fittings_to_flow_response(result)
   {
@@ -709,13 +709,13 @@
                   <div style="border:1px solid #3C3C3C;padding:12px;width:840px;">
                       <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>Western Union</b></p>
                       <p style="margin-bottom: 15px;">
-                          <b>First Name:</b> YEFEI <br>
-                          <b>Last Name:</b> CHEN <br>
-                          <b>Country:</b> CHINA <br>
-                          <b>Address:</b> 2/F, TongJian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
+                          <span>First Name:</span> YANGCHAO <br>
+                          <span>Last Name:</span> PENG <br>
+                          <span>Country:</span> CHINA <br>
+                          <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
                       </p>
                       <p style="margin-bottom: 15px;">
-                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@163.com</span> after you send payment through MoneyGram.
+                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@126.com</span> after you send payment through MoneyGram.
                       </p>
                       <p>
                           We want to remind all customers that they are responsible for all local Western Union handling fees. Therefore, customers should confirm the total payment amount with their local Western Union.
@@ -725,13 +725,13 @@
                   <div style="border:1px solid #3C3C3C;padding:12px;width:840px;">
                       <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>MoneyGram</b></p>
                       <p style="margin-bottom: 15px;">
-                          <b>First Name:</b> DEZHU <br>
-                          <b>Last Name:</b> YAO <br>
-                          <b>Country:</b> CHINA <br>
-                          <b>Address:</b> 8/F, No.614 Building, Bagua 1st Road, Futian District, Shenzhen
+                          <span>First Name:</span> YANGCHAO <br>
+                          <span>Last Name:</span> PENG <br>
+                          <span>Country:</span> CHINA <br>
+                          <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
                       </p>
                       <p style="margin-bottom: 15px;">
-                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@163.com</span> after you send payment through MoneyGram.
+                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@126.com</span> after you send payment through MoneyGram.
                       </p>
                       <p>
                           We want to remind all customers that they are responsible for all local MoneyGram handling fees. Therefore, customers should confirm the total payment amount with their local MoneyGram.

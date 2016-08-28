@@ -369,14 +369,14 @@ Object.extend(ToggleHanlder ,{
     var date = new Date();
     date.setTime(date.getTime() + 99999999);
 //    document.setCookie(this.CookieName, this.SourceObject.toJSONString(), date.toGMTString());
-    document.cookie = ''+this.CookieName +' = '+ this.SourceObject.toJSONString()+','+date.toGMTString()+'';
+    document.cookie = ''+this.CookieName +' = '+ objToJSONString(this.SourceObject) +','+date.toGMTString()+'';
   },
 
   Reset :function() {
     var date = new Date();
     date.setTime(date.getTime() + 99999999);
 //    document.setCookie(this.CookieName, "{}" , date.toGMTString());
-    document.cookie = ''+this.CookieName +' = '+ this.SourceObject.toJSONString()+','+date.toGMTString()+'';
+    document.cookie = ''+this.CookieName +' = '+ objToJSONString(this.SourceObject) +','+date.toGMTString()+'';
   },
 
   Load : function()
