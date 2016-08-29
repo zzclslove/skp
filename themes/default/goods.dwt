@@ -342,6 +342,8 @@ function changePriceResponse(res)
   }
 }
 <!-- {/literal} -->
+
+initcloudZoomMainImage();
 $('#goodsInfo .gallery li').click(function(){
   var self = $(this);
   if(self.find('img').hasClass('loaded')){
@@ -375,6 +377,18 @@ function cloudZoomMainImage(){
       zoomWidth:zoomWidth,
       zoomHeight:zoomHeight,
       hoverIntentDelay:100
+    });
+  }
+}
+function initcloudZoomMainImage(){
+  var imgsrc = $('#goodsInfo .imgInfo img').attr('src');
+  var mainImage = new Image();
+  mainImage.src = imgsrc;
+  if(mainImage.complete){
+    cloudZoomMainImage();
+  }else{
+    $(mainImage).load(function(){
+      cloudZoomMainImage();
     });
   }
 }

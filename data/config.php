@@ -1,15 +1,15 @@
 <?php
 // database host
-$db_host   = "mysql.sql132.eznowdata.com:3306";
+$db_host   = "127.0.0.1:3306";
 
 // database name
-$db_name   = "sq_lanbeike";
+$db_name   = "ecs";
 
 // database username
-$db_user   = "sq_lanbeike";
+$db_user   = "root";
 
 // database password
-$db_pass   = "zzc79801890";
+$db_pass   = "";
 
 // table prefix
 $prefix    = "ecs_";

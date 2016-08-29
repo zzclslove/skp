@@ -112,8 +112,10 @@ var select_spe = "{$lang.select_spe}";
               <tr>
                 <td bgcolor="#ffffff">&nbsp;</td>
                 <!-- {foreach name="goods_list" from=$goods_list item=goods} -->
-                <td align='center' bgcolor="#ffffff"><a href="javascript:collect({$goods.goods_id});"><img src="images/bnt_colles.gif" alt="{$lang.collect}"  style="margin:2px auto;"/></a>
-                <a href="javascript:addToCart({$goods.goods_id})"><img src="images/bnt_cat.gif" alt="{$lang.add_to_cart}"  style="margin:2px auto;"/></a></td>
+                <td align='center' bgcolor="#ffffff">
+                    <a href="javascript:collect({$goods.goods_id});"><img src="images/bnt_colles.gif" alt="{$lang.collect}"  style="margin:2px auto;"/></a><br>
+                    <a href="javascript:addToCart({$goods.goods_id})"><img src="images/bnt_buy_1.gif" alt="{$lang.add_to_cart}"  style="margin:2px auto;"/></a>
+                </td>
                 <!-- {/foreach} -->
               </tr>
   </table>
