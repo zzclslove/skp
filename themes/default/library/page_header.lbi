@@ -17,27 +17,31 @@ var process_request = "{$lang.process_request}";
     </div>
   </div>
 </div>
-<div class="nav-menu">
-  <div class="wrap">
-    <div class="logo"><a href="../index.php" name="top"><img src="../images/logo.jpg" /></a></div>
-    <div id="mainNav" class="clearfix maxmenu">
-      <div class="m_left">
-      <ul>
-        <!-- {foreach name=nav_middle_list from=$categories item=nav} -->
-        <li class="pos-{$smarty.foreach.nav_middle_list.iteration}"><a href="{$nav.url}">{$nav.name}</a></li>
-        <!-- {/foreach} -->
-      </ul>
-      </div>
-    </div>
-    <div class="serach-box">
-      <form id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()" class="f_r">
+<div class="nav-menu" style="height: 80px">
+  <div class="wrap" style="position: relative">
+    <div style="margin: 0 auto;float: inherit;" class="logo"><a href="../index.php" name="top"><img width="160" src="../images/logo.jpg" /></a></div>
+    <div class="serach-box" style="position: absolute;margin-top: 0;right: 0px;top: 30px;">
+      <form style="background-size: 220px;height: 30px;" id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()" class="f_r">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td width="135"><input name="keywords" type="text" id="keyword" value="{$search_keywords|escape}" class="B_input"  /></td>
-            <td><input name="imageField" type="submit" value="Search" class="go" style="cursor:pointer;" /></td>
+            <td width="115"><input style="width: 113px;padding-left: 35px;height: 28px;line-height: 28px;" name="keywords" type="text" id="keyword" value="{$search_keywords|escape}" class="B_input"  /></td>
+            <td><input name="imageField" type="submit" value="Search" class="go" style="cursor:pointer;width: 69px;line-height: 31px;height: 28px;" /></td>
           </tr>
         </table>
       </form>
+    </div>
+  </div>
+</div>
+<div class="nav-menu" style="height: 45px">
+  <div class="wrap">
+    <div id="mainNav" class="clearfix maxmenu" style="margin-left: -13px">
+      <div class="m_left" style="height: 45px;margin-top: 0;width: 1200px">
+        <ul>
+          <!-- {foreach name=nav_middle_list from=$categories item=nav} -->
+          <li class="pos-{$smarty.foreach.nav_middle_list.iteration}"><a style="line-height: 45px" href="{$nav.url}">{$nav.name}</a></li>
+          <!-- {/foreach} -->
+        </ul>
+      </div>
     </div>
   </div>
 </div>

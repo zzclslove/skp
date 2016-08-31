@@ -1307,9 +1307,10 @@ position:absolute; top:0px; right:0px;}
     top: 0;
 }
 .pos-1>a{
-    font-family: "Georgia",serif;
+    font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;
+    font-size: 16px!important;
     text-transform: uppercase;
-    font-size: 18px!important;
+    -webkit-font-smoothing: antialiased!important;
     letter-spacing: .14em!important;
 }
 .pos-2>a{
@@ -1319,15 +1320,16 @@ position:absolute; top:0px; right:0px;}
     letter-spacing: .14em!important;
 }
 .pos-3>a{
-    font-family: "Georgia",serif;
+    font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;
     font-weight: bold;
-    font-size: 22px!important;
+    font-size: 17px!important;
+    -webkit-font-smoothing: antialiased!important;
 }
 .pos-4>a{
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;
+    font-family: "Georgia",serif;
     text-transform: uppercase;
     font-size: 16px!important;
-    letter-spacing: .23em!important;
+    letter-spacing: .20em!important;
 }
 .pos-5>a{
     font-family: "Georgia",serif;
@@ -1341,16 +1343,15 @@ position:absolute; top:0px; right:0px;}
     font-size: 16px!important;
 }
 .pos-10>a{
-    font-family: "Georgia",serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;
     text-transform: uppercase;
     font-size: 16px!important;
-    letter-spacing: .24em!important;
+    letter-spacing: .23em!important;
 }
 .pos-8>a{
-    font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;
-    font-size: 16px!important;
+    font-family: "Georgia",serif;
     text-transform: uppercase;
-    -webkit-font-smoothing: antialiased!important;
+    font-size: 18px!important;
     letter-spacing: .14em!important;
 }
 .pos-9>a{
@@ -1362,10 +1363,9 @@ position:absolute; top:0px; right:0px;}
     font-size: 16px!important;
 }
 .pos-11>a{
-    font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;
+    font-family: "Georgia",serif;
     font-weight: bold;
-    font-size: 16px!important;
-    -webkit-font-smoothing: antialiased!important;
+    font-size: 22px!important;
 }
 .maxmenu li a{
     padding: 0 13px!important;
