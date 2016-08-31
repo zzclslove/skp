@@ -59,7 +59,7 @@ Compare = {
       this.compareBox.align = "center";
       this.compareList.id = "compareList";
       submitBtn.type = "button";
-      submitBtn.value = button_compare;
+      submitBtn.value = "GO";
 			this.compareBox.appendChild(this.compareList);
       this.compareBox.appendChild(submitBtn);
       submitBtn.onclick = function() {

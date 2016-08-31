@@ -10,8 +10,9 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
 {* 包含脚本文件 *}
-{insert_scripts files='utils.js,common.js,global.js,compare.js'}
+{insert_scripts files='utils.js,common.js,compare.js'}
 </head>
 <body>
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
@@ -138,18 +139,14 @@
          <span>{$lang.search_result}</span>
          <!-- {/if} -->
           <!--{if $goods_list}-->
+
           <form action="search.php" method="post" class="sort" name="listform" id="form">
-          {$lang.btn_display}：
-          <a href="javascript:;" onClick="javascript:display_mode('list')"><img src="images/display_mode_list<!-- {if $pager.display == 'list'} -->_act<!-- {/if} -->.gif" alt="{$lang.display.list}"></a>
-          <a href="javascript:;" onClick="javascript:display_mode('grid')"><img src="images/display_mode_grid<!-- {if $pager.display == 'grid'} -->_act<!-- {/if} -->.gif" alt="{$lang.display.grid}"></a>
-          <a href="javascript:;" onClick="javascript:display_mode('text')"><img src="images/display_mode_text<!-- {if $pager.display == 'text'} -->_act<!-- {/if} -->.gif" alt="{$lang.display.text}"></a>&nbsp;&nbsp;
-              <select name="sort">
-              {html_options options=$lang.sort selected=$pager.search.sort}
-              </select>
-              <select name="order">
-              {html_options options=$lang.order selected=$pager.search.order}
-              </select>
-              <input type="image" name="imageField" src="../images/bnt_go.gif" alt="go"/>
+              <label style="font-weight:normal;">Sort:</label>
+              <a class="sort_btn" sort="sort_order"  href="javascript:;"><img src="themes/default/images/<!--{if $pager.search.sort eq 'sort_order'}-->sort_default_activity.gif<!--{else}-->sort_default.gif<!--{/if}-->" alt="Default"></a>
+              <a class="sort_btn" sort="goods_id" href="javascript:;"><img src="themes/default/images/<!--{if $pager.search.sort eq 'goods_id'}-->goods_id_<!--{if $pager.search.order eq 'ASC'}-->ASC.gif<!--{else}-->DESC.gif<!--{/if}--><!--{else}-->goods_id_default.gif<!--{/if}-->" alt="Sort by time"></a>
+              <a class="sort_btn" sort="shop_price" href="javascript:;"><img src="themes/default/images/<!--{if $pager.search.sort eq 'shop_price'}-->shop_price_<!--{if $pager.search.order eq 'ASC'}-->ASC.gif<!--{else}-->DESC.gif<!--{/if}--><!--{else}-->shop_price_default.gif<!--{/if}-->" alt="Sort by price"></a>
+              <input id="sort" type="hidden" name="sort" value="{$pager.search.sort}">
+              <input id="order" type="hidden" name="order" value="{$pager.search.order}">
               <input type="hidden" name="page" value="{$pager.page}" />
               <input type="hidden" name="display" value="{$pager.display}" id="display" />
               <!--{foreach from=$pager.search key=key item=item}-->
@@ -167,107 +164,36 @@
         <!--{if $goods_list}-->
 
           <form action="compare.php" method="post" name="compareForm" id="compareForm" onsubmit="return compareGoods(this);">
-          <!-- {if $pager.display == 'list'} -->
               <div class="goodsList">
                 <!--{foreach name=goods_list from=$goods_list item=goods}-->
                 <!-- {if $goods.goods_id} -->
                 <ul class="clearfix bgcolor"<!--{if $smarty.foreach.goods_list.index mod 2 eq 0}-->id=""<!--{else}-->id="bgcolor"<!--{/if}-->>
-                <li>
-                <br>
-                <a href="javascript:;" id="compareLink" onClick="Compare.add({$goods.goods_id},'{$goods.goods_name|escape:"quotes"}','{$goods.type}')" class="f6">{$lang.compare}</a>
+                <li style="line-height: 140px;padding: 0 15px;">
+                    <a href="javascript:;" id="compareLink" onClick="Compare.add({$goods.goods_id},'{$goods.goods_name|escape:"quotes"}','{$goods.type}')" class="f6">{$lang.compare}</a>
                 </li>
-                <li class="thumb"><a href="{$goods.url}"><img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" /></a></li>
+                <li class="thumb"><a target="_blank" href="{$goods.url}"><img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" /></a></li>
                 <li class="goodsName">
-                <a href="{$goods.url}" class="f6">
-                    <!-- {if $goods.goods_style_name} -->
-                    {$goods.goods_style_name}<br />
-                    <!-- {else} -->
-                    {$goods.goods_name}<br />
-                    <!-- {/if} -->
-                  </a>
-                 <!-- {if $goods.goods_brief} -->
-                {$lang.goods_brief}{$goods.goods_brief}<br />
-                <!-- {/if} -->
-                </li>
-                <li>
-                <!-- {if $show_marketprice} -->
-                {$lang.market_price}<font class="market">{$goods.market_price}</font><br />
-                <!-- {/if} -->
-                <!--{if $goods.promote_price neq "" } -->
-                {$lang.promote_price}<font class="shop">{$goods.promote_price}</font><br />
-                <!--{else}-->
-                {$lang.shop_price}<font class="shop">{$goods.shop_price}</font><br />
-                <!--{/if}-->
-                </li>
-                <li class="action">
-                <a href="javascript:collect({$goods.goods_id});" class="abg f6">{$lang.favourable_goods}</a>
-                <a href="javascript:addToCart({$goods.goods_id})"><img src="../images/bnt_buy_1.gif"></a>
+                    <div style=".goodsList li.thumb imgfont-family: Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;font-size: 16px;"><a target="_blank" href="{$goods.url}" class="f6"><!-- {if $goods.goods_style_name} -->{$goods.goods_style_name}<!-- {else} -->{$goods.goods_name}<!-- {/if} --></a></div>
+                    <!-- {if $goods.goods_brief} --><div class="search_result_list_goods_brief">{$lang.goods_brief}{$goods.goods_brief}</div><!-- {/if} -->
+                    <div  class="search_result_list_goods_price">
+                        <!-- {if $show_marketprice} -->
+                        {$lang.market_price}<font class="market">{$goods.market_price}</font><br />
+                        <!-- {/if} -->
+                        <!--{if $goods.promote_price neq "" } -->
+                        {$lang.promote_price}<font class="shop">{$goods.promote_price}</font><br />
+                        <!--{else}-->
+                        price:<font style="font-size:16px;padding-left:8px" class="shop">{$goods.shop_price}</font><br />
+                        <!--{/if}-->
+                    </div>
+                    <div style="overflow: hidden;margin-top: 8px;">
+                        <a href="javascript:collect({$goods.goods_id});" class="abg f6"><img style="vertical-align: middle;" src="themes/default/images/bnt_colles.gif"></a>
+                        <a href="javascript:addToCart({$goods.goods_id})"><img style="vertical-align: middle;" src="../images/bnt_buy_1.gif"></a>
+                    </div>
                 </li>
                 </ul>
                 <!--{/if}-->
                 <!--{/foreach}-->
                 </div>
-             <!-- {elseif $pager.display == 'grid'} -->
-              <div class="centerPadd">
-                <div class="clearfix goodsBox" style="border:none;">
-                <!--{foreach from=$goods_list item=goods}-->
-                <!-- {if $goods.goods_id} -->
-                 <div class="goodsItem">
-                       <a href="{$goods.url}"><img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" /></a><br />
-                       <p><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.goods_name}</a></p>
-                       <!-- {if $show_marketprice} -->
-                        {$lang.market_prices}<font class="market_s">{$goods.market_price}</font><br />
-                        <!-- {/if} -->
-                        <!--{if $goods.promote_price neq "" } -->
-                        {$lang.promote_price}<font class="shop_s">{$goods.promote_price}</font><br />
-                        <!--{else}-->
-                        {$lang.shop_prices}<font class="shop_s">{$goods.shop_price}</font><br />
-                        <!--{/if}-->
-                       <a href="javascript:collect({$goods.goods_id});" class="f6">{$lang.btn_collect}</a> |
-                       <a href="javascript:addToCart({$goods.goods_id})" class="f6">{$lang.btn_buy}</a> |
-                       <a href="javascript:;" id="compareLink" onClick="Compare.add({$goods.goods_id},'{$goods.goods_name|escape:"quotes"}','{$goods.type}')" class="f6">{$lang.compare}</a>
-                    </div>
-                <!--{/if}-->
-                <!--{/foreach}-->
-                </div>
-                </div>
-             <!-- {elseif $pager.display == 'text'} -->
-              <div class="goodsList">
-              <!--{foreach from=$goods_list item=goods}-->
-               <ul class="clearfix bgcolor"<!--{if $smarty.foreach.goods_list.index mod 2 eq 0}-->id=""<!--{else}-->id="bgcolor"<!--{/if}-->>
-              <li style="margin-right:15px;">
-              <a href="javascript:;" id="compareLink" onClick="Compare.add({$goods.goods_id},'{$goods.goods_name|escape:"quotes"}','{$goods.type}')" class="f6">{$lang.compare}</a>
-              </li>
-              <li class="goodsName">
-              <a href="{$goods.url}" class="f6 f5">
-                  <!-- {if $goods.goods_style_name} -->
-                  {$goods.goods_style_name}<br />
-                  <!-- {else} -->
-                  {$goods.goods_name}<br />
-                  <!-- {/if} -->
-                </a>
-               <!-- {if $goods.goods_brief} -->
-              {$lang.goods_brief}{$goods.goods_brief}<br />
-              <!-- {/if} -->
-              </li>
-              <li>
-              <!-- {if $show_marketprice} -->
-              {$lang.market_price}<font class="market">{$goods.market_price}</font><br />
-              <!-- {/if} -->
-              <!--{if $goods.promote_price neq "" } -->
-              {$lang.promote_price}<font class="shop">{$goods.promote_price}</font><br />
-              <!--{else}-->
-              {$lang.shop_price}<font class="shop">{$goods.shop_price}</font><br />
-              <!--{/if}-->
-              </li>
-              <li class="action">
-              <a href="javascript:collect({$goods.goods_id});" class="abg f6">{$lang.favourable_goods}</a>
-              <a href="javascript:addToCart({$goods.goods_id})"><img src="../images/bnt_buy_1.gif"></a>
-              </li>
-              </ul>
-              <!--{/foreach}-->
-              </div>
-             <!-- {/if} -->
           </form>
           <script type="text/javascript">
         {foreach from=$lang.compare_js item=item key=key}
@@ -307,5 +233,20 @@
 </div>
 <div class="blank"></div>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<script>
+    jQuery('.sort_btn').click(function(){
+        $('#sort').val($(this).attr('sort'));
+        if($('#sort').val() != 'sort_order'){
+            if($('#order').val() == 'ASC'){
+                $('#order').val('DESC')
+            }else{
+                $('#order').val('ASC')
+            }
+        }else{
+            $('#order').val('ASC');
+        }
+        $('#form').submit();
+    });
+</script>
 </body>
 </html>
