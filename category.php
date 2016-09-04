@@ -83,6 +83,25 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
 
     $cat = get_cat_info($cat_id);   // 获得分类的相关信息
 
+
+    /* 获取当前子分类 */
+    $sql = 'SELECT cat_id,cat_name ,parent_id,is_show ' .
+        'FROM ' . $GLOBALS['ecs']->table('category') .
+        "WHERE parent_id = '$cat_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
+
+    $res = $GLOBALS['db']->getAll($sql);
+
+    foreach ($res AS $row)
+    {
+        if ($row['is_show'])
+        {
+            $cat_arr[$row['cat_id']]['id']   = $row['cat_id'];
+            $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
+            $cat_arr[$row['cat_id']]['url']  = build_uri('category', array('cid' => $row['cat_id']), $row['cat_name']);
+        }
+    }
+    $smarty->assign('child_categories', $cat_arr); // 分类树
+
     if (!empty($cat))
     {
         $smarty->assign('keywords',    htmlspecialchars($cat['keywords']));
@@ -331,7 +350,7 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
     $smarty->assign('page_title',       $position['title']);    // 页面标题
     $smarty->assign('ur_here',          $position['ur_here']);  // 当前位置
 
-    $smarty->assign('categories',       get_categories_tree($cat_id)); // 分类树
+    $smarty->assign('categories',       get_categories_tree()); // 分类树
     $smarty->assign('helps',            get_shop_help());              // 网店帮助
     $smarty->assign('top_goods',        get_top10());                  // 销售排行
     $smarty->assign('show_marketprice', $_CFG['show_marketprice']);

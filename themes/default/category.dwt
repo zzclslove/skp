@@ -28,9 +28,24 @@
 
   <!--right start-->
   <div class="Area">
+    <!--{if $child_categories|@count neq 0}-->
+    <div class="guige" style="overflow: hidden">
+      <div style="overflow: hidden;margin-bottom: -2px">
+        <div class="screeBox">
+          <strong>{$lang.category}：</strong>
+          <div style="padding-left: 20px;background-color:#fff">
+            <!--{foreach from=$child_categories item=children_category}-->
+            <a href="{$children_category.url}">{$children_category.name}</a>
+            <!--{/foreach}-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--{/if}-->
     <!--组合搜索 开始-->
     <!--{if $brands.1 || $price_grade.1 || $filter_attr_list}-->
-    <div class="guige">
+    <div class="guige" style="overflow: hidden">
+      <div style="overflow: hidden;margin-bottom: -2px">
       <!--{if $brands.1}-->
       <div class="screeBox">
         <strong>{$lang.brand}：</strong>
@@ -74,6 +89,7 @@
       </div>
       <!--{/foreach}-->
       <div class="clear0"></div>
+      </div>
     </div>
 
     <!-- {/if} -->

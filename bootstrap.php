@@ -17,8 +17,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 // Replace these values by entering your own ClientId and Secret by visiting https://developer.paypal.com/webapps/developer/applications/myapps
-$clientId = 'AT5YSb4bcAY6DNjoegaCXdFDm31gzvRy6zYqpmW7bzOpbReGavEsD9OlWm-UDzFKyc5Dy3kyBdc2Xl18';
-$clientSecret = 'EPPOZ_8TpMNzWMH1VFaBg0yqyL_QUT3dI8wsFe3R5o3-kTes2xzomySSdpUpXHy3NhaOOWX1y_4hwcHy';
+$clientId = 'AZg1Apg5qDkD7wFVwYlGuZmZvbqDnRD6MVJf_d1igTE6i8UNzoY39R1wWEMtr8qkXyoJvnpx5suzUyj3';
+$clientSecret = 'EP6JougtuSuU2ESdG9vjNKOxcligtC8HvRaT5Zfo4eGejAzzcTeRkXsTrmmqW4HmoqoTOac0TYqeoUK0';
 
 /**
  * All default curl options are stored in the array inside the PayPalHttpConfig class. To make changes to those settings
@@ -70,12 +70,9 @@ function getApiContext($clientId, $clientSecret)
 
     $apiContext->setConfig(
         array(
-            'mode' => 'sandbox',
+            'mode' => 'live',
             'log.LogEnabled' => false,
-            'cache.enabled' => true,
-            // 'http.CURLOPT_CONNECTTIMEOUT' => 30
-            // 'http.headers.PayPal-Partner-Attribution-Id' => '123123123'
-            //'log.AdapterFactory' => '\PayPal\Log\DefaultLogFactory' // Factory class implementing \PayPal\Log\PayPalLogFactory
+            'cache.enabled' => true
         )
     );
 

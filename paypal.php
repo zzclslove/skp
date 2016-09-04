@@ -3,6 +3,7 @@ define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require(dirname(__FILE__) . '/includes/lib_order.php');
+require(ROOT_PATH . 'includes/cls_json.php');
 require 'bootstrap.php';
 
 use PayPal\Api\Amount;
@@ -18,7 +19,7 @@ use PayPal\Api\ShippingAddress;
 $order_id = $_REQUEST['orderid'];
 $sql = 'select * from '.$GLOBALS['ecs']->table('order_info').' where order_id='.$order_id;
 $res = $GLOBALS['db']->getAll($sql);
-print_r($sql);
+
 if (!empty($res))
 {
     foreach ($res AS $row){
@@ -39,7 +40,6 @@ if(!empty($order))
             $goods[] = $row;
         }
     }
-
     if(!empty($goods))
     {
         $payer = new Payer();
@@ -89,32 +89,37 @@ if(!empty($order))
             ->setRedirectUrls($redirectUrls)
             ->setTransactions(array($transaction));
         $request = clone $payment;
-
         try {
-            $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('payment') .
-                " WHERE pay_id = '".$order['pay_id']."' AND enabled = 1";
-
-            $payment_info = $GLOBALS['db']->getRow($sql);
-            $payment_config = unserialize_config($payment_info['pay_config']);
-            if($payment_config['sandbox']){
-                $apiContext->setConfig(
-                    array(
-                        'mode' => 'sandbox',
-                        'cache.enabled' => true,
-                    )
-                );
-            }else{
-                $apiContext->setConfig(
-                    array(
-                        'mode' => 'live',
-                        'cache.enabled' => true,
-                    )
-                );
-            }
             $payment->create($apiContext);
         } catch (Exception $ex) {
-            print_r($ex->getData());
+            $errorMsg = '';
+            if ($ex instanceof \PayPal\Exception\PayPalConnectionException) {
+                $msg = $ex->getData();
+                $msgObj = json_decode($msg);
+                foreach($msgObj->details as $key=>$val){
+                    $errorMsg .= $val->field.':'.$val->issue;
+                    if($key != count($msgObj->details) - 1){
+                        $errorMsg .= ' or ';
+                    }
+                }
+            }else{
+                $errorMsg = $ex->getMessage();
+            }
+
+            assign_template();
+            $position = assign_ur_here();
+            $smarty->assign('page_title', $position['title']);   // 页面标题
+            $smarty->assign('ur_here',    $position['ur_here']); // 当前位置
+            $smarty->assign('page_title', $position['title']);   // 页面标题
+            $smarty->assign('ur_here',    $position['ur_here']); // 当前位置
+            $smarty->assign('helps',      get_shop_help());      // 网店帮助
+
+            $smarty->assign('message',    $errorMsg);
+            $smarty->assign('shop_url',   $ecs->url());
+
+            $smarty->display('respond.dwt');
             exit(1);
+
         }
         $approvalUrl = $payment->getApprovalLink();
         header("Location:" . $approvalUrl);

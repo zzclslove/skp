@@ -523,7 +523,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     $total = order_fee($order, $cart_goods, $consignee);
 
     $smarty->assign('total', $total);
-    $smarty->assign('shopping_money', sprintf($_LANG['shopping_money'], $total['formated_goods_price']));
+    $smarty->assign('shopping_money', sprintf($_LANG['shopping_money'], '<span style="color:#f05642;font-weight: bold;font-size: 14px;padding: 0 5px;">'.$total['formated_goods_price'].'</span>'));
     $smarty->assign('market_price_desc', sprintf($_LANG['than_market_price'], $total['formated_market_price'], $total['formated_saving'], $total['save_rate']));
 
     /* 取得配送列表 */
@@ -2163,7 +2163,7 @@ else
     $smarty->assign('total', $cart_goods['total']);
 
     //购物车的描述的格式化
-    $smarty->assign('shopping_money',         sprintf($_LANG['shopping_money'], $cart_goods['total']['goods_price']));
+    $smarty->assign('shopping_money',         sprintf($_LANG['shopping_money'], '<span style="color:#f05642;font-weight: bold;font-size: 14px;padding: 0 5px;">'.$cart_goods['total']['goods_price'].'</span>'));
     $smarty->assign('market_price_desc',      sprintf($_LANG['than_market_price'],
         $cart_goods['total']['market_price'], $cart_goods['total']['saving'], $cart_goods['total']['save_rate']));
 

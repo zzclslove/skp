@@ -14,12 +14,9 @@ require(ROOT_PATH . 'includes/lib_order.php');
 require(ROOT_PATH . 'includes/cls_json.php');
 
 require 'bootstrap.php';
-use PayPal\Api\Amount;
-use PayPal\Api\Details;
 use PayPal\Api\ExecutePayment;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
-use PayPal\Api\Transaction;
 
 // ### Approval Status
 // Determine if the user approved the payment or not
@@ -44,12 +41,13 @@ if (isset($_GET['success']) && $_GET['success'] == 'true') {
         // (See bootstrap.php for more on `ApiContext`)
         $msg = '';
         $result = $payment->execute($execution, $apiContext);
+
         if($result->getState() == 'approved'){
             $transactions = $result->getTransactions();
             foreach($transactions as $transaction){
                 $order_id = intval($transaction->getInvoiceNumber());
                 $amount = $transaction->getAmount();
-                $sql = "SELECT order_amount FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE log_id = '$order_id'";
+                $sql = "SELECT order_amount FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id = '$order_id'";
                 if ($GLOBALS['db']->getOne($sql) != $amount->getTotal())
                 {
                     $msg = $_LANG['pay_fail'];
@@ -60,18 +58,21 @@ if (isset($_GET['success']) && $_GET['success'] == 'true') {
                         $sale = $relate_resource->getSale();
                         $sale_id = $sale->getId();
                     }
+                    $sql = "SELECT log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id = '$order_id'";
+                    $log_id = $GLOBALS['db']->getOne($sql);
                 }
             }
         }else{
             $msg = $_LANG['pay_fail'];
         }
-        if(isset($order_id) && isset($sale_id)){
+        if(isset($log_id) && isset($sale_id)){
             $action_note = 'PayPal交易号：' . $sale_id;
-            order_paid($order_id, PS_PAYED, $action_note);
+            order_paid($log_id, PS_PAYED, $action_note);
             $msg = $_LANG['pay_success'];
         }else{
             $msg = $_LANG['pay_fail'];
         }
+
     } catch (Exception $ex) {
         $json = new JSON();
         $error_msg = $json->decode($ex->getData());

@@ -109,14 +109,14 @@ class paypal
             $mode = 'live';
         }
 
-        $def_url  = '<br /><form style="text-align:center;" action="paypal.php" method="post" target="_blank">' .   // 不能省略             // 不能省略
+        $def_url  = '<br /><form style="display: block;float: left" action="paypal.php" method="post" target="_blank">' .   // 不能省略             // 不能省略
             "<input type='hidden' name='mode' value='$mode'>" .                 // payment for
             "<input type='hidden' name='orderid' value='$data_order_id'>" .                 // payment for
             "<input type='hidden' name='item_name' value='$order[order_sn]'>" .             // payment for
             "<input type='hidden' name='return' value='$data_return_url'>" .                // 付款后页面
             "<input type='hidden' name='invoice' value='$invoice'>" .                       // 订单号
             "<input type='hidden' name='cancel_return' value='$cancel_return'>" .
-            "<input type='submit' value='" . $GLOBALS['_LANG']['paypal_button'] . "'>" .    // 按钮
+            "<input class='paypal_btn' type='submit' value=' '>" .    // 按钮
             "</form><br />";
         return $def_url;
     }
