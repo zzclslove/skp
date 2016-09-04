@@ -890,7 +890,7 @@ elseif ($action == 'order_detail')
     }
 
     /* 订单 支付 配送 状态语言项 */
-    $smarty->assign('country_list',       get_regions());
+    $smarty->assign('country_list', get_regions());
     $order['order_status'] = $_LANG['os'][$order['order_status']];
     $order['pay_status'] = $_LANG['ps'][$order['pay_status']];
     $order['shipping_status'] = $_LANG['ss'][$order['shipping_status']];

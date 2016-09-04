@@ -287,13 +287,9 @@ elseif ($_REQUEST['act'] == 'info')
     $smarty->assign('agency_list', $db->getAll($sql));
 
     /* 取得区域名 */
-    $sql = "SELECT concat(IFNULL(c.region_name, ''), '  ', IFNULL(p.region_name, ''), " .
-        "'  ', IFNULL(t.region_name, ''), '  ', IFNULL(d.region_name, '')) AS region " .
+    $sql = "SELECT IFNULL(c.region_name, '') AS region " .
         "FROM " . $ecs->table('order_info') . " AS o " .
         "LEFT JOIN " . $ecs->table('region') . " AS c ON o.country = c.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS p ON o.province = p.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS t ON o.city = t.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS d ON o.district = d.region_id " .
         "WHERE o.order_id = '$order[order_id]'";
     $order['region'] = $db->getOne($sql);
 
@@ -704,13 +700,9 @@ elseif ($_REQUEST['act'] == 'delivery_info')
     }
 
     /* 取得区域名 */
-    $sql = "SELECT concat(IFNULL(c.region_name, ''), '  ', IFNULL(p.region_name, ''), " .
-        "'  ', IFNULL(t.region_name, ''), '  ', IFNULL(d.region_name, '')) AS region " .
+    $sql = "SELECT IFNULL(c.region_name, '') AS region " .
         "FROM " . $ecs->table('order_info') . " AS o " .
         "LEFT JOIN " . $ecs->table('region') . " AS c ON o.country = c.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS p ON o.province = p.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS t ON o.city = t.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS d ON o.district = d.region_id " .
         "WHERE o.order_id = '" . $delivery_order['order_id'] . "'";
     $delivery_order['region'] = $db->getOne($sql);
 
@@ -1212,13 +1204,9 @@ elseif ($_REQUEST['act'] == 'back_info')
     }
 
     /* 取得区域名 */
-    $sql = "SELECT concat(IFNULL(c.region_name, ''), '  ', IFNULL(p.region_name, ''), " .
-        "'  ', IFNULL(t.region_name, ''), '  ', IFNULL(d.region_name, '')) AS region " .
+    $sql = "SELECT IFNULL(c.region_name, '') AS region " .
         "FROM " . $ecs->table('order_info') . " AS o " .
         "LEFT JOIN " . $ecs->table('region') . " AS c ON o.country = c.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS p ON o.province = p.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS t ON o.city = t.region_id " .
-        "LEFT JOIN " . $ecs->table('region') . " AS d ON o.district = d.region_id " .
         "WHERE o.order_id = '" . $back_order['order_id'] . "'";
     $back_order['region'] = $db->getOne($sql);
 
@@ -2706,13 +2694,9 @@ elseif ($_REQUEST['act'] == 'operate')
         }
 
         /* 查询：取得区域名 */
-        $sql = "SELECT concat(IFNULL(c.region_name, ''), '  ', IFNULL(p.region_name, ''), " .
-            "'  ', IFNULL(t.region_name, ''), '  ', IFNULL(d.region_name, '')) AS region " .
+        $sql = "SELECT IFNULL(c.region_name, '') AS region " .
             "FROM " . $ecs->table('order_info') . " AS o " .
             "LEFT JOIN " . $ecs->table('region') . " AS c ON o.country = c.region_id " .
-            "LEFT JOIN " . $ecs->table('region') . " AS p ON o.province = p.region_id " .
-            "LEFT JOIN " . $ecs->table('region') . " AS t ON o.city = t.region_id " .
-            "LEFT JOIN " . $ecs->table('region') . " AS d ON o.district = d.region_id " .
             "WHERE o.order_id = '$order[order_id]'";
         $order['region'] = $db->getOne($sql);
 
@@ -3059,13 +3043,9 @@ elseif ($_REQUEST['act'] == 'operate')
             }
 
             /* 取得区域名 */
-            $sql = "SELECT concat(IFNULL(c.region_name, ''), '  ', IFNULL(p.region_name, ''), " .
-                "'  ', IFNULL(t.region_name, ''), '  ', IFNULL(d.region_name, '')) AS region " .
+            $sql = "SELECT IFNULL(c.region_name, '') AS region " .
                 "FROM " . $ecs->table('order_info') . " AS o " .
                 "LEFT JOIN " . $ecs->table('region') . " AS c ON o.country = c.region_id " .
-                "LEFT JOIN " . $ecs->table('region') . " AS p ON o.province = p.region_id " .
-                "LEFT JOIN " . $ecs->table('region') . " AS t ON o.city = t.region_id " .
-                "LEFT JOIN " . $ecs->table('region') . " AS d ON o.district = d.region_id " .
                 "WHERE o.order_id = '$order[order_id]'";
             $order['region'] = $db->getOne($sql);
 

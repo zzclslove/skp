@@ -1097,3 +1097,32 @@ function cancel_div()
     i++;
   }
 }
+
+function getStateInputHtml(obj){
+  var countryId = $(obj).val();
+  if(countryId != 0){
+    $.post("flow.php?step=consignee&action=get_state_list&country_id=" + countryId, function(res){
+      eval("var result = " + res);
+      var input = $(obj).parents('tr').next().find('input');
+      var select = $(obj).parents('tr').next().find('select');
+      var id = "";
+      if(input.length > 0){
+        id = input.attr('id');
+      }
+      if(select.length > 0){
+        id = select.attr('id');
+      }
+      var html = '';
+      if(result.content.length > 0){
+        html += '<select id="' + id + '" name="states" class="inputBg" style="height:22px"><option value="">Please Select State</option>';
+        for(var i = 0; i < result.content.length; i++){
+          html += '<option value="' + result.content[i].region_code + '">'+ result.content[i].region_name +'</option>';
+        }
+        html += '</select> *';
+      }else{
+        html += '<input  id="' + id + '" name="states" class="inputBg" value=""> *';
+      }
+      $(obj).parents('tr').next().find('td:nth-child(2)').html(html);
+    });
+  }
+}

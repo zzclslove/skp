@@ -55,7 +55,8 @@ if (isset($set_modules) && $set_modules == TRUE)
 
     /* 配置信息 */
     $modules[$i]['config'] = array(
-        array('name' => 'paypal_account', 'type' => 'text', 'value' => ''),
+        array('name' => 'client_id', 'type' => 'text', 'value' => ''),
+        array('name' => 'client_secret', 'type' => 'text', 'value' => ''),
         array('name' => 'paypal_currency', 'type' => 'select', 'value' => 'USD'),
         array('name' => 'sandbox', 'type' => 'select', 'value' => '')
     );
@@ -92,41 +93,31 @@ class paypal
      */
     function get_code($order, $payment)
     {
-        $data_order_id      = $order['log_id'];
-        $data_amount        = $order['order_amount'];
-        $data_return_url    = return_url(basename(__FILE__, '.php'));
-        $data_pay_account   = $payment['paypal_account'];
-        $currency_code      = $payment['paypal_currency'];
-        $data_notify_url    = return_url(basename(__FILE__, '.php'));
-        $cancel_return      = $GLOBALS['ecs']->url();
+        $data_order_id      = $order['order_id'];
+        //$data_client_id     = $payment['client_id'];
+        //$data_client_secret = $payment['client_secret'];
+        $data_return_url    = $GLOBALS['ecs']->url() . 'paypal_respond.php?success=true';
+        $cancel_return      = $GLOBALS['ecs']->url() . 'paypal_respond.php?success=false';
         $sub_fix = preg_replace('/(.*?:\/\/(www\.)?)(.*?)\.(:?.*?)$/','$3',$data_return_url);
         $invoice = $data_order_id.'-'.$sub_fix;
         if($payment['sandbox'])
         {
-            $paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+            $mode = 'sandbox';
         }
         else
         {
-            $paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
+            $mode = 'live';
         }
 
-        $def_url  = '<br /><form style="text-align:center;" action="'.$paypal_url.'" method="post" target="_blank">' .   // 不能省略
-            "<input type='hidden' name='cmd' value='_xclick'>" .                             // 不能省略
-            "<input type='hidden' name='business' value='$data_pay_account'>" .                 // 贝宝帐号
-            "<input type='hidden' name='item_name' value='$order[order_sn]'>" .                 // payment for
-            "<input type='hidden' name='amount' value='$data_amount'>" .                        // 订单金额
-            "<input type='hidden' name='currency_code' value='$currency_code'>" .            // 货币
-            "<input type='hidden' name='return' value='$data_return_url'>" .                    // 付款后页面
-            "<input type='hidden' name='invoice' value='$invoice'>" .                      // 订单号
-            "<input type='hidden' name='charset' value='utf-8'>" .                              // 字符集
-            "<input type='hidden' name='no_shipping' value='1'>" .                              // 不要求客户提供收货地址
-            "<input type='hidden' name='no_note' value=''>" .                                  // 付款说明
-            "<input type='hidden' name='notify_url' value='$data_notify_url'>" .
-            "<input type='hidden' name='rm' value='2'>" .
+        $def_url  = '<br /><form style="text-align:center;" action="paypal.php" method="post" target="_blank">' .   // 不能省略             // 不能省略
+            "<input type='hidden' name='mode' value='$mode'>" .                 // payment for
+            "<input type='hidden' name='orderid' value='$data_order_id'>" .                 // payment for
+            "<input type='hidden' name='item_name' value='$order[order_sn]'>" .             // payment for
+            "<input type='hidden' name='return' value='$data_return_url'>" .                // 付款后页面
+            "<input type='hidden' name='invoice' value='$invoice'>" .                       // 订单号
             "<input type='hidden' name='cancel_return' value='$cancel_return'>" .
-            "<input type='submit' value='" . $GLOBALS['_LANG']['paypal_button'] . "'>" .                      // 按钮
+            "<input type='submit' value='" . $GLOBALS['_LANG']['paypal_button'] . "'>" .    // 按钮
             "</form><br />";
-
         return $def_url;
     }
 
@@ -135,17 +126,17 @@ class paypal
      */
     function respond()
     {
-        $payment        = get_payment('paypal');
+        $payment = get_payment('paypal');
 
         // assign posted variables to local variables
         $order_sn = intval($_POST['invoice']);
         $action_note = $GLOBALS['_LANG']['paypal_txn_id'] . '：' . $_POST['txn_id'];
 
         //输出$_POST的所有数据
-        /*foreach($_POST as $key => $value)  
+        foreach($_POST as $key => $value)
         {  
             echo "POST Data: $key -> $value <br>";  
-        }*/
+        }
 
         if($_POST['payer_status'] == 'verified')
         {

@@ -175,8 +175,47 @@ function get_regions($type = 0, $parent = 0)
 {
     $sql = 'SELECT region_id, region_name FROM ' . $GLOBALS['ecs']->table('region') .
             " WHERE region_type = '$type' AND parent_id = '$parent'";
+    $res = $GLOBALS['db']->GetAll($sql);
+    foreach($res as $key=>$value){
+        if($value['region_name'] == 'USA'){
+            $sql2 = 'SELECT region_id, region_code, region_name FROM ' . $GLOBALS['ecs']->table('region') .
+                " WHERE region_type = '1' AND parent_id = '4091'";
+            $res2 = $GLOBALS['db']->GetAll($sql2);
+            $res[$key]['state_list'] = $res2;
+        }
+    }
+    return $res;
+}
 
-    return $GLOBALS['db']->GetAll($sql);
+/**
+ * 创建一个JSON格式的数据
+ *
+ * @access  public
+ * @param   string      $content
+ * @param   integer     $error
+ * @param   string      $message
+ * @param   array       $append
+ * @return  void
+ */
+function make_json_response_front($content='', $error="0", $message='', $append=array())
+{
+    include_once(ROOT_PATH . 'includes/cls_json.php');
+
+    $json = new JSON;
+
+    $res = array('error' => $error, 'message' => $message, 'content' => $content);
+
+    if (!empty($append))
+    {
+        foreach ($append AS $key => $val)
+        {
+            $res[$key] = $val;
+        }
+    }
+
+    $val = $json->encode($res);
+
+    exit($val);
 }
 
 /**

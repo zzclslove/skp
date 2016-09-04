@@ -864,3 +864,70 @@ function calResult()
     }
   }
 }
+
+function checkConsignee(frm)
+{
+  var msg = new Array();
+  var err = false;
+
+  if (Utils.isEmpty(frm.elements['consignee'].value))
+  {
+    err = true;
+    msg.push(consignee_not_null);
+  }
+
+  if ( ! Utils.isEmail(frm.elements['email'].value))
+  {
+    err = true;
+    msg.push(invalid_email);
+  }
+
+  if (frm.elements['country'] && frm.elements['country'].value == 0)
+  {
+    msg.push(country_not_null);
+    err = true;
+  }
+
+  if (Utils.isEmpty(frm.elements['states'].value) || frm.elements['states'].value == 0)
+  {
+    msg.push('State is Empty');
+    err = true;
+  }
+
+  if (Utils.isEmpty(frm.elements['city'].value))
+  {
+    msg.push('City is Empty');
+    err = true;
+  }
+
+  if (frm.elements['address'] && Utils.isEmpty(frm.elements['address'].value))
+  {
+    err = true;
+    msg.push(address_not_null);
+  }
+
+  if (Utils.isEmpty(frm.elements['zipcode'].value))
+  {
+    msg.push('Postalcode is Empty');
+    err = true;
+  }
+
+  if (frm.elements['zipcode'] && frm.elements['zipcode'].value.length > 0 && (!Utils.isNumber(frm.elements['zipcode'].value)))
+  {
+    err = true;
+    msg.push(zip_not_num);
+  }
+
+  if (Utils.isEmpty(frm.elements['tel'].value))
+  {
+    err = true;
+    msg.push(tele_not_null);
+  }
+
+  if (err)
+  {
+    message = msg.join("\n");
+    alert(message);
+  }
+  return ! err;
+}

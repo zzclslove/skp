@@ -314,8 +314,16 @@ elseif ($_REQUEST['step'] == 'consignee')
     /*------------------------------------------------------ */
     include_once('includes/lib_transaction.php');
 
+    if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'get_state_list'){
+        $sql = 'SELECT region_id, region_code, region_name FROM ' . $GLOBALS['ecs']->table('region') .
+            " WHERE region_type = '1' AND parent_id = '".$_REQUEST['country_id']."'";
+        $res = $GLOBALS['db']->GetAll($sql);
+        make_json_response_front($res);
+    }
+
     if ($_SERVER['REQUEST_METHOD'] == 'GET')
     {
+
         /* 取得购物类型 */
         $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
@@ -1775,29 +1783,27 @@ elseif ($_REQUEST['step'] == 'done')
 
     /* 插入支付日志 */
     $order['log_id'] = insert_pay_log($new_order_id, $order['order_amount'], PAY_ORDER);
-
+    $payment = payment_info($order['pay_id']);
     /* 取得支付信息，生成支付代码 */
     if ($order['order_amount'] > 0)
     {
-        $payment = payment_info($order['pay_id']);
-
         include_once('includes/modules/payment/' . $payment['pay_code'] . '.php');
         $pay_obj    = new $payment['pay_code'];
-//为天宫支付传递商品名
-    $sql = "SELECT goods_name FROM " . $ecs->table('order_goods') . " WHERE order_id =" . $order['order_id'];
-    $res = $db->query($sql);
-    while ($aaa[] = $db->fetchRow($res))
-    {
-        $bbb = array_values($aaa);
-    }
-    foreach($bbb as $v)
-    {
-        $ccc[] = $v['goods_name'];
-    }
-    $goods_name = implode(',',$ccc);
-    $order['goods_name'] = $goods_name;
+        //为天宫支付传递商品名
+        $sql = "SELECT goods_name FROM " . $ecs->table('order_goods') . " WHERE order_id =" . $order['order_id'];
+        $res = $db->query($sql);
+        while ($aaa[] = $db->fetchRow($res))
+        {
+            $bbb = array_values($aaa);
+        }
+        foreach($bbb as $v)
+        {
+            $ccc[] = $v['goods_name'];
+        }
+        $goods_name = implode(',',$ccc);
+        $order['goods_name'] = $goods_name;
 
-//天工结束
+        //天工结束
 
         //云起收银
         $payment['pay_code']='yunqi' and  $order['yunqi_paymethod'] = $_POST['yunqi_paymethod'];
@@ -1827,7 +1833,6 @@ elseif ($_REQUEST['step'] == 'done')
     unset($_SESSION['flow_consignee']); // 清除session中保存的收货人信息
     unset($_SESSION['flow_order']);
     unset($_SESSION['direct_shopping']);
-
 }
 
 /*------------------------------------------------------ */

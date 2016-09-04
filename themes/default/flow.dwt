@@ -300,7 +300,6 @@
   </div>
   <!-- {/if} -->
 
-
         <!-- {if $step eq "consignee"} -->
         <!-- 开始收货人信息填写界面 -->
         {insert_scripts files='region.js,utils.js'}
@@ -462,7 +461,9 @@
             <!-- 循环支付方式 -->
             {if $payment.pay_code!='yunqi'}
             <tr>
-              <td style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff"><input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/></td>
+              <td style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff">
+                  <input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/>
+              </td>
 
                   <!--{if $payment.pay_name eq "WesternUnion"}-->
                 <td class="checkout_paylist" style="vertical-align: middle;text-align: left" valign="top" bgcolor="#ffffff">
@@ -470,6 +471,9 @@
                   <!--{elseif $payment.pay_name eq "MoneyGram"}-->
                 <td class="checkout_paylist" style="vertical-align: middle;text-align: left" valign="top" bgcolor="#ffffff">
                     <span style="background-position: 0 -424px;"></span><span><strong>{$payment.pay_name}</strong></span>
+                    <!--{elseif $payment.pay_name eq "PayPal"}-->
+                <td class="checkout_paylist" style="vertical-align: middle;text-align: left" valign="top" bgcolor="#ffffff">
+                    <span style="background-position: 0 0px;"></span><span><strong>{$payment.pay_name}</strong></span>
                   <!--{else}-->
                 <td class="checkout_paylist" style="vertical-align: middle;text-align: center" valign="top" bgcolor="#ffffff">
                     <strong>{$payment.pay_name}</strong>
