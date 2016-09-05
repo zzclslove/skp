@@ -470,9 +470,9 @@ position:absolute; top:0px; right:0px;}
     .usBox{background:#f2f2f2; border:1px solid #e2e2e2; padding:15px; width:928px;}
     .usBox_1{background:#fff; text-align:left; width:297px; height:208px; padding:43px 153px 60px 123px;}
     .usBox_1 .logtitle{height:30px; background:url(images/ur_bg.gif) no-repeat 0px 0px;}
-    .us_Submit{border:none; width:115px; height:40px; background:url(images/bnt_ur_log.gif);}
+    .us_Submit{border:none; width:115px; height:40px; background: #ff5c26;color: #fff;font-size: 18px;}
     .us_Submit_reg{border:none; width:113px; height:40px; background:url(images/bnt_ur_reg.gif);}
-    .usTxt{width:265px; height:267px; padding:43px 0 0 90px; background:#f2f2f2; float:right;
+    .usTxt{width:265px; height:267px; padding:23px 0 0 90px; background:#f2f2f2; float:right;
     text-align:left; background:url(images/ur_bg1.gif) no-repeat 0 50%; line-height:23px;
     }
     .usTxt img{margin-top:15px;}
@@ -1426,7 +1426,7 @@ position:absolute; top:0px; right:0px;}
 
 .paypal_btn{width:142px;height:27px;background:url(images/paypal_btn.png);border:0;cursor:pointer;}
 
-
+.login_register_btn{display:block;width:115px;height:40px;background:#0080ff;color:#fff;line-height:40px;text-align:center;font-size:16px;margin-top:10px;}
 
 
 

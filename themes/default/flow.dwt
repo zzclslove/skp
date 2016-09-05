@@ -11,11 +11,13 @@
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+<link href="js/chosen/chosen.min.css" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
 {insert_scripts files='common.js,shopping_flow.js'}
 </head>
 <body>
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<script type="text/javascript" src="js/chosen/chosen.jquery.min.js"></script>
 <!--当前位置 start-->
 <div class="block box">
  <div id="ur_here">
@@ -326,7 +328,12 @@
         </form>
         <!-- {/foreach} -->
         <!-- {/if} -->
-
+        <script>
+            {literal}
+            $('.country-selector').chosen({no_results_text: "Oops, nothing found!"});
+            $('.state-selector').chosen({no_results_text: "Oops, nothing found!"});
+            {/literal}
+        </script>
         <!-- {if $step eq "checkout"} 开始订单确认界面 -->
         <form action="flow.php" method="post" name="theForm" id="theForm" onsubmit="return checkOrderForm(this)">
         <script type="text/javascript">
@@ -708,7 +715,7 @@
         <!-- {if $step eq "done"} -->
         <!-- 订单提交成功 -->
         <div class="flowBox" style="margin:30px auto 70px auto;">
-         <h6 style="text-align:left; height:30px; line-height:30px;padding-left: 15px;">{$lang.remember_order_number}: <font style="color:red">{$order.order_sn}</font></h6>
+         <h6 style="text-align:left; height:30px; line-height:30px;padding-left: 15px;">{$lang.remember_order_number}: <a href="user.php?act=order_detail&order_id={$order.order_id}"><font style="color:red">{$order.order_sn}</font></a></h6>
           <table width="99%" align="left" border="0" cellpadding="15" cellspacing="0" bgcolor="#fff" style="border:1px solid #ddd; margin:20px auto;" >
             <tr>
               <td align="left" bgcolor="#FFFFFF">

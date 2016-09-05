@@ -1114,7 +1114,7 @@ function getStateInputHtml(obj){
       }
       var html = '';
       if(result.content.length > 0){
-        html += '<select id="' + id + '" name="states" class="inputBg" style="height:22px"><option value="">Please Select State</option>';
+        html += '<select id="' + id + '" name="states" class="inputBg state-selector" style="height:22px"><option value="">Please Select State</option>';
         for(var i = 0; i < result.content.length; i++){
           html += '<option value="' + result.content[i].region_code + '">'+ result.content[i].region_name +'</option>';
         }
@@ -1123,6 +1123,7 @@ function getStateInputHtml(obj){
         html += '<input  id="' + id + '" name="states" class="inputBg" value=""> *';
       }
       $(obj).parents('tr').next().find('td:nth-child(2)').html(html);
+      $(obj).parents('tr').next().find('td:nth-child(2)').find('.state-selector').chosen({no_results_text: "Oops, nothing found!"});
     });
   }
 }

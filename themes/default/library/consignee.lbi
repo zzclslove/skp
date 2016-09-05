@@ -16,7 +16,7 @@
   <tr>
     <td bgcolor="#ffffff">{$lang.country_province}:</td>
     <td bgcolor="#ffffff">
-      <select onchange="getStateInputHtml(this)" name="country" id="selCountries_{$sn}" class="inputBg" style="height:22px">
+      <select onchange="getStateInputHtml(this)" name="country" id="selCountries_{$sn}" class="inputBg country-selector" style="height:22px">
         <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
         <!-- {foreach from=$country_list item=country} -->
         <option value="{$country.region_id}" {if $consignee.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
@@ -29,7 +29,7 @@
     <td bgcolor="#ffffff">State:</td>
     <td bgcolor="#ffffff">
       <!--{if $consignee.country eq '4091'}-->
-      <select name="states" id="states_{$sn}" class="inputBg" style="height:22px">
+      <select name="states" id="states_{$sn}" class="inputBg state-selector" style="height:22px">
         <option value="0">{$lang.please_select} State</option>
         <!-- {foreach from=$country_list item=country} -->
         <!--{if $country.region_id eq '4091'}-->
