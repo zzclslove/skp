@@ -19,8 +19,8 @@ var process_request = "{$lang.process_request}";
 </div>
 <div class="nav-menu" style="height: 80px">
   <div class="wrap" style="position: relative">
-    <div style="margin: 0 auto;float: inherit;" class="logo"><a href="../index.php" name="top"><img width="160" src="../images/logo.jpg" /></a></div>
-    <div class="serach-box" style="position: absolute;margin-top: 0;right: 0px;top: 30px;">
+    <div style="margin: 0 auto;float: inherit;" class="logo"><a href="../index.php" name="top"><img style="margin-top:16px;" width="210" src="../images/logo.png" /></a></div>
+    <div class="serach-box" style="position: absolute;margin-top: 0;right: 0px;top: 27px;">
       <form style="background-size: 220px;height: 30px;" id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()" class="f_r">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
