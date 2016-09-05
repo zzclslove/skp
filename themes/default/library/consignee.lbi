@@ -16,7 +16,7 @@
   <tr>
     <td bgcolor="#ffffff">{$lang.country_province}:</td>
     <td bgcolor="#ffffff">
-      <select name="country" id="selCountries_{$sn}" class="inputBg" style="height:22px">
+      <select onchange="getStateInputHtml(this)" name="country" id="selCountries_{$sn}" class="inputBg" style="height:22px">
         <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
         <!-- {foreach from=$country_list item=country} -->
         <option value="{$country.region_id}" {if $consignee.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
@@ -27,7 +27,22 @@
   </tr>
   <tr>
     <td bgcolor="#ffffff">State:</td>
-    <td bgcolor="#ffffff"><input name="states" type="text" class="inputBg" id="states_{$sn}" value="{$consignee.states|escape}" />{$lang.require_field}</td>
+    <td bgcolor="#ffffff">
+      <!--{if $consignee.country eq '4091'}-->
+      <select name="states" id="states_{$sn}" class="inputBg" style="height:22px">
+        <option value="0">{$lang.please_select} State</option>
+        <!-- {foreach from=$country_list item=country} -->
+        <!--{if $country.region_id eq '4091'}-->
+        <!-- {foreach from=$country.state_list item=state} -->
+        <option value="{$state.region_code}" {if $consignee.states eq $state.region_code}selected{/if}>{$state.region_name}</option>
+        <!-- {/foreach} -->
+        <!--{/if}-->
+        <!-- {/foreach} -->
+      </select>
+      <!--{else}-->
+      <input name="states" type="text" class="inputBg" id="states_{$sn}" value="{$consignee.states|escape}" />{$lang.require_field}
+      <!--{/if}-->
+    </td>
   </tr>
   <tr>
     <td bgcolor="#ffffff">City:</td>
@@ -39,7 +54,7 @@
   </tr>
   <tr>
     <td bgcolor="#ffffff">{$lang.postalcode}:</td>
-    <td bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg"  id="zipcode_{$sn}" value="{$consignee.zipcode|escape}" /></td>
+    <td bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg"  id="zipcode_{$sn}" value="{$consignee.zipcode|escape}" />{$lang.require_field}</td>
   </tr>
   <tr>
     <td bgcolor="#ffffff">{$lang.phone}:</td>

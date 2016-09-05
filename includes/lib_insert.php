@@ -179,7 +179,7 @@ function insert_ads($arr)
                 $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
                         DATA_DIR . "/afficheimg/$row[ad_code]" : $row['ad_code'];
                 $ads[] = "<a href='affiche.php?ad_id=$row[ad_id]&amp;uri=" .urlencode($row["ad_link"]). "'
-                target='_blank'><img src='$src' width='" .$row['ad_width']. "' height='$row[ad_height]'
+                ><img src='$src' width='" .$row['ad_width']. "' height='$row[ad_height]'
                 border='0' /></a>";
                 break;
             case 1: // Flash

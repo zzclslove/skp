@@ -19,6 +19,61 @@ if (!defined('IN_ECS'))
 }
 
 /**
+ * 获得指定分类同级的所有分类以及该分类下的子分类
+ *
+ * @access  public
+ * @param   integer     $cat_id     分类编号
+ * @return  array
+ */
+function get_categories_tree($cat_id = 0)
+{
+    if ($cat_id > 0)
+    {
+        $sql = 'SELECT parent_id FROM ' . $GLOBALS['ecs']->table('category') . " WHERE cat_id = '$cat_id'";
+        $parent_id = $GLOBALS['db']->getOne($sql);
+    }
+    else
+    {
+        $parent_id = 0;
+    }
+
+    /*
+     判断当前分类中全是是否是底级分类，
+     如果是取出底级分类上级分类，
+     如果不是取当前分类及其下的子分类
+    */
+    $sql = 'SELECT count(*) FROM ' . $GLOBALS['ecs']->table('category') . " WHERE parent_id = '$parent_id' AND is_show = 1 ";
+    if ($GLOBALS['db']->getOne($sql) || $parent_id == 0)
+    {
+        /* 获取当前分类及其子分类 */
+        $sql = 'SELECT cat_id,cat_name ,parent_id,is_show ' .
+            'FROM ' . $GLOBALS['ecs']->table('category') .
+            "WHERE parent_id = '$parent_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
+
+        $res = $GLOBALS['db']->getAll($sql);
+
+        foreach ($res AS $row)
+        {
+            if ($row['is_show'])
+            {
+                $cat_arr[$row['cat_id']]['id']   = $row['cat_id'];
+                $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
+                $cat_arr[$row['cat_id']]['url']  = build_uri('category', array('cid' => $row['cat_id']), $row['cat_name']);
+
+                if (isset($row['cat_id']) != NULL)
+                {
+                    $cat_arr[$row['cat_id']]['cat_id'] = get_child_tree($row['cat_id']);
+                }
+            }
+        }
+    }
+    if(isset($cat_arr))
+    {
+        return $cat_arr;
+    }
+}
+
+/**
  * 创建像这样的查询: "IN('a','b')";
  *
  * @access   public
@@ -175,8 +230,47 @@ function get_regions($type = 0, $parent = 0)
 {
     $sql = 'SELECT region_id, region_name FROM ' . $GLOBALS['ecs']->table('region') .
             " WHERE region_type = '$type' AND parent_id = '$parent'";
+    $res = $GLOBALS['db']->GetAll($sql);
+    foreach($res as $key=>$value){
+        if($value['region_name'] == 'USA'){
+            $sql2 = 'SELECT region_id, region_code, region_name FROM ' . $GLOBALS['ecs']->table('region') .
+                " WHERE region_type = '1' AND parent_id = '4091'";
+            $res2 = $GLOBALS['db']->GetAll($sql2);
+            $res[$key]['state_list'] = $res2;
+        }
+    }
+    return $res;
+}
 
-    return $GLOBALS['db']->GetAll($sql);
+/**
+ * 创建一个JSON格式的数据
+ *
+ * @access  public
+ * @param   string      $content
+ * @param   integer     $error
+ * @param   string      $message
+ * @param   array       $append
+ * @return  void
+ */
+function make_json_response_front($content='', $error="0", $message='', $append=array())
+{
+    include_once(ROOT_PATH . 'includes/cls_json.php');
+
+    $json = new JSON;
+
+    $res = array('error' => $error, 'message' => $message, 'content' => $content);
+
+    if (!empty($append))
+    {
+        foreach ($append AS $key => $val)
+        {
+            $res[$key] = $val;
+        }
+    }
+
+    $val = $json->encode($res);
+
+    exit($val);
 }
 
 /**

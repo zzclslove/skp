@@ -564,7 +564,7 @@ function checkConsignee(frm)
     err = true;
   }
 
-  if (Utils.isEmpty(frm.elements['states'].value))
+  if (Utils.isEmpty(frm.elements['states'].value) || frm.elements['states'].value == 0)
   {
     msg.push('State is Empty');
     err = true;
@@ -580,6 +580,12 @@ function checkConsignee(frm)
   {
     err = true;
     msg.push(address_not_null);
+  }
+
+  if (Utils.isEmpty(frm.elements['zipcode'].value))
+  {
+    msg.push('Postalcode is Empty');
+    err = true;
   }
 
   if (frm.elements['zipcode'] && frm.elements['zipcode'].value.length > 0 && (!Utils.isNumber(frm.elements['zipcode'].value)))

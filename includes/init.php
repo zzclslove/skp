@@ -187,6 +187,7 @@ if (!defined('INIT_NO_SMARTY'))
 
     $smarty->assign('lang', $_LANG);
     $smarty->assign('ecs_charset', EC_CHARSET);
+    $smarty->assign('categories',         get_categories_tree());  // 分类树
     if (!empty($_CFG['stylename']))
     {
         $smarty->assign('ecs_css_path', 'themes/' . $_CFG['template'] . '/style_' . $_CFG['stylename'] . '.css');

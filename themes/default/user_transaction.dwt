@@ -9,6 +9,7 @@
 <!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
 {insert_scripts files='common.js,user.js'}
@@ -465,47 +466,70 @@
         <h5><span>{$lang.consignee_info}</span></h5>
         <div class="blank"></div>
          <!-- {if $order.allow_update_address gt 0} -->
-          <form action="user.php" method="post" name="formAddress" id="formAddress">
+          <form action="user.php" method="post" name="formAddress" id="formAddress"  onsubmit="return checkConsignee(this)">
            <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
               <tr>
-                <td width="15%" align="right" bgcolor="#ffffff">{$lang.consignee_name}： </td>
-                <td width="35%" align="left" bgcolor="#ffffff"><input name="consignee" type="text"  class="inputBg" value="{$order.consignee|escape}" size="25">
-                </td>
-                <td width="15%" align="right" bgcolor="#ffffff">{$lang.email_address}： </td>
-                <td width="35%" align="left" bgcolor="#ffffff"><input name="email" type="text"  class="inputBg" value="{$order.email|escape}" size="25" />
+                <td width="150" align="right" bgcolor="#ffffff">{$lang.consignee_name}： </td>
+                <td align="left" bgcolor="#ffffff"><input name="consignee" type="text"  class="inputBg" value="{$order.consignee|escape}" size="25"></td>
+              </tr>
+               <tr>
+                <td align="right" bgcolor="#ffffff">{$lang.email_address}： </td>
+                <td align="left" bgcolor="#ffffff"><input name="email" type="text"  class="inputBg" value="{$order.email|escape}" size="25" />
                 </td>
               </tr>
+               <tr>
+                   <td align="right" bgcolor="#ffffff">{$lang.country_province}：</td>
+                   <td align="left" bgcolor="#ffffff">
+                       <select class="inputBg" style="height: 22px" name="country" id="selCountries_{$sn}" onchange="getStateInputHtml(this)">
+                           <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
+                           <!-- {foreach from=$country_list item=country} -->
+                           <option value="{$country.region_id}" {if $order.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
+                           <!-- {/foreach} -->
+                       </select>
+                   </td>
+               </tr>
+               <tr>
+                   <td align="right" bgcolor="#ffffff">State： </td>
+                   <td align="left" bgcolor="#ffffff">
+                       <!--{if $order.country eq '4091'}-->
+                       <select name="states" id="states_{$sn}" class="inputBg" style="height:22px">
+                           <option value="0">{$lang.please_select} State</option>
+                           <!-- {foreach from=$country_list item=country} -->
+                           <!--{if $country.region_id eq '4091'}-->
+                           <!-- {foreach from=$country.state_list item=state} -->
+                           <option value="{$state.region_code}" {if $order.states eq $state.region_code}selected{/if}>{$state.region_name}</option>
+                           <!-- {/foreach} -->
+                           <!--{/if}-->
+                           <!-- {/foreach} -->
+                       </select>
+                       <!--{else}-->
+                       <input name="states" type="text"  class="inputBg" value="{$order.states|escape}">
+                       <!--{/if}-->
+                   </td>
+               </tr>
+               <tr>
+                   <td align="right" bgcolor="#ffffff">City： </td>
+                   <td align="left" bgcolor="#ffffff"><input name="city" type="text"  class="inputBg" value="{$order.city|escape}" size="25" />
+                   </td>
+               </tr>
               <tr>
                 <td align="right" bgcolor="#ffffff">{$lang.detailed_address}： </td>
                 <td align="left" bgcolor="#ffffff">
                     <textarea style="width: 294px;margin: 0px;height: 43px;background-color:#fafafa" name="address" type="text" class="inputBg">{$order.address|escape}</textarea>
                 </td>
-                <td align="right" bgcolor="#ffffff">{$lang.country_province}：</td>
-                <td align="left" bgcolor="#ffffff">
-                    <select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
-                        <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
-                        <!-- {foreach from=$country_list item=country} -->
-                        <option value="{$country.region_id}" {if $order.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
-                        <!-- {/foreach} -->
-                    </select>
-                </td>
-              </tr>
-              <tr>
-                  <td width="15%" align="right" bgcolor="#ffffff">State： </td>
-                  <td width="35%" align="left" bgcolor="#ffffff"><input name="states" type="text"  class="inputBg" value="{$order.states|escape}" size="25">
-                  </td>
-                  <td width="15%" align="right" bgcolor="#ffffff">City： </td>
-                  <td width="35%" align="left" bgcolor="#ffffff"><input name="city" type="text"  class="inputBg" value="{$order.city|escape}" size="25" />
-                  </td>
               </tr>
               <tr>
                 <td align="right" bgcolor="#ffffff">{$lang.phone}：</td>
                 <td align="left" bgcolor="#ffffff"><input name="tel" type="text" class="inputBg" value="{$order.tel|escape}" size="25" /></td>
+              </tr>
+               <tr>
                   <td align="right" bgcolor="#ffffff">{$lang.postalcode}：</td>
                   <td align="left" bgcolor="#ffffff"><input name="zipcode" type="text"  class="inputBg" value="{$order.zipcode|escape}" size="25" /></td>
               </tr>
               <tr>
-                <td colspan="4" align="center" bgcolor="#ffffff"><input type="hidden" name="act" value="save_order_address" />
+                <td bgcolor="#ffffff"></td>
+                <td align="left" bgcolor="#ffffff">
+                  <input type="hidden" name="act" value="save_order_address" />
                   <input type="hidden" name="order_id" value="{$order.order_id}" />
                   <input style="width: 175px;" type="submit" class="bnt_blue_2" value="{$lang.update_address}"  />
                 </td>
@@ -897,9 +921,11 @@
             <form action="user.php" method="post" name="theForm" onsubmit="return checkConsignee(this)">
               <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                   <tr>
-                      <td align="right" bgcolor="#ffffff">{$lang.consignee_name}：</td>
+                      <td width="150" align="right" bgcolor="#ffffff">{$lang.consignee_name}：</td>
                       <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_{$sn}" value="{$consignee.consignee|escape}" />
                           {$lang.require_field} </td>
+                  </tr>
+                  <tr>
                       <td align="right" bgcolor="#ffffff">{$lang.email_address}：</td>
                       <td align="left" bgcolor="#ffffff"><input name="email" type="text" class="inputBg" id="email_{$sn}" value="{$consignee.email|escape}" />
                           {$lang.require_field}</td>
@@ -907,7 +933,7 @@
                 <tr>
                   <td align="right" bgcolor="#ffffff">{$lang.country_province}：</td>
                   <td align="left" bgcolor="#ffffff">
-                    <select class="inputBg"  name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
+                    <select style="height: 22px" class="inputBg"  name="country" id="selCountries_{$sn}" onchange="getStateInputHtml(this)">
                       <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
                       <!-- {foreach from=$country_list item=country} -->
                       <option value="{$country.region_id}" {if $consignee.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
@@ -915,12 +941,31 @@
                     </select>
                     {$lang.require_field}
                   </td>
+                </tr>
+                  <tr>
                     <td align="right" bgcolor="#ffffff">State：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="states" type="text" class="inputBg" id="states_{$sn}" value="{$consignee.states|escape}" />{$lang.require_field}</td>
+                    <td align="left" bgcolor="#ffffff">
+                        <!--{if $consignee.country eq '4091'}-->
+                        <select name="states" id="states_{$sn}" class="inputBg" style="height:22px">
+                            <option value="0">{$lang.please_select} State</option>
+                            <!-- {foreach from=$country_list item=country} -->
+                            <!--{if $country.region_id eq '4091'}-->
+                            <!-- {foreach from=$country.state_list item=state} -->
+                            <option value="{$state.region_code}" {if $consignee.states eq $state.region_code}selected{/if}>{$state.region_name}</option>
+                            <!-- {/foreach} -->
+                            <!--{/if}-->
+                            <!-- {/foreach} -->
+                        </select>
+                        <!--{else}-->
+                        <input name="states" type="text" class="inputBg" id="states_{$sn}" value="{$consignee.states|escape}" />{$lang.require_field}
+                        <!--{/if}-->
+                    </td>
                 </tr>
                 <tr>
                     <td align="right" bgcolor="#ffffff">City：</td>
                     <td align="left" bgcolor="#ffffff"><input name="city" type="text" class="inputBg" id="city_{$sn}" value="{$consignee.city|escape}" /></td>
+                </tr>
+                  <tr>
                     <td align="right" bgcolor="#ffffff">{$lang.detailed_address}：</td>
                   <td align="left" bgcolor="#ffffff"><input style="width:350px" name="address" type="text" class="inputBg" id="address_{$sn}" value="{$consignee.address|escape}" />
                   {$lang.require_field}</td>
@@ -929,11 +974,14 @@
                   <td align="right" bgcolor="#ffffff">{$lang.phone}：</td>
                   <td align="left" bgcolor="#ffffff"><input name="tel" type="text" class="inputBg" id="tel_{$sn}" value="{$consignee.tel|escape}" />
                   {$lang.require_field}</td>
+                </tr>
+                  <tr>
                     <td align="right" bgcolor="#ffffff">{$lang.postalcode}：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg" id="zipcode_{$sn}" value="{$consignee.zipcode|escape}" /></td>
+                    <td align="left" bgcolor="#ffffff"><input name="zipcode" type="text" class="inputBg" id="zipcode_{$sn}" value="{$consignee.zipcode|escape}" />{$lang.require_field}</td>
                 </tr>
                 <tr>
-                  <td colspan="4" align="center" bgcolor="#ffffff"><!-- {if $consignee.consignee && $consignee.email} -->
+                    <td bgcolor="#ffffff"></td>
+                  <td bgcolor="#ffffff" align="left" ><!-- {if $consignee.consignee && $consignee.email} -->
                     <input type="submit" name="submit" class="bnt_blue_1" value="{$lang.confirm_edit}" />
                     <input name="button" type="button" class="bnt_blue"  onclick="if (confirm('{$lang.confirm_drop_address}'))location.href='user.php?act=drop_consignee&id={$consignee.address_id}'" value="{$lang.drop}" />
                     <!-- {else} -->
@@ -1188,7 +1236,7 @@ function deliveryResponse(result){
     catch (e) { alert(e); }
   }
 }
-function checkIpt(item,type=1){
+function checkIpt(item){
   var val = item.value;
   var method = document.getElementById('payMethod');
   if(val == 'wxpay'){

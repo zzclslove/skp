@@ -21,6 +21,11 @@ require(ROOT_PATH . 'includes/lib_order.php');
 /* 支付方式代码 */
 $pay_code = !empty($_REQUEST['code']) ? trim($_REQUEST['code']) : '';
 
+foreach($_REQUEST as $key => $value)
+{
+    echo "POST Data: $key -> $value <br>";
+}
+
 //获取首信支付方式
 if (empty($pay_code) && !empty($_REQUEST['v_pmode']) && !empty($_REQUEST['v_pstring']))
 {

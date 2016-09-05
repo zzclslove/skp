@@ -24,7 +24,7 @@ if (!defined('IN_ECS'))
  */
 function return_url($code)
 {
-    return $GLOBALS['ecs']->url() . 'respond.php?code=' . $code;
+    return $GLOBALS['ecs']->url() . 'respond.php';
 }
 
 /**
@@ -140,7 +140,6 @@ function check_money($log_id, $money)
  */
 function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
 {
-    error_log(date("c")."\t".'log_id:'.$log_id.";pay_status:".$pay_status.";\n\n",3,LOG_DIR."/pay_status.log");
     /* 取得支付编号 */
     $log_id = intval($log_id);
     if ($log_id > 0)

@@ -142,9 +142,9 @@ class paypal
         $action_note = $GLOBALS['_LANG']['paypal_txn_id'] . '：' . $_POST['txn_id'];
 
         //输出$_POST的所有数据
-        /*foreach($_POST as $key => $value)
-        {
-            echo "POST Data: $key -> $value <br>";
+        /*foreach($_POST as $key => $value)  
+        {  
+            echo "POST Data: $key -> $value <br>";  
         }*/
 
         if($_POST['payer_status'] == 'verified')
@@ -152,24 +152,24 @@ class paypal
             // check the payment_status is Completed
             if ($_POST['payment_status'] != 'Completed' && $_POST['payment_status'] != 'Pending')
             {
-                return false;
+				return false;
             }
 
             // check that receiver_email is your Primary PayPal email
             if ($_POST['receiver_email'] != $payment['paypal_account'])
             {
-                return false;
+				return false;
             }
 
             // check that payment_amount/payment_currency are correct
             $sql = "SELECT order_amount FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE log_id = '$order_sn'";
             if ($GLOBALS['db']->getOne($sql) != $_POST['mc_gross'])
             {
-                return false;
+				return false;
             }
             if ($payment['paypal_currency'] != $_POST['mc_currency'])
             {
-                return false;
+				return false;
             }
 
             // process payment
