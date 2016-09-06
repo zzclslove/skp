@@ -863,7 +863,7 @@
         <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
           <tr>
             <td width="50%" valign="top" bgcolor="#ffffff">
-            <h6><span>用户登录：</span></h6>
+            <h6><span>LOGIN：</span></h6>
             <form action="flow.php?step=login" method="post" name="loginForm" id="loginForm" onsubmit="return checkLoginForm(this)">
                 <table width="90%" border="0" cellpadding="8" cellspacing="1" bgcolor="#eeeeee" class="table">
                   <tr>
@@ -882,10 +882,10 @@
                   </tr>
                   <!--{/if}-->
                   <tr>
-            <td colspan="2"  bgcolor="#ffffff"><input type="checkbox" value="1" name="remember" id="remember" /><label for="remember">{$lang.remember}</label></td>
+            <td colspan="2"  bgcolor="#ffffff"><input style="vertical-align:middle;margin-left:90px;" type="checkbox" value="1" name="remember" id="remember" /><label for="remember">{$lang.remember}</label></td>
           </tr>
                   <tr>
-                    <td bgcolor="#ffffff" colspan="2" align="center"><a href="user.php?act=qpassword_name" class="f6">{$lang.get_password_by_question}</a>&nbsp;&nbsp;&nbsp;<a href="user.php?act=get_password" class="f6">{$lang.get_password_by_mail}</a></td>
+                    <td bgcolor="#ffffff" colspan="2" align="center"><a href="user.php?act=qpassword_name" class="f6">{$lang.get_password_by_question}</a><br><a href="user.php?act=get_password" class="f6">{$lang.get_password_by_mail}</a></td>
                   </tr>
                   <tr>
                     <td bgcolor="#ffffff" colspan="2"><div align="center">
@@ -901,7 +901,7 @@
 
               </td>
             <td valign="top" bgcolor="#ffffff">
-            <h6><span>用户注册：</span></h6>
+            <h6><span>REGISTER：</span></h6>
             <form action="flow.php?step=login" method="post" name="formUser" id="registerForm" onsubmit="return checkSignupForm(this)">
                <table width="98%" border="0" cellpadding="8" cellspacing="1" bgcolor="#eeeeee" class="table">
                   <tr>

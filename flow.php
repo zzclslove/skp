@@ -316,7 +316,7 @@ elseif ($_REQUEST['step'] == 'consignee')
 
     if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'get_state_list'){
         $sql = 'SELECT region_id, region_code, region_name FROM ' . $GLOBALS['ecs']->table('region') .
-            " WHERE region_type = '1' AND parent_id = '".$_REQUEST['country_id']."'";
+            " WHERE region_type = '1' AND parent_id = '" . compile_str($_REQUEST['country_id']) ."'";
         $res = $GLOBALS['db']->GetAll($sql);
         make_json_response_front($res);
     }

@@ -87,7 +87,7 @@ elseif ($_REQUEST['act'] == 'batch_remove')
 }
 
 /*------------------------------------------------------ */
-//-- 批量恢复
+//-- 批量发送
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'batch_send')
 {
@@ -100,13 +100,16 @@ elseif ($_REQUEST['act'] == 'batch_send')
     $sql = "SELECT template_subject, template_content ".
         " FROM ".$GLOBALS['ecs']->table('mail_templates') .
         " WHERE template_id = ".$email_content_id;
-    $email_content = $db->getOne($sql);
+    $email_contents = $db->getAll($sql);
 
     $sql = "select * from " . $ecs->table('email_list') .
             " WHERE id " . db_create_in(join(',', $_POST['checkboxes']));
-    $email_list = $db->query($sql);
+    $email_list = $db->getAll($sql);
     foreach($email_list as $email){
-        send_mail('', $email, $email['template_subject'], $email['template_content'], 0);
+        foreach($email_contents as $email_content){
+            $template_content = str_replace('{{email}}', $email['email'], $email_content['template_content']);
+            send_mail('', $email['email'], $email_content['template_subject'], $template_content, 1);
+        }
     }
     $lnk[] = array('text' => $_LANG['back_list'], 'href' => 'email_list.php?act=list');
     sys_msg(sprintf('发送成功', count($email_list)), 0, $lnk);
@@ -147,7 +150,7 @@ function get_email_list()
         /* 查询 */
 
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') .
-            " ORDER BY ordernum desc" .
+            " ORDER BY ordernum asc" .
             " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
         set_filter($filter, $sql);
