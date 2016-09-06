@@ -19,7 +19,12 @@ admin_priv('email_list');
 if ($_REQUEST['act'] == 'list')
 {
     $emaildb = get_email_list();
+    $sql = "SELECT * ".
+        " FROM ".$GLOBALS['ecs']->table('mail_templates') .
+        " WHERE type = 'magazine'";
+    $email_contents = $db->getAll($sql);
     $smarty->assign('full_page',    1);
+    $smarty->assign('email_contents', $email_contents);
     $smarty->assign('ur_here', $_LANG['email_list']);
     $smarty->assign('emaildb',      $emaildb['emaildb']);
     $smarty->assign('filter',       $emaildb['filter']);
@@ -84,19 +89,27 @@ elseif ($_REQUEST['act'] == 'batch_remove')
 /*------------------------------------------------------ */
 //-- 批量恢复
 /*------------------------------------------------------ */
-elseif ($_REQUEST['act'] == 'batch_unremove')
+elseif ($_REQUEST['act'] == 'batch_send')
 {
     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes']))
     {
         sys_msg($_LANG['no_select_email'], 1);
     }
 
-    $sql = "UPDATE " . $ecs->table('email_list') .
-            " SET stat = 1 WHERE stat <> 1 AND id " . db_create_in(join(',', $_POST['checkboxes']));
-    $db->query($sql);
+    $email_content_id = $_POST['email_content_id'];
+    $sql = "SELECT template_subject, template_content ".
+        " FROM ".$GLOBALS['ecs']->table('mail_templates') .
+        " WHERE template_id = ".$email_content_id;
+    $email_content = $db->getOne($sql);
 
+    $sql = "select * from " . $ecs->table('email_list') .
+            " WHERE id " . db_create_in(join(',', $_POST['checkboxes']));
+    $email_list = $db->query($sql);
+    foreach($email_list as $email){
+        send_mail('', $email, $email['template_subject'], $email['template_content'], 0);
+    }
     $lnk[] = array('text' => $_LANG['back_list'], 'href' => 'email_list.php?act=list');
-    sys_msg(sprintf($_LANG['batch_unremove_succeed'], $db->affected_rows()), 0, $lnk);
+    sys_msg(sprintf('发送成功', count($email_list)), 0, $lnk);
 }
 
 /*------------------------------------------------------ */
@@ -134,7 +147,7 @@ function get_email_list()
         /* 查询 */
 
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') .
-            " ORDER BY " . $filter['sort_by'] . ' ' . $filter['sort_order'] .
+            " ORDER BY ordernum desc" .
             " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
         set_filter($filter, $sql);

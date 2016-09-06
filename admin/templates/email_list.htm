@@ -11,12 +11,18 @@
 <tr>
 <th width="5%"><input onclick='listTable.selectAll(this, "checkboxes")' type="checkbox"><a href="javascript:listTable.sort('id'); ">{$lang.id}</a>{$sort_id}</th>
 <th><a href="javascript:listTable.sort('email'); ">{$lang.email_val}</a>{$sort_email}</th>
+<th>优先级</th>
+<th>国家</th>
+<th>已发送次数</th>
 <th width="15%"><a href="javascript:listTable.sort('stat'); ">{$lang.stat.name}</a>{$sort_stat}</th>
 </tr>
 {foreach from=$emaildb item=val}
 <tr>
   <td><input name="checkboxes[]" type="checkbox" value="{$val.id}" />{$val.id}</td>
   <td>{$val.email}</td>
+  <td>{$val.ordernum}</td>
+  <td>{$val.country}</td>
+  <td>{$val.sendcount}</td>
   <td align="center">{$lang.stat[$val.stat]}</td>
 </tr>
 {foreachelse}
@@ -25,11 +31,19 @@
 </table>
 <table id="page-table" cellspacing="0">
   <tr>
+    <td>选择发送内容</td>
+    <td>
+      <select name="email_content_id">
+        {foreach from=$email_contents item=val}
+        <option value="{$val.template_id}">{$val.template_subject}</option>
+        {/foreach}
+      </select>
+    </td>
     <td>
       <input type="hidden" name="act" value="" />
       <input type="button" id="btnSubmit1" value="{$lang.button_exit}" disabled="true" class="button" onClick="javascript:document.listForm.act.value='batch_exit';document.listForm.submit();" />
       <input type="button" id="btnSubmit2" value="{$lang.button_remove}" disabled="true" class="button" onClick="javascript:document.listForm.act.value='batch_remove';document.listForm.submit();" />
-      <input type="button" id="btnSubmit3" value="{$lang.button_unremove}" disabled="true" class="button" onClick="javascript:document.listForm.act.value='batch_unremove';document.listForm.submit();" />
+      <input type="button" id="btnSubmit3" value="发送" disabled="true" class="button" onClick="javascript:document.listForm.act.value='batch_send';document.listForm.submit();" />
     </td>
     <td align="right" nowrap="true">
     {include file="page.htm"}

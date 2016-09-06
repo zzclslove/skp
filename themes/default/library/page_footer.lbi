@@ -1,11 +1,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <div class="foot-body">
-
+    <div class="site-server-box" data-site="site" data-spm="20" style="border-bottom:0">
+        <div class="container" style="margin-top:20px;font-size: 14px;line-height: 28px;color:#999">
+            <p>Customer Service Email: <span style="color: #5a7ea8;">service@openskyphone.com</span></p>
+            <p>We're here to help! We respond to emails as quickly as possible, every day of the week, in the order they're received.</p>
+        </div>
+    </div>
   <div class="site-server-box" data-site="site" data-spm="20">
   	<div class="container">
   		<div class="site-item"><i class="icon i-great">&nbsp;</i>
   			<h3>Great Value</h3>
-  			<p>We offer competitive prices on our 100 million plus product range.</p>
+  			<p>We offer competitive prices on our all plus product range.</p>
   		</div>
   		<div class="site-item"><i class="icon i-delivery">&nbsp;</i>
   			<h3>Worldwide Delivery</h3>
@@ -25,39 +30,12 @@
   		</div>
   	</div>
   </div>
-
   <div class="clear10"></div>
-  <!--底部导航 start-->
- <!--{if $helps}-->
-    <!--
-    <div class="foot-help">
-      <!-- {foreach from=$helps item=help_cat name=foo} -->
-        {if $smarty.foreach.foo.iteration < 5}
-        <dl>
-          <dt class="xs-{$smarty.foreach.foo.iteration}">{$help_cat.cat_name}</dt>
-            <!-- {foreach from=$help_cat.article item=item} -->
-          <dd><a href="{$item.url}" target="_blank" title="{$item.title|escape:html}">{$item.short_title}</a></dd>
-          <!-- {/foreach} --> 
-        </dl>
-        {/if} 
-        <!-- {/foreach} --> 
-        <div class="foot-weixin">
-          <div class="weixin-txt">关注demo微信</div>
-          <div class="weixin-pic">
-            <img src="images/weixin.jpg">
-          </div>
-        </div>
-    </div>
-    -->
-    <!--{/if}--> 
-    
-   
-  <!--底部导航 end-->
   <div class="blank"></div>
   <!--版权 start-->
-<div class="footer_info"> © 2005-2016 chinarephone.com All rights reserved.<br />
-      {foreach from=$lang.p_y item=pv}{$pv}{/foreach}{$licensed}<br />
-    </div>
+  <div class="footer_info"> © 2005-2016 openskyphone.com All rights reserved.<br />
+  {foreach from=$lang.p_y item=pv}{$pv}{/foreach}{$licensed}<br />
+  </div>
   <div class="clear10"></div>
 </div>
  
