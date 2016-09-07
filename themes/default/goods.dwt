@@ -56,12 +56,8 @@ function reg(str){
     <div id="goodsInfo" class="clearfix">
       <!--商品图片和相册 start-->
       <div style="overflow: hidden">
-      <div id="product_detail_img" class="imgInfo loaded">
-        <!-- {if $pictures}-->
-        <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
-        <!-- {else} -->
-        <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
-        <!-- {/if}-->
+      <div id="product_detail_img" class="imgInfo">
+        <img src="" alt="{$goods.goods_name|escape:html}"/>
       </div>
       <!--商品图片和相册 end-->
       <div class="textInfo">
@@ -172,7 +168,7 @@ function reg(str){
               <!-- {if $cfg.goodsattr_style eq 1} -->
               <!-- {foreach from=$spec.values item=value key=key} -->
               <label class="goods-spec-selector {if $key eq 0}selected{/if}" for="spec_value_{$value.id}">
-              <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} />
+              <input label="{$value.label}" type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} />
               {$value.label}{if $value.price != 0} [ {if $value.price gt 0}+{elseif $value.price lt 0}-{/if}{$value.format_price|abs}]{/if}</label>
               <!-- {/foreach} -->
               <input type="hidden" name="spec_list" value="{$key}" />
@@ -223,7 +219,7 @@ function reg(str){
             <div id="demo1" style="float:left">
               <ul>
                 <!-- {foreach from=$pictures item=picture}-->
-                <li><a href="javascript:;"><img dsrc="{$picture.img_url}" src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" alt="{$goods.goods_name}" class="B_blue" /></a></li>
+                <li><a href="javascript:;"><img des="{$picture.img_desc}" dsrc="{$picture.img_url}" src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" alt="{$goods.goods_name}" class="B_blue" /></a></li>
                 <!--{/foreach}-->
               </ul>
             </div>
@@ -311,6 +307,33 @@ onload = function(){
 }
 $('.goods-spec-selector input').click(function(){
   changePrice();
+  var self = $(this);
+  $('.gallery img').each(function(i, n){
+    if(self.attr('label').trim() == $(n).attr('des').trim()){
+      if($(n).hasClass('loaded')){
+        $('#goodsInfo .imgInfo').html('<img src="' + $(n).attr('dsrc') + '">');
+        cloudZoomMainImage();
+      }else{
+        $('#goodsInfo .imgInfo').removeClass('loaded');
+        var mainImage = new Image();
+        var imgSrc = $(n).attr('dsrc');
+        mainImage.src = imgSrc;
+        if(mainImage.complete){
+          $('#goodsInfo .imgInfo').html('<img src="' + $(n).attr('dsrc') + '">');
+          $('#goodsInfo .imgInfo').addClass('loaded');
+          $(n).addClass('loaded');
+          cloudZoomMainImage();
+        }else{
+          $(mainImage).load(function(){
+            $('#goodsInfo .imgInfo').html('<img src="' + $(n).attr('dsrc') + '">');
+            $('#goodsInfo .imgInfo').addClass('loaded');
+            $(n).addClass('loaded');
+            cloudZoomMainImage();
+          });
+        }
+      }
+    }
+  });
   $(this).parent().parent().find('.goods-spec-selector').removeClass('selected');
   $(this).parent().addClass('selected');
 });
@@ -341,7 +364,6 @@ function changePriceResponse(res)
       document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
   }
 }
-<!-- {/literal} -->
 
 initcloudZoomMainImage();
 $('#goodsInfo .gallery li').click(function(){
@@ -381,6 +403,42 @@ function cloudZoomMainImage(){
   }
 }
 function initcloudZoomMainImage(){
+  var mark = 0;
+  $('.goods-spec-selector input').each(function(a, b){
+    if($(b).prop('checked')){
+      $('.gallery img').each(function(i, n){
+        if($(b).attr('label').trim() == $(n).attr('des').trim()){
+          mark = 1;
+          if($(n).hasClass('loaded')){
+            $('#goodsInfo .imgInfo').html('<img src="' + $(n).attr('dsrc') + '">');
+            cloudZoomMainImage();
+          }else{
+            $('#goodsInfo .imgInfo').removeClass('loaded');
+            var mainImage = new Image();
+            var imgSrc = $(n).attr('dsrc');
+            mainImage.src = imgSrc;
+            if(mainImage.complete){
+              $('#goodsInfo .imgInfo').html('<img src="' + $(n).attr('dsrc') + '">');
+              $('#goodsInfo .imgInfo').addClass('loaded');
+              $(n).addClass('loaded');
+              cloudZoomMainImage();
+            }else{
+              $(mainImage).load(function(){
+                $('#goodsInfo .imgInfo').html('<img src="' + $(n).attr('dsrc') + '">');
+                $('#goodsInfo .imgInfo').addClass('loaded');
+                $(n).addClass('loaded');
+                cloudZoomMainImage();
+              });
+            }
+          }
+        }
+      });
+    }
+  });
+  if(mark == 0){
+    $('#goodsInfo .imgInfo img').attr('src', $($('.gallery img')[0]).attr('dsrc'))
+    $('#product_detail_img').addClass('loaded');
+  }
   var imgsrc = $('#goodsInfo .imgInfo img').attr('src');
   var mainImage = new Image();
   mainImage.src = imgsrc;
@@ -392,5 +450,6 @@ function initcloudZoomMainImage(){
     });
   }
 }
+<!-- {/literal} -->
 </script>
 </html>

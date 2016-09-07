@@ -332,7 +332,23 @@
                 <a href="goods.php?act=show_image&img_url={$img.img_url}" target="_blank">
                 <img src="../{if $img.thumb_url}{$img.thumb_url}{else}{$img.img_url}{/if}" {if $thumb_width neq 0}width="{$thumb_width}"{/if} {if $thumb_height neq 0}height="{$thumb_height}"{/if} border="0" />
                 </a><br />
-                描述<input type="text" value="{$img.img_desc|escape}" size="15" name="old_img_desc[{$img.img_id}]" /><br />
+                描述{$img.img_desc}<select name="old_img_desc[{$img.img_id}]">
+                      <option value="">请选择...</option>
+                      <option {if $img.img_desc eq 'White'}selected{/if} value="White">White</option>
+                      <option {if $img.img_desc eq "Black"}selected{/if} value="Black">Black</option>
+                      <option {if $img.img_desc eq 'Gold'}selected{/if} value="Gold">Gold</option>
+                      <option {if $img.img_desc eq 'Grey'}selected{/if} value="Grey">Grey</option>
+                      <option {if $img.img_desc eq 'Silver'}selected{/if} value="Silver">Silver</option>
+                      <option {if $img.img_desc eq "RoseGold"}selected{/if} value="Rose Gold">Rose Gold</option>
+                      <option {if $img.img_desc eq 'Blue'}selected{/if} value="Blue">Blue</option>
+                      <option {if $img.img_desc eq 'Green'}selected{/if} value="Green">Green</option>
+                      <option {if $img.img_desc eq 'Pink'}selected{/if} value="Pink">Pink</option>
+                      <option {if $img.img_desc eq 'Yellow'}selected{/if} value="Yellow">Yellow</option>
+                      <option {if $img.img_desc eq 'Red'}selected{/if} value="Red">Red</option>
+                      <option {if $img.img_desc eq 'Orange'}selected{/if} value="Orange">Orange</option>
+                      <option {if $img.img_desc eq 'Magenta'}selected{/if} value="Magenta">Magenta</option>
+                      <option {if $img.img_desc eq 'Purple'}selected{/if} value="Purple">Purple</option>
+                    </select><br />
                 排序<input type="text" value="{$img.img_order}" size="5" name="img_order[{$img.img_id}]" />
               </div>
               {/foreach}

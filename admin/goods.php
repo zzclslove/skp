@@ -442,6 +442,12 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('link_goods_list', $link_goods_list);
     $smarty->assign('group_goods_list', $group_goods_list);
     $smarty->assign('goods_article_list', $goods_article_list);
+    foreach ($img_list as $key => $gallery_img)
+    {
+        if(strpos($gallery_img['img_desc'], 'Rose') > -1){
+            $img_list[$key]['img_desc'] = 'RoseGold';
+        }
+    }
     $smarty->assign('img_list', $img_list);
     $smarty->assign('goods_type_list', goods_type_list($goods['goods_type']));
     $smarty->assign('gd', gd_version());

@@ -18,11 +18,13 @@ admin_priv('email_list');
 
 if ($_REQUEST['act'] == 'list')
 {
-    $emaildb = get_email_list();
+    $stat   = empty($_REQUEST['stat']) ? '0' : trim($_REQUEST['stat']);
+    $emaildb = get_email_list($stat);
     $sql = "SELECT * ".
         " FROM ".$GLOBALS['ecs']->table('mail_templates') .
         " WHERE type = 'magazine'";
     $email_contents = $db->getAll($sql);
+    $smarty->assign('stat',    $stat);
     $smarty->assign('full_page',    1);
     $smarty->assign('email_contents', $email_contents);
     $smarty->assign('ur_here', $_LANG['email_list']);
@@ -105,14 +107,22 @@ elseif ($_REQUEST['act'] == 'batch_send')
     $sql = "select * from " . $ecs->table('email_list') .
             " WHERE id " . db_create_in(join(',', $_POST['checkboxes']));
     $email_list = $db->getAll($sql);
+    $success_count = 0;
+    $fail_count = 0;
     foreach($email_list as $email){
         foreach($email_contents as $email_content){
             $template_content = str_replace('{{email}}', $email['email'], $email_content['template_content']);
-            send_mail('', $email['email'], $email_content['template_subject'], $template_content, 1);
+            if(send_mail('', $email['email'], $email_content['template_subject'], $template_content, 1)){
+                $sql = "update " . $GLOBALS['ecs']->table('email_list') . " set sendcount = sendcount + 1 where id = " . $email['id'];
+                $db->query($sql);
+                $success_count ++;
+            }else{
+                $fail_count ++;
+            }
         }
     }
     $lnk[] = array('text' => $_LANG['back_list'], 'href' => 'email_list.php?act=list');
-    sys_msg(sprintf('发送成功', count($email_list)), 0, $lnk);
+    sys_msg(sprintf($success_count.'发送成功, '.$fail_count.'发送失败', count($email_list)), 0, $lnk);
 }
 
 /*------------------------------------------------------ */
@@ -133,7 +143,7 @@ elseif ($_REQUEST['act'] == 'batch_exit')
     sys_msg(sprintf($_LANG['batch_exit_succeed'], $db->affected_rows()), 0, $lnk);
 }
 
-function get_email_list()
+function get_email_list($stat='0')
 {
     $result = get_filter();
     if ($result === false)
@@ -141,7 +151,7 @@ function get_email_list()
         $filter['sort_by']      = empty($_REQUEST['sort_by']) ? 'stat' : trim($_REQUEST['sort_by']);
         $filter['sort_order']   = empty($_REQUEST['sort_order']) ? 'ASC' : trim($_REQUEST['sort_order']);
 
-        $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list');
+        $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         /* 分页大小 */
@@ -149,7 +159,7 @@ function get_email_list()
 
         /* 查询 */
 
-        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') .
+        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat .
             " ORDER BY ordernum asc" .
             " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
