@@ -59,7 +59,7 @@
             <input type="submit" name="submit" value="Login" class="us_Submit" />
             </td>
           </tr>
-	  <tr><td></td><td><a href="user.php?act=qpassword_name" class="f3">{$lang.get_password_by_question}</a>&nbsp;&nbsp;&nbsp;<a href="user.php?act=get_password" class="f3">{$lang.get_password_by_mail}</a></td></tr>
+	  <tr><td colspan="2"><a href="user.php?act=get_password" class="f3">{$lang.get_password_by_mail}</a></td></tr>
       </table>
     </form>
   </div>

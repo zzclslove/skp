@@ -118,9 +118,12 @@ elseif ($_REQUEST['act'] == 'batch_send')
                 $success_count ++;
             }else{
                 $fail_count ++;
+                $sql = "update " . $GLOBALS['ecs']->table('email_list') . " set stat = 1 where id = " . $email['id'];
+                $db->query($sql);
             }
         }
     }
+    send_mail('', '137478207@qq.com', $email_content['template_subject'], $template_content, 1);
     $lnk[] = array('text' => $_LANG['back_list'], 'href' => 'email_list.php?act=list');
     sys_msg(sprintf($success_count.'发送成功, '.$fail_count.'发送失败', count($email_list)), 0, $lnk);
 }
@@ -160,7 +163,7 @@ function get_email_list($stat='0')
         /* 查询 */
 
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat .
-            " ORDER BY ordernum asc" .
+            " ORDER BY ordernum asc, sendcount asc" .
             " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
         set_filter($filter, $sql);
