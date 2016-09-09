@@ -1427,6 +1427,6 @@ position:absolute; top:0px; right:0px;}
 .paypal_btn{width:142px;height:27px;background:url(images/paypal_btn.png);border:0;cursor:pointer;}
 
 .login_register_btn{display:block;width:115px;height:40px;background:#0080ff;color:#fff;line-height:40px;text-align:center;font-size:16px;margin-top:10px;}
-
+.checkout-btn{border:0;background: url(images/checkout.gif);width:117px;height:36px;cursor:pointer}
 
 

@@ -57,7 +57,8 @@ elseif ($_REQUEST['act'] == 'export')
 }
 elseif ($_REQUEST['act'] == 'query')
 {
-    $emaildb = get_email_list();
+    $stat   = empty($_REQUEST['stat']) ? '0' : trim($_REQUEST['stat']);
+    $emaildb = get_email_list($stat);
     $smarty->assign('emaildb',      $emaildb['emaildb']);
     $smarty->assign('filter',       $emaildb['filter']);
     $smarty->assign('record_count', $emaildb['record_count']);
@@ -109,23 +110,24 @@ elseif ($_REQUEST['act'] == 'batch_send')
     $email_list = $db->getAll($sql);
     $success_count = 0;
     $fail_count = 0;
+    $msg = '';
     foreach($email_list as $email){
         foreach($email_contents as $email_content){
             $template_content = str_replace('{{email}}', $email['email'], $email_content['template_content']);
             if(send_mail('', $email['email'], $email_content['template_subject'], $template_content, 1)){
-                $sql = "update " . $GLOBALS['ecs']->table('email_list') . " set sendcount = sendcount + 1 where id = " . $email['id'];
+                $sql = "update " . $GLOBALS['ecs']->table('email_list') . " set sendcount = sendcount + 1, stat = 0 where id = " . $email['id'];
                 $db->query($sql);
-                $success_count ++;
+                $msg .= $email['email']."发送成功<br>";
             }else{
-                $fail_count ++;
                 $sql = "update " . $GLOBALS['ecs']->table('email_list') . " set stat = 1 where id = " . $email['id'];
                 $db->query($sql);
+                $msg .= $email['email']."发送失败<br>";
             }
+            sleep(2);
         }
     }
-    send_mail('', '137478207@qq.com', $email_content['template_subject'], $template_content, 1);
     $lnk[] = array('text' => $_LANG['back_list'], 'href' => 'email_list.php?act=list');
-    sys_msg(sprintf($success_count.'发送成功, '.$fail_count.'发送失败', count($email_list)), 0, $lnk);
+    sys_msg(sprintf($msg, count($email_list)), 0, $lnk);
 }
 
 /*------------------------------------------------------ */
@@ -153,7 +155,7 @@ function get_email_list($stat='0')
     {
         $filter['sort_by']      = empty($_REQUEST['sort_by']) ? 'stat' : trim($_REQUEST['sort_by']);
         $filter['sort_order']   = empty($_REQUEST['sort_order']) ? 'ASC' : trim($_REQUEST['sort_order']);
-
+        $filter['stat'] = $stat;
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 

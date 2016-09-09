@@ -30,7 +30,7 @@
   <!-- {if $step eq "cart"} -->
   <!-- 购物车内容 -->
   {* 包含脚本文件 *}
-  {insert_scripts files='showdiv.js'}
+  {insert_scripts files='showdiv.js,listtable.js'}
   <script type="text/javascript">
   {foreach from=$lang.password_js item=item key=key}
     var {$key} = "{$item}";
@@ -41,6 +41,7 @@
         <form id="formCart" name="formCart" method="post" action="flow.php">
            <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
             <tr>
+                <!--<th bgcolor="#ffffff" width="25"><input onclick="listTable.selectAll(this, 'checkboxes')" type="checkbox"></th>-->
               <th bgcolor="#ffffff">{$lang.goods_name}</th>
       <!-- {if $show_goods_attribute eq 1} 显示商品属性 -->
               <th bgcolor="#ffffff" style="text-align: left">{$lang.goods_attr}</th>
@@ -55,6 +56,7 @@
             </tr>
             <!-- {foreach from=$goods_list item=goods} -->
             <tr>
+                <!--<td bgcolor="#ffffff"><input type="checkbox" name="checkboxes[]" value="{$goods.goods_id}"></td>-->
               <td bgcolor="#ffffff" align="center">
                 <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 商品 -->
                   <!-- {if $show_goods_thumb eq 1} -->
@@ -119,12 +121,16 @@
           </table>
           <input type="hidden" name="step" value="update_cart" />
         </form>
+        <form id="formCheckOut" name="formCart" method="get" action="flow.php">
+        <input type="hidden" name="step" value="checkout" />
         <table width="99%" align="center" border="0" cellpadding="5" cellspacing="0" bgcolor="#dddddd">
           <tr>
             <td bgcolor="#ffffff"><a href="./"><img src="images/continue.gif" alt="continue" /></a></td>
-            <td bgcolor="#ffffff" align="right"><a href="flow.php?step=checkout"><img src="images/checkout.gif" alt="checkout" /></a></td>
+            <td bgcolor="#ffffff" align="right">
+                <input class="checkout-btn" type="submit" value="">
           </tr>
         </table>
+        </form>
        <!-- {if $smarty.session.user_id gt 0} -->
        {insert_scripts files='transport.js'}
        <script type="text/javascript" charset="utf-8">

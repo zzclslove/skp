@@ -96,7 +96,7 @@ elseif ($_REQUEST['act'] == 'edit')
     {
         $magazine_name = trim($_POST['magazine_name']);
         $magazine_content = trim($_POST['magazine_content']);
-        $magazine_content = str_replace('src=\"','src=\"http://'.$_SERVER['HTTP_HOST'],$magazine_content);
+       //$magazine_content = str_replace('src=\"','src=\"http://'.$_SERVER['HTTP_HOST'],$magazine_content);
         $time = gmtime();
         $db->query("UPDATE " . $ecs->table('mail_templates') . " SET is_html = 1, template_subject = '$magazine_name', template_content = '$magazine_content', last_modify = '$time' WHERE type = 'magazine' AND template_id = '$id'");
         $links[] = array('text' => $_LANG['magazine_list'], 'href' => 'magazine_list.php?act=list');
