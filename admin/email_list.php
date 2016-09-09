@@ -123,7 +123,6 @@ elseif ($_REQUEST['act'] == 'batch_send')
                 $db->query($sql);
                 $msg .= $email['email']."发送失败<br>";
             }
-            sleep(2);
         }
     }
     $lnk[] = array('text' => $_LANG['back_list'], 'href' => 'email_list.php?act=list');

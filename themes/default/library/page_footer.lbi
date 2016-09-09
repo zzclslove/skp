@@ -2,7 +2,8 @@
 <div class="foot-body">
     <div class="site-server-box" data-site="site" data-spm="20" style="border-bottom:0">
         <div class="container" style="margin-top:20px;font-size: 14px;line-height: 28px;color:#999">
-            <p>Customer Service Email: <span style="color: #5a7ea8;">service@openskyphone.com</span></p>
+			<p>All products support the <a style="color: #5a7ea8;text-decoration: underline;" target="_blank" href="article.php?id=7">return and warranty</a>.</p>
+            <p>Customer Service Email: <span style="color: #5a7ea8;">service@openskyphone.com.</span></p>
             <p>We're here to help! We respond to emails as quickly as possible, every day of the week, in the order they're received.</p>
         </div>
     </div>
@@ -14,7 +15,7 @@
   		</div>
   		<div class="site-item"><i class="icon i-delivery">&nbsp;</i>
   			<h3>Worldwide Delivery</h3>
-  			<p>With sites in 5 languages, we ship to over 200 countries &amp; regions.</p>
+  			<p>We support DHL, Sweden Post, Singapore Post, the fast way cost 3-5 days· </p>
   		</div>
   		<div class="site-item"><i class="icon i-payment">&nbsp;</i>
   			<h3>Safe Payment</h3>

