@@ -102,7 +102,7 @@ elseif ($_REQUEST['act'] == 'edit')
         $links[] = array('text' => $_LANG['magazine_list'], 'href' => 'magazine_list.php?act=list');
         sys_msg($_LANG['edit_ok'], 0, $links);
     }
-} 
+}
 elseif ($_REQUEST['act'] == 'del')
 {
     $id = intval($_REQUEST['id']);

@@ -249,7 +249,7 @@ function send_mail($name, $email, $subject, $content, $type = 0, $notification=f
         $headers = array();
         $headers[] = 'Date: ' . gmdate('D, j M Y H:i:s') . ' +0000';
         $headers[] = 'To: "' . '=?' . $charset . '?B?' . base64_encode($name) . '?=' . '" <' . $email. '>';
-        $headers[] = 'From: "' . '=?' . $charset . '?B?' . base64_encode($shop_name) . '?='.'" <test458596585@hotmail.com>';
+        $headers[] = 'From: "' . '=?' . $charset . '?B?' . base64_encode($shop_name) . '?='.'" <' . $GLOBALS['_CFG']['smtp_mail'] . '>';
         $headers[] = 'Subject: ' . '=?' . $charset . '?B?' . base64_encode($subject) . '?=';
         $headers[] = $content_type . '; format=flowed';
         $headers[] = 'Content-Transfer-Encoding: base64';

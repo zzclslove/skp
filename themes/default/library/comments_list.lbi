@@ -15,7 +15,7 @@
         <img src="../images/stars{$comment.rank}.gif" alt="{$comment.comment_rank}" />
         <p>{$comment.content}</p>
 				<!-- {if $comment.re_content} -->
-        <p><font class="f1">{$lang.admin_username}</font>{$comment.re_content}</p>
+        <p><font class="f1">{$lang.admin_username}: </font>{$comment.re_content}</p>
 				<!-- {/if} -->
         </li>
         <!-- {/foreach} -->

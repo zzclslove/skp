@@ -1,7 +1,7 @@
 {if $full_page}
 {include file="pageheader.htm"}
 {insert_scripts files="../js/utils.js,listtable.js"}
-  <form method="get" action="email_list.php" name="searchForm">
+  <form method="get" action="email_list.php" id="searchForm" name="searchForm">
     <div class="form-div">
       <input type="hidden" name="act" value="list" />
       <input type="button" name="export" value="{$lang.export}" onclick="location.href='email_list.php?act=export';" class="button" />
@@ -11,9 +11,12 @@
         <option {if $stat eq '1'} selected {/if} value="1">无效</option>
         <option {if $stat eq '2'} selected {/if} value="2">已退订</option>
       </select>
+      <span>域名：</span>
+      <input type="text" name="domain" value="{$domain}" style="width: 150px" />
+      <input type="submit" value="搜索" />
     </div>
   </form>
-<form method="post" action="email_list.php" name="listForm">
+
   <div class="list-div" id="listDiv">
     {/if}
     <table cellspacing='1' cellpadding='3'>
@@ -28,7 +31,7 @@
       {foreach from=$emaildb item=val}
         <tr>
           <td><input name="checkboxes[]" type="checkbox" value="{$val.id}" />{$val.id}</td>
-          <td>{$val.email}</td>
+          <td>{$val.email} <a href="send_email.php?email={$val.email}">手动发送</a></td>
           <td>{$val.ordernum}</td>
           <td>{$val.country}</td>
           <td>{$val.sendcount}</td>
@@ -38,7 +41,7 @@
         <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
       {/foreach}
     </table>
-    <table id="page-table" cellspacing="0">
+    <table style="display: none" id="page-table" cellspacing="0">
       <tr>
         <td>选择发送内容</td>
         <td>
@@ -54,27 +57,25 @@
           <input type="button" id="btnSubmit2" value="{$lang.button_remove}" disabled="true" class="button" onClick="javascript:document.listForm.act.value='batch_remove';document.listForm.submit();" />
           <input type="button" id="btnSubmit3" value="发送" disabled="true" class="button" onClick="javascript:document.listForm.act.value='batch_send';document.listForm.submit();" />
         </td>
+      </tr>
+    </table>
+    <form method="post" action="email_list.php" name="listForm">
+    <table id="page-table" cellspacing="0">
+      <tr>
         <td align="right" nowrap="true">
           {include file="page.htm"}
         </td>
       </tr>
     </table>
+    </form>
     {if $full_page}
   </div>
-</form>
   <script type="Text/Javascript" language="JavaScript">
     listTable.recordCount = {$record_count};
     listTable.pageCount = {$page_count};
     {foreach from=$filter item=item key=key}
     listTable.filter.{$key} = '{$item}';
     {/foreach}
-    <!--
-            onload = function()
-    {
-      // 开始检查订单
-      startCheckOrder();
-    }
-    //-->
   </script>
 {include file="pagefooter.htm"}
 {/if}

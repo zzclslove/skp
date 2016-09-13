@@ -911,13 +911,13 @@ function checkConsignee(frm)
     msg.push('Postalcode is Empty');
     err = true;
   }
-
+/***
   if (frm.elements['zipcode'] && frm.elements['zipcode'].value.length > 0 && (!Utils.isNumber(frm.elements['zipcode'].value)))
   {
     err = true;
     msg.push(zip_not_num);
   }
-
+***/
   if (Utils.isEmpty(frm.elements['tel'].value))
   {
     err = true;

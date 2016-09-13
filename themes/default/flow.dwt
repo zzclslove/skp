@@ -41,7 +41,6 @@
         <form id="formCart" name="formCart" method="post" action="flow.php">
            <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
             <tr>
-                <!--<th bgcolor="#ffffff" width="25"><input onclick="listTable.selectAll(this, 'checkboxes')" type="checkbox"></th>-->
               <th bgcolor="#ffffff">{$lang.goods_name}</th>
       <!-- {if $show_goods_attribute eq 1} 显示商品属性 -->
               <th bgcolor="#ffffff" style="text-align: left">{$lang.goods_attr}</th>
@@ -56,7 +55,6 @@
             </tr>
             <!-- {foreach from=$goods_list item=goods} -->
             <tr>
-                <!--<td bgcolor="#ffffff"><input type="checkbox" name="checkboxes[]" value="{$goods.goods_id}"></td>-->
               <td bgcolor="#ffffff" align="center">
                 <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 商品 -->
                   <!-- {if $show_goods_thumb eq 1} -->

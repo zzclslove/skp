@@ -19,13 +19,15 @@ admin_priv('email_list');
 if ($_REQUEST['act'] == 'list')
 {
     $stat   = empty($_REQUEST['stat']) ? '0' : trim($_REQUEST['stat']);
-    $emaildb = get_email_list($stat);
+    $domain   = empty($_REQUEST['domain']) ? '' : trim($_REQUEST['domain']);
+    $emaildb = get_email_list($stat,$domain);
     $sql = "SELECT * ".
         " FROM ".$GLOBALS['ecs']->table('mail_templates') .
         " WHERE type = 'magazine'";
     $email_contents = $db->getAll($sql);
     $smarty->assign('stat',    $stat);
     $smarty->assign('full_page',    1);
+    $smarty->assign('domain',    $domain);
     $smarty->assign('email_contents', $email_contents);
     $smarty->assign('ur_here', $_LANG['email_list']);
     $smarty->assign('emaildb',      $emaildb['emaildb']);
@@ -58,7 +60,8 @@ elseif ($_REQUEST['act'] == 'export')
 elseif ($_REQUEST['act'] == 'query')
 {
     $stat   = empty($_REQUEST['stat']) ? '0' : trim($_REQUEST['stat']);
-    $emaildb = get_email_list($stat);
+    $domain   = empty($_REQUEST['domain']) ? '' : trim($_REQUEST['domain']);
+    $emaildb = get_email_list($stat, $domain);
     $smarty->assign('emaildb',      $emaildb['emaildb']);
     $smarty->assign('filter',       $emaildb['filter']);
     $smarty->assign('record_count', $emaildb['record_count']);
@@ -147,7 +150,7 @@ elseif ($_REQUEST['act'] == 'batch_exit')
     sys_msg(sprintf($_LANG['batch_exit_succeed'], $db->affected_rows()), 0, $lnk);
 }
 
-function get_email_list($stat='0')
+function get_email_list($stat='0',$domain='')
 {
     $result = get_filter();
     if ($result === false)
@@ -155,7 +158,8 @@ function get_email_list($stat='0')
         $filter['sort_by']      = empty($_REQUEST['sort_by']) ? 'stat' : trim($_REQUEST['sort_by']);
         $filter['sort_order']   = empty($_REQUEST['sort_order']) ? 'ASC' : trim($_REQUEST['sort_order']);
         $filter['stat'] = $stat;
-        $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat;
+        $filter['domain'] = $domain;
+        $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat . " and email like '%" . $domain ."%'";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         /* 分页大小 */
@@ -163,8 +167,8 @@ function get_email_list($stat='0')
 
         /* 查询 */
 
-        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat .
-            " ORDER BY ordernum asc, sendcount asc" .
+        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat . " and email like '%" . $domain ."%'".
+            " ORDER BY sendcount asc, ordernum desc " .
             " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
         set_filter($filter, $sql);

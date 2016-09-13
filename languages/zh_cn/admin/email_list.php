@@ -12,7 +12,7 @@
  * $Author: liubo $
  * $Id: email_list.php 17217 2011-01-19 06:29:08Z liubo $
  */
-$_LANG['email_val'] = '邮件地址'; 
+$_LANG['email_val'] = '邮件地址';
 $_LANG['stat']['name'] = '状态';
 $_LANG['stat'][0] = '未确认';
 $_LANG['stat'][1] = '无效';
