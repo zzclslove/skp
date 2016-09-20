@@ -167,7 +167,7 @@ function get_email_list($stat='0',$domain='')
 
         /* 查询 */
 
-        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where stat = " . $stat . " and email like '%" . $domain ."%'".
+        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where ordernum in (1, 2) and stat = " . $stat . " and email like '%" . $domain ."%'".
             " ORDER BY sendcount asc, ordernum desc " .
             " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
