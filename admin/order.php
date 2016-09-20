@@ -373,7 +373,7 @@ elseif ($_REQUEST['act'] == 'info')
     /* 取得订单商品及货品 */
     $goods_list = array();
     $goods_attr = array();
-    $sql = "SELECT o.*, IF(o.product_id > 0, p.product_number, g.goods_number) AS storage, o.goods_attr, g.suppliers_id, IFNULL(b.brand_name, '') AS brand_name, p.product_sn
+    $sql = "SELECT o.*, IF(o.product_id > 0, p.product_number, g.goods_number) AS storage, o.goods_attr, g.suppliers_id, g.seller_note, IFNULL(b.brand_name, '') AS brand_name, p.product_sn
             FROM " . $ecs->table('order_goods') . " AS o
                 LEFT JOIN " . $ecs->table('products') . " AS p
                     ON p.product_id = o.product_id
@@ -5207,10 +5207,11 @@ function order_list()
 
         /* 查询 */
         $sql = "SELECT o.order_id, o.order_sn, o.add_time, o.order_status, o.shipping_status, o.order_amount, o.money_paid, o.callback_status," .
-            "o.pay_status, o.consignee, o.address, o.email, o.tel, o.extension_code, o.extension_id, " .
+            "o.pay_status, o.consignee, o.address, o.city, o.states, o.email, o.tel, o.zipcode, o.extension_code, o.extension_id, IFNULL(r.region_name, '') AS region, " .
             "(" . order_amount_field('o.') . ") AS total_fee, " .
             "IFNULL(u.user_name, '" .$GLOBALS['_LANG']['anonymous']. "') AS buyer ".
             " FROM " . $GLOBALS['ecs']->table('order_info') . " AS o " .
+            " LEFT JOIN " . $GLOBALS['ecs']->table('region') . " AS r ON o.country = r.region_id " .
             " LEFT JOIN " .$GLOBALS['ecs']->table('users'). " AS u ON u.user_id=o.user_id ". $where .
             " ORDER BY $filter[sort_by] $filter[sort_order] ".
             " LIMIT " . ($filter['page'] - 1) * $filter['page_size'] . ",$filter[page_size]";
