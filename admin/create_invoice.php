@@ -5,7 +5,7 @@ require_once(ROOT_PATH . 'includes/lib_order.php');
 require_once(ROOT_PATH . 'includes/lib_goods.php');
 require_once(ROOT_PATH . 'includes/cls_matrix.php');
 include_once(ROOT_PATH . 'includes/cls_certificate.php');
-require(dirname(__FILE__) . '/includes/word.php');
+include_once(dirname(__FILE__) . '/includes/word.php');
 
 $where = " {$alias}order_status " .
     db_create_in(array(OS_CONFIRMED, OS_SPLITED, OS_SPLITING_PART)) .
@@ -303,7 +303,7 @@ lang=EN-US style=\'color:#002060\'><o:p>&nbsp;</o:p></span></p>
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>
   <p class=MsoNormal style=\'margin-right:-5.35pt;mso-para-margin-right:-.51gd;
   line-height:125%\'><span style=\'mso-bidi-font-size:10.5pt;line-height:125%;
-  font-family:宋体;mso-ascii-font-family:Arial;mso-hansi-font-family:Arial\'>定单号:</span><span
+  font-family:宋体;mso-ascii-font-family:Arial;mso-hansi-font-family:Arial\'>订单号:</span><span
   lang=EN-US style=\'mso-bidi-font-size:10.5pt;line-height:125%;font-family:
   Arial;mso-bidi-font-family:"Times New Roman"\'>'.$value['order_sn'].'<o:p></o:p></span></p>
   </td>

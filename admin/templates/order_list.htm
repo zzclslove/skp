@@ -78,6 +78,7 @@
      {if $order.callback_status=='false' && ($is_bind_taoda || $is_bind_erp)}
      <a href="javascript:;" onclick="listTable.retry({$order.order_sn})">{$lang.retry}</a>
      {/if}
+     &nbsp;&nbsp;<a target="_blank" href="invoice/{$order.order_sn}.doc">发票</a>
     </td>
   </tr>
   {/foreach}
