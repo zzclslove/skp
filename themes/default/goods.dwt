@@ -117,7 +117,7 @@ function reg(str){
             <li class="padd" style="border-bottom: 1px solid #ccc;padding-bottom: 10px;">
             <div class="customer-service" title="Customer Service Email">
               <div class="service-icon"><img src="images/services-email.png"></div>
-              <div class="service-email" style="font-family: 'Georgia',serif;letter-spacing: 0.05em;">openskyphone@hotmail.com</div>
+              <div class="service-email" style="font-family: 'Georgia',serif;letter-spacing: 0.05em;">service.openskyphone@hotmail.com</div>
             </div>
             </li>
             <!--{if $volume_price_list } -->
