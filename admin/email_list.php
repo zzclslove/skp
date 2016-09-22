@@ -159,7 +159,7 @@ function get_email_list($stat='0',$domain='')
         $filter['sort_order']   = empty($_REQUEST['sort_order']) ? 'ASC' : trim($_REQUEST['sort_order']);
         $filter['stat'] = $stat;
         $filter['domain'] = $domain;
-        $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list') ."where ordernum in (1, 2) and stat = " . $stat . " and email like '%" . $domain ."%'";
+        $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list') ."where ordernum in (1, 2) and stat = " . $stat . " and email like '%" . $domain ."%' and email not like '%@marketplace.amazon.com' ";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         /* 分页大小 */
@@ -167,7 +167,7 @@ function get_email_list($stat='0',$domain='')
 
         /* 查询 */
 
-        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where ordernum in (1, 2) and stat = " . $stat . " and email like '%" . $domain ."%'".
+        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') ."where ordernum in (1, 2) and stat = " . $stat . " and email like '%" . $domain ."%' and email not like '%@marketplace.amazon.com' ".
             " ORDER BY sendcount asc, ordernum desc " .
             " LIMIT " . $filter['start'] . ",$filter[page_size]"; 
 

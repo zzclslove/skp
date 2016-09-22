@@ -14,7 +14,7 @@
       <span>域名：</span>
       <input type="text" name="domain" value="{$domain}" style="width: 150px" />
       <input type="submit" value="搜索" />
-      <span style="">Refurbished Original Phone From China,Stable supply.</span>
+      <span style="">High quality refurbished phones, support for warranty and return.</span>
     </div>
   </form>
 
@@ -32,7 +32,7 @@
       {foreach from=$emaildb item=val}
         <tr>
           <td><input name="checkboxes[]" type="checkbox" value="{$val.id}" />{$val.id}</td>
-          <td>{$val.email} <a rel="{$val.email}" class="sendemail" href="javascript:;">手动发送</a></td>
+          <td style="position: relative;">{$val.email} <a rel="{$val.email}" class="sendemail" href="javascript:;">手动发送</a></td>
           <td>{$val.ordernum}</td>
           <td>{$val.country}</td>
           <td>{$val.sendcount}</td>
@@ -78,20 +78,26 @@
     listTable.filter.{$key} = '{$item}';
     {/foreach}
   </script>
-{include file="pagefooter.htm"}
-{/if}
-<script>
-  $('.sendemail').click(function(){
-    var self = $(this);
-    var email = $(this).attr('rel');
-    $.post('send_email.php?email=' + $(this).attr('rel'),function(res){
-      if(res.trim() != 'false'){
-        window.clipboardData.setData('Text',email);
-        self.parents('tr').remove();
-        window.open('email_template.php?email=' + email);
-      }else{
-        alert('请不要重复给该人发送邮件。');
+  {insert_scripts files="jquery.zclip.min.js"}
+  <script>
+    $('.sendemail').zclip({
+      path: "js/ZeroClipboard.swf",
+      copy: function(){
+        return $(this).attr('rel');
       }
     });
-  });
-</script>
+    $('.sendemail').click(function(){
+      var self = $(this);
+      var email = $(this).attr('rel');
+      $.post('send_email.php?email=' + $(this).attr('rel'),function(res){
+        if(res.trim() != 'false'){
+          self.parents('tr').remove();
+          window.open('email_template.php?email=' + email);
+        }else{
+          alert('请不要重复给该人发送邮件。');
+        }
+      });
+    });
+  </script>
+{include file="pagefooter.htm"}
+{/if}
