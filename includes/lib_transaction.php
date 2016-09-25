@@ -286,7 +286,7 @@ function get_user_orders($user_id, $num = 10, $start = 0)
     /* 取得订单列表 */
     $arr    = array();
 
-    $sql = "SELECT order_id, order_sn, order_status, shipping_status, pay_status, add_time, " .
+    $sql = "SELECT order_id, order_sn, order_status, shipping_status, pay_status, add_time,invoice_no,shipping_name, " .
            "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount - goods_discount_fee) AS total_fee ".
            " FROM " .$GLOBALS['ecs']->table('order_info') .
            " WHERE user_id = '$user_id' ORDER BY add_time DESC";
@@ -331,6 +331,8 @@ function get_user_orders($user_id, $num = 10, $start = 0)
         $row['order_status'] = $GLOBALS['_LANG']['os'][$row['order_status']] . ',' . $GLOBALS['_LANG']['ps'][$row['pay_status']] . ',' . $GLOBALS['_LANG']['ss'][$row['shipping_status']];
 
         $arr[] = array('order_id'       => $row['order_id'],
+                       'invoice_no'    => $row['invoice_no'],
+                       'shipping_name' => $row['shipping_name'],
                        'order_sn'       => $row['order_sn'],
                        'order_time'     => local_date($GLOBALS['_CFG']['time_format'], $row['add_time']),
                        'order_status'   => $row['order_status'],

@@ -13,6 +13,8 @@
       </select>
       <span>域名：</span>
       <input type="text" name="domain" value="{$domain}" style="width: 150px" />
+      <span>优先级大于：</span>
+      <input type="text" name="ordernum" value="{$ordernum}" style="width: 30px" />
       <input type="submit" value="搜索" />
       <span style="">High quality refurbished phones, support for warranty and return.</span>
     </div>
@@ -23,7 +25,8 @@
     <table cellspacing='1' cellpadding='3'>
       <tr>
         <th width="5%"><input onclick='listTable.selectAll(this, "checkboxes")' type="checkbox"><a href="javascript:listTable.sort('id'); ">{$lang.id}</a>{$sort_id}</th>
-        <th><a href="javascript:listTable.sort('email'); ">{$lang.email_val}</a>{$sort_email}</th>
+        <th width="450"><a href="javascript:listTable.sort('email'); ">{$lang.email_val}</a>{$sort_email}</th>
+        <th>操作</th>
         <th>优先级</th>
         <th>国家</th>
         <th>已发送次数</th>
@@ -32,7 +35,8 @@
       {foreach from=$emaildb item=val}
         <tr>
           <td><input name="checkboxes[]" type="checkbox" value="{$val.id}" />{$val.id}</td>
-          <td style="position: relative;">{$val.email} <a rel="{$val.email}" class="sendemail" href="javascript:;">手动发送</a></td>
+          <td>{$val.email}</td>
+          <td style="position: relative;"><a rel="{$val.email}" class="sendemail" href="javascript:;">手动发送</a></td>
           <td>{$val.ordernum}</td>
           <td>{$val.country}</td>
           <td>{$val.sendcount}</td>

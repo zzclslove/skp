@@ -16,6 +16,7 @@
     </select>
     <input type="submit" value="{$lang.button_search}" class="button" />
     <span class="btn-search cl-link" style="padding-left: 20px" onclick="detailSearch()">{$lang.advanced_search}</span>
+      <a target="_blank" class="btn-search cl-link" style="padding-left: 20px" href="unshipgoods.php">所有未发货产品</a>
     <!--ERP link-->
 
       {$erp_icon_html}
@@ -58,7 +59,9 @@
         <a href="order.php?act=info&order_id={$order.order_id}" id="order_{$okey}">{$order.order_sn}{if $order.extension_code eq "group_buy"}<br /><div align="center">{$lang.group_buy}</div>{elseif $order.extension_code eq "exchange_goods"}<br /><div align="center">{$lang.exchange_goods}</div>{/if}</a>
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="left">
-        <p>用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：{$order.buyer|escape}</p><p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：{$order.email}</p><p>下单时间：{$order.short_order_time}</p>
+        <p>用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：{$order.buyer|escape}</p>
+        <p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：{$order.email}</p>
+        <p>下单时间：{$order.short_order_time}</p>
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="left" valign="top">
         <p>收货人：{$order.consignee|escape}</p>
