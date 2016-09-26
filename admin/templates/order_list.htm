@@ -69,6 +69,13 @@
         <p>地&nbsp;&nbsp;&nbsp;址：{$order.address|escape},{$order.city},{$order.states}</p>
         <p>邮&nbsp;&nbsp;&nbsp;编：{$order.zipcode|escape}</p>
         <p>电&nbsp;&nbsp;&nbsp;话：{$order.tel}</p>
+        {if $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}
+            {if $order.shipping_name eq 'DHL'}
+            <p>跟踪号：<a style="color:red;text-decoration: underline" target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$order.invoice_no}&brand=DHL">{$order.invoice_no}</a></p>
+            {else}
+            <p>跟踪号：{$order.invoice_no}</p>
+            {/if}
+        {/if}
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="right" valign="middle" nowrap="nowrap">{$order.formated_total_fee}</td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="right" valign="middle" nowrap="nowrap">{$order.formated_order_amount}</td>

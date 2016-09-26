@@ -38,7 +38,7 @@ $goods_id = isset($_REQUEST['id'])  ? intval($_REQUEST['id']) : 0;
 if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'allgoodsprice')
 {
     $html = '<html><head></head><body><table>';
-    $sql = "SELECT g.goods_id, g.seller_note, g.goods_name, g.promote_price, g.promote_start_date, g.promote_end_date, ".
+    $sql = "SELECT g.goods_id, gg.seller_note, g.goods_name, g.promote_price, g.promote_start_date, g.promote_end_date, ".
         "IFNULL(mp.user_price, g.shop_price * '" . $_SESSION['discount'] . "') AS shop_price ".
         " FROM " .$GLOBALS['ecs']->table('goods'). " AS g ".
         " LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
