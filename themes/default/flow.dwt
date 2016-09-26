@@ -486,9 +486,9 @@
                   <input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/>
               </td>
 
-                  <!--{if $payment.pay_name eq "WesternUnion"}-->
+                  <!--{if $payment.pay_name eq "BankTransfer"}-->
                 <td class="checkout_paylist" style="vertical-align: middle;text-align: left" valign="top" bgcolor="#ffffff">
-                    <span style="background-position: 0 -371px;"></span><span><strong>{$payment.pay_name}</strong></span>
+                    <span style="background-position: 0 -318px;"></span><span><strong>{$payment.pay_name}</strong></span>
                   <!--{elseif $payment.pay_name eq "MoneyGram"}-->
                 <td class="checkout_paylist" style="vertical-align: middle;text-align: left" valign="top" bgcolor="#ffffff">
                     <span style="background-position: 0 -424px;"></span><span><strong>{$payment.pay_name}</strong></span>
@@ -500,20 +500,14 @@
                     <strong>{$payment.pay_name}</strong>
                   <!--{/if}-->
               </td>
-              <td valign="top" bgcolor="#ffffff">
-                  <!--{if $payment.pay_name eq "WesternUnion"}-->
-                  <span>First Name:</span> YANGCHAO <br>
-                  <span>Last Name:</span> PENG <br>
-                  <span>Country:</span> CHINA <br>
-                  <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
+              <td style="vertical-align:middle;" valign="top" bgcolor="#ffffff">
+                  <!--{if $payment.pay_name eq "BankTransfer"}-->
+                  <span>Contact us and we will give you a <b style="color: #DB3B3B;">5-10%</b> discount.</span>
                   <!--{elseif $payment.pay_name eq "MoneyGram"}-->
-                  <span>First Name:</span> YANGCHAO <br>
-                  <span>Last Name:</span> PENG <br>
-                  <span>Country:</span> CHINA <br>
-                  <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
+                  <span>Inter personal rapid remittance service.</span>
                   <!--{else}-->
                   {$payment.pay_desc}
-                  <!--{/if}-->
+                  <!--{/if}--> 
               </td>
               <td style="vertical-align: middle;text-align: center" align="right" bgcolor="#ffffff" valign="top">{$payment.format_pay_fee}</td>
             </tr>
@@ -730,20 +724,21 @@
             </tr>
             <tr>
               <td align="left" bgcolor="#FFFFFF">
-                  <!--{if $order.pay_name eq "WesternUnion"}-->
+                  <!--{if $order.pay_name eq "BankTransfer"}-->
                   <div style="border:1px solid #3C3C3C;padding:12px;width:840px;">
-                      <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>Western Union</b></p>
+                      <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>BankTransfer</b></p>
                       <p style="margin-bottom: 15px;">
-                          <span>First Name:</span> YANGCHAO <br>
-                          <span>Last Name:</span> PENG <br>
-                          <span>Country:</span> CHINA <br>
-                          <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
+                          <span>Bank Name:</span> Bank of China，Hubei branch Chongyang County Tiancheng Subbranch <br>
+                          <span>Address:</span> N.21 Mingzhu Road, Tiancheng Town,Chongyang County, Hubei Province <br>
+                          <span>Swift Code:</span> BKCHCNBJ600 <br>
+                          <span>Beneficiary Name:</span> GANGPING ZHANG <br>
+                          <span>Account No:</span> 6013827609000075560
                       </p>
                       <p style="margin-bottom: 15px;">
-                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@126.com</span> after you send payment through MoneyGram.
+                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> PLEASE EMAIL YOUR ORDER NUMBER, AMOUNT, SENDER'S FIRST AND LAST NAME, SENDER'S COUNTRY, SENDER'S PHONE NUMBER TO <span style="color:red;">service.openskyphone@hotmail.com</span> AFTER YOU SEND THE PAYMENT BY Bank Transfer. THANKS!
                       </p>
                       <p>
-                          We want to remind all customers that they are responsible for all local Western Union handling fees. Therefore, customers should confirm the total payment amount with their local Western Union.
+                          We want to remind all customers that they are responsible for all local handling fees and Intermediary bank handling fees. Therefore, customers should confirm the total payment amount with their local bank.
                       </p>
                   </div>
                   <!--{elseif $order.pay_name eq "MoneyGram"}-->
@@ -756,7 +751,7 @@
                           <span>Address:</span> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
                       </p>
                       <p style="margin-bottom: 15px;">
-                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@126.com</span> after you send payment through MoneyGram.
+                          <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">service.openskyphone@hotmail.com</span> after you send payment through MoneyGram.
                       </p>
                       <p>
                           We want to remind all customers that they are responsible for all local MoneyGram handling fees. Therefore, customers should confirm the total payment amount with their local MoneyGram.

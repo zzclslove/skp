@@ -3,7 +3,7 @@
 $db_host   = "127.0.0.1:3306";
 
 // database name
-$db_name   = "ecs";
+$db_name   = "china3cmarket";
 
 // database username
 $db_user   = "root";

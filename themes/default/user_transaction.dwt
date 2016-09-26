@@ -200,11 +200,11 @@
               <td style="position:relative">{$item.order_status}
               <!-- {if $open_logistics_trace and ($item.shipping_status == 1 or $item.shipping_status == 2)} -->
               <br>
-              <div onmouseover="showPop(this,{$item.order_sn});" onmouseout="hidePop(this);">
-                <a href="user.php?act=delivery_info&order_sn={$item.order_sn}" class="link-blue">{$lang.delivery_info}</a>
-                <div id="delivery_detail_{$item.order_sn}" class="list-pop hide">
-                </div>
-              </div>
+                  {if $item.shipping_name eq 'DHL'}
+                      <a target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$item.invoice_no}&brand=DHL" style="color:#FF5C26;text-decoration: underline">{$item.shipping_name}:{$item.invoice_no}</a>
+                  {else}
+                      <span style="color:#FF5C26;">{$item.shipping_name}:{$item.invoice_no}</span>
+                  {/if}
               <!-- {/if} -->
               </td>
               <td><font class="f6">{$item.handler}</font><br><a href="javascript:;" onclick="repurchase({$item.order_id})">{$lang.repurchase}</a></td>
@@ -583,20 +583,21 @@
         <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                 <tr>
                   <td bgcolor="#ffffff">
-                      <!--{if $order.pay_name eq "WesternUnion"}-->
+                      <!--{if $order.pay_name eq "BankTransfer"}-->
                       <div style="padding:12px;">
-                          <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>Western Union</b></p>
+                          <p style="margin-bottom:10px;font-size: 14px;">Paying with <b>BankTransfer</b></p>
                           <p style="margin-bottom: 15px;">
-                              <b>First Name:</b> YANGCHAO <br>
-                              <b>Last Name:</b> PENG <br>
-                              <b>Country:</b> CHINA <br>
-                              <b>Address:</b> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
+                              <b>Bank Name:</b> Bank of China，Hubei branch Chongyang County Tiancheng Subbranch <br>
+                              <b>Address:</b> N.21 Mingzhu Road, Tiancheng Town,Chongyang County, Hubei Province <br>
+                              <b>Swift Code:</b> BKCHCNBJ600 <br>
+                              <b>Beneficiary Name:</b> GANGPING ZHANG <br>
+                              <b>Account No:</b> 6013827609000075560
                           </p>
                           <p style="margin-bottom: 15px;">
-                              <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@126.com</span> after you send payment through MoneyGram.
+                              <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> PLEASE EMAIL YOUR ORDER NUMBER, AMOUNT, SENDER'S FIRST AND LAST NAME, SENDER'S COUNTRY, SENDER'S PHONE NUMBER TO <span style="color:red;">service.openskyphone@hotmail.com</span> AFTER YOU SEND THE PAYMENT BY Bank Transfer. THANKS!
                           </p>
                           <p>
-                              We want to remind all customers that they are responsible for all local Western Union handling fees. Therefore, customers should confirm the total payment amount with their local Western Union.
+                              We want to remind all customers that they are responsible for all local handling fees and Intermediary bank handling fees. Therefore, customers should confirm the total payment amount with their local bank.
                           </p>
                       </div>
                       <!--{elseif $order.pay_name eq "MoneyGram"}-->
@@ -609,7 +610,7 @@
                               <b>Address:</b> 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen
                           </p>
                           <p style="margin-bottom: 15px;">
-                              <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">chinarephone@126.com</span> after you send payment through MoneyGram.
+                              <span style="color:red;font-weight:bold;">IMPORTANT NOTICE:</span> Please email your ORDER NUMBER, WESTERN UNION CONTROL NUMBER, ORDER AMOUNT, SENDER'S FIRST and LAST NAME, SENDER'S ADDRESS and COUNTRY, and SENDER'S PHONE NUMBER to: <span style="color:red;">service.openskyphone@hotmail.com</span> after you send payment through MoneyGram.
                           </p>
                           <p>
                               We want to remind all customers that they are responsible for all local MoneyGram handling fees. Therefore, customers should confirm the total payment amount with their local MoneyGram.

@@ -16,6 +16,7 @@
     </select>
     <input type="submit" value="{$lang.button_search}" class="button" />
     <span class="btn-search cl-link" style="padding-left: 20px" onclick="detailSearch()">{$lang.advanced_search}</span>
+      <a target="_blank" class="btn-search cl-link" style="padding-left: 20px" href="unshipgoods.php">所有未发货产品</a>
     <!--ERP link-->
 
       {$erp_icon_html}
@@ -58,7 +59,9 @@
         <a href="order.php?act=info&order_id={$order.order_id}" id="order_{$okey}">{$order.order_sn}{if $order.extension_code eq "group_buy"}<br /><div align="center">{$lang.group_buy}</div>{elseif $order.extension_code eq "exchange_goods"}<br /><div align="center">{$lang.exchange_goods}</div>{/if}</a>
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="left">
-        <p>用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：{$order.buyer|escape}</p><p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：{$order.email}</p><p>下单时间：{$order.short_order_time}</p>
+        <p>用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：{$order.buyer|escape}</p>
+        <p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：{$order.email}</p>
+        <p>下单时间：{$order.short_order_time}</p>
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="left" valign="top">
         <p>收货人：{$order.consignee|escape}</p>
@@ -66,6 +69,13 @@
         <p>地&nbsp;&nbsp;&nbsp;址：{$order.address|escape},{$order.city},{$order.states}</p>
         <p>邮&nbsp;&nbsp;&nbsp;编：{$order.zipcode|escape}</p>
         <p>电&nbsp;&nbsp;&nbsp;话：{$order.tel}</p>
+        {if $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}
+            {if $order.shipping_name eq 'DHL'}
+            <p>跟踪号：<a style="color:red;text-decoration: underline" target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$order.invoice_no}&brand=DHL">{$order.invoice_no}</a></p>
+            {else}
+            <p>跟踪号：{$order.invoice_no}</p>
+            {/if}
+        {/if}
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="right" valign="middle" nowrap="nowrap">{$order.formated_total_fee}</td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="right" valign="middle" nowrap="nowrap">{$order.formated_order_amount}</td>

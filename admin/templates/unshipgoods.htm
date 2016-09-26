@@ -1,0 +1,37 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <style>
+        td{border-right:1px solid #3c3c3c;border-bottom:1px solid #3c3c3c; padding:5px;font-size: 0.7em}
+        .title{
+            text-align: center;
+            background: #FF8100;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .contentt{border-top: 1px solid #3c3c3c;border-left: 1px solid #3c3c3c;margin-bottom: 10px}
+    </style>
+</head>
+<body>
+<table width="100%" class="outer" border="0" cellspacing="0" cellpadding="0" align="left">
+<tr>
+    <td style="padding: 0;border-right: 0;border-bottom: 0">
+        {foreach from=$order_goods item=order key=okey}
+        <table class="contentt" width="100%" class="outer" border="0" cellspacing="0" cellpadding="0" align="left">
+            <tr>
+                <td class="title" colspan="2">{$order.order_number}[发往:{$order.region_name}]</td>
+            </tr>
+            {foreach from=$order.goods item=goods key=okey}
+            <tr>
+                <td>{if $goods.seller_note eq ''}{$goods.goods_name}{else}{$goods.seller_note}{/if} [{$goods.attr}]</td>
+                <td width="70">数量：{$goods.num} 个</td>
+            </tr>
+            {/foreach}
+        </table>
+        {/foreach}
+    </td>
+</tr>
+</table>
+</body>
+</html>

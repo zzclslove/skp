@@ -21,7 +21,7 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="index-body">
     <div class="indexpage">
-        <div style="width: 1200px;margin:20px;text-align:center;font-size:18px;color:rgb(90,126,168);">
+        <div style="width: 1200px;margin:20px;text-align:center;font-size:18px;color:rgb(0, 128, 222);">
             Very sorry to bother you, you have successfully unsubscribed.
         </div>
     </div>
