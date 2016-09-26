@@ -35,7 +35,6 @@
   <div class="blank"></div>
   <!--版权 start-->
   <div class="footer_info"> © 2005-2016 openskyphone.com All rights reserved.<br />
-  {foreach from=$lang.p_y item=pv}{$pv}{/foreach}{$licensed}<br />
   </div>
   <div class="clear10"></div>
 </div>
