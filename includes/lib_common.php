@@ -1023,6 +1023,13 @@ function price_format($price, $change_price = true)
     {
      $price=0;
     }
+    if((!isset($_SESSION['currency'])) || $_SESSION['currency'] == 0){
+        $_SESSION['currency'] = 1;
+        $_SESSION['currency_name'] = 'USD';
+        $_SESSION['currency_code'] = '$';
+        $_SESSION['currency_rate'] = 1;
+    }
+    $price = $price * $_SESSION['currency_rate'];
     if ($change_price && defined('ECS_ADMIN') === false)
     {
         switch ($GLOBALS['_CFG']['price_format'])
@@ -1056,8 +1063,8 @@ function price_format($price, $change_price = true)
     {
         $price = number_format($price, 2, '.', '');
     }
-
-    return sprintf($GLOBALS['_CFG']['currency_format'], $price);
+    return $_SESSION['currency_code'] . $price;
+    //return sprintf($GLOBALS['_CFG']['currency_format'], $price);
 }
 
 /**

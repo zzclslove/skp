@@ -6,6 +6,7 @@
   <div id="tabbar-div">
     <p>
       {foreach from=$group_list item=group name="bar_group"}<span class="{if $smarty.foreach.bar_group.iteration eq 1}tab-front{else}tab-back{/if}" id="{$group.code}-tab">{$group.name}</span>{/foreach}
+      <span class="tab-back" id="rate-tab">汇率设置</span>
     </p>
   </div>
   <!-- tab body -->
@@ -18,7 +19,24 @@
       {/foreach}
     </table>
     {/foreach}
-
+    <table width="90%" id="rate-table" style="display:none">
+      <tr>
+        <td class="label" valign="top">
+          美元:
+        </td>
+        <td class="panel-par">
+          <input name="rate[1]" type="text" value="1.0000" size="40">
+        </td>
+      </tr>
+      <tr>
+        <td class="label" valign="top">
+          欧元:
+        </td>
+        <td class="panel-par">
+          <input name="rate[2]" type="text" value="0.8896" size="40">
+        </td>
+      </tr>
+    </table>
     <div class="button-div">
       <input name="submit" type="submit" value="{$lang.button_submit}" class="button" />
       <input name="reset" type="reset" value="{$lang.button_reset}" class="button" />

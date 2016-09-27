@@ -107,7 +107,7 @@ function reg(str){
             </li>
             <li class="clearfix">
               <!--本店售价-->
-               <dd><strong>Price: </strong><font class="shop" id="ECS_SHOPPRICE">{$goods.shop_price_formated}</font> </dd>
+               <dd><strong>Price: </strong><font class="shop" id="ECS_SHOPPRICE">{insert name="show_goods_format_price" goods_id=$goods_id}</font> </dd>
                <dd>
                  <!-- {if $cfg.show_marketprice} 市场价格-->
                  <strong>Mark Price: </strong><font style="text-decoration: line-through;">{$goods.market_price}</font>

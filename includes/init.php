@@ -306,4 +306,23 @@ else
 {
     ob_start();
 }
+$currency_id = !empty($_GET['currency']) ? intval($_GET['currency']) : 0;
+if($currency_id == 0){
+    if(!isset($_SESSION['currency'])){
+        $_SESSION['currency'] = 1;
+        $_SESSION['currency_name'] = 'USD';
+        $_SESSION['currency_code'] = '$';
+        $_SESSION['currency_rate'] = 1;
+    }
+}else if($currency_id == 1){
+    $_SESSION['currency'] = 1;
+    $_SESSION['currency_name'] = 'USD';
+    $_SESSION['currency_code'] = '$';
+    $_SESSION['currency_rate'] = 1;
+}else if($currency_id == 2){
+    $_SESSION['currency'] = 2;
+    $_SESSION['currency_name'] = 'EUR';
+    $_SESSION['currency_code'] = '€';
+    $_SESSION['currency_rate'] = 0.8896;
+}
 ?>

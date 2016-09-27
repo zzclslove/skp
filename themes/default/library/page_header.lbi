@@ -14,13 +14,23 @@ var process_request = "{$lang.process_request}";
       </div>
       <!-- #BeginLibraryItem "/library/cart.lbi" --> {insert_scripts files='transport.js'}
       <div class="cart" id="ECS_CARTINFO"> {insert name='cart_info'} </div>
+      <div class="rate_box">
+        <span>Currency</span>
+        <span>
+          <select id="rate-select" class="rate-select">
+            <option value="1">$ - USD</option>
+            <option value="2">€ - EUR</option>
+          </select>
+          <script>$('#rate-select').val({insert name="get_currency"});</script>
+        </span>
+      </div>
     </div>
   </div>
 </div>
 <div class="nav-menu" style="height: 80px">
   <div class="wrap" style="position: relative">
-    <div style="margin: 0 auto;float: inherit;" class="logo"><a href="../index.php" name="top"><img style="margin-top:16px;" width="210" src="../images/logo.png" /></a></div>
-    <div class="serach-box" style="position: absolute;margin-top: 0;left: 0px;top: 27px;">
+    <div style="float: inherit;" class="logo"><a href="../index.php" name="top"><img style="margin-top:16px;" width="210" src="../images/logo.png" /></a></div>
+    <div class="serach-box" style="position: absolute;margin-top: 0;right: 0px;top: 27px;">
       <form style="background-size: 220px;height: 30px;" id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()" class="f_r">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
@@ -29,9 +39,6 @@ var process_request = "{$lang.process_request}";
           </tr>
         </table>
       </form>
-    </div>
-    <div class="serach-box" style="position: absolute;margin-top: 0;right: 0px;top: 27px;width:160px;text-align: center;height:30px;line-height:30px;font-size: 14px;text-decoration: underline;">
-      <a href="article.php?id=8" target="_blank">About Us</a>
     </div>
   </div>
 </div>
@@ -43,6 +50,7 @@ var process_request = "{$lang.process_request}";
           <!-- {foreach name=nav_middle_list from=$categories item=nav} -->
           <li class="pos-{$smarty.foreach.nav_middle_list.iteration}"><a style="line-height: 45px" href="{$nav.url}">{$nav.name}</a></li>
           <!-- {/foreach} -->
+          <li class="pos-1"><a style="line-height: 45px" href="article.php?id=8">About Us</a></li>
         </ul>
       </div>
     </div>
