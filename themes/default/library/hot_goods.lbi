@@ -11,8 +11,6 @@
     <font class="shop_s"><b>{$goods.shop_price}</b></font>
     <!--{/if}-->
 	</div>
-	 
-
   </a>
   <!--{/foreach}-->
   <div class="clear0"></div>

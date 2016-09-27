@@ -1,0 +1,12 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div id="show_hot_area" class="clearfix goodsBox all_mid all_ms">
+    <!--{foreach from=$hot_goods item=goods}-->
+    <a class="goodsItem" href="{$goods.url}" target="_blank">
+        <div  class="img-box"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></div>
+        <span class="pricecsg"><i>{$goods.shop_price}</i><span></span></span>
+        <div class="goods-brief"><span>{$goods.name|escape:html}<span></div>
+    </a>
+    <!--{/foreach}-->
+    <div class="clear0"></div>
+</div> <div class="clear10"></div>
+

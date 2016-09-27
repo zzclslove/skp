@@ -38,7 +38,11 @@
   </div>
   <div class="clear10"></div>
 </div>
- 
+<script>
+$('#rate-select').change(function(){
+	window.location.href = "index.php?currency=" + $(this).val();
+});
+</script>
 
  
 

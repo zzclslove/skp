@@ -365,4 +365,21 @@ function insert_vote()
     return $val;
 }
 
+function insert_index_hot_goods(){
+    $GLOBALS['smarty']->assign('hot_goods', get_recommend_goods('hot'));     // 热点文章
+    $val = $GLOBALS['smarty']->fetch('library/index_hot_goods.lib');
+    return $val;
+}
+
+function insert_show_goods_format_price($arr){
+    $sql = 'select shop_price from ' . $GLOBALS['ecs']->table('goods') . ' where goods_id = ' .$arr['goods_id'];
+    $price = $GLOBALS['db']->getOne($sql);
+    $price = price_format($price);
+    return $price;
+}
+
+function insert_get_currency(){
+    return $_SESSION['currency'];
+}
+
 ?>
