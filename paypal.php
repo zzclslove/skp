@@ -48,7 +48,7 @@ if(!empty($order))
         $items = array();
         foreach ($goods AS $good) {
             $item = new Item();
-            $item->setName($good['goods_name'])
+            $item->setName(str_replace("Refurbished Original","Used",$good['goods_name']))
                 ->setCurrency('USD')
                 ->setQuantity($good['goods_number'])
                 ->setSku($good['goods_sn']) // Similar to `item_number` in Classic API
