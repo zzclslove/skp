@@ -81,8 +81,8 @@ require(ROOT_PATH . 'includes/lib_time.php');
 require(ROOT_PATH . 'includes/lib_base.php');
 require(ROOT_PATH . 'includes/lib_common.php');
 require(ROOT_PATH . 'includes/lib_main.php');
-require(ROOT_PATH . 'includes/lib_insert.php');
 require(ROOT_PATH . 'includes/lib_goods.php');
+require(ROOT_PATH . 'includes/lib_insert.php');
 require(ROOT_PATH . 'includes/lib_article.php');
 
 /* 对用户传入的变量进行转义操作。*/
@@ -324,5 +324,11 @@ if($currency_id == 0){
     $_SESSION['currency_name'] = 'EUR';
     $_SESSION['currency_code'] = '€';
     $_SESSION['currency_rate'] = 0.8896;
+}
+else if($currency_id == 3){
+    $_SESSION['currency'] = 3;
+    $_SESSION['currency_name'] = 'RMB';
+    $_SESSION['currency_code'] = '￥';
+    $_SESSION['currency_rate'] = 6.6689;
 }
 ?>

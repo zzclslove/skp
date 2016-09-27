@@ -2957,7 +2957,55 @@ function iframe_source_encode($product)
     return base64_encode(implode('|',$source));
 }
 
+function price_currency($price, $change_price = true)
+{
+    if($price==='')
+    {
+        $price=0;
+    }
+    if((!isset($_SESSION['currency'])) || $_SESSION['currency'] == 0){
+        $_SESSION['currency'] = 1;
+        $_SESSION['currency_name'] = 'USD';
+        $_SESSION['currency_code'] = '$';
+        $_SESSION['currency_rate'] = 1;
+    }
+    $price = $price * $_SESSION['currency_rate'];
+    if ($change_price && defined('ECS_ADMIN') === false)
+    {
+        switch ($GLOBALS['_CFG']['price_format'])
+        {
+            case 0:
+                $price = number_format($price, 2, '.', '');
+                break;
+            case 1: // 保留不为 0 的尾数
+                $price = preg_replace('/(.*)(\\.)([0-9]*?)0+$/', '\1\2\3', number_format($price, 2, '.', ''));
 
+                if (substr($price, -1) == '.')
+                {
+                    $price = substr($price, 0, -1);
+                }
+                break;
+            case 2: // 不四舍五入，保留1位
+                $price = substr(number_format($price, 2, '.', ''), 0, -1);
+                break;
+            case 3: // 直接取整
+                $price = intval($price);
+                break;
+            case 4: // 四舍五入，保留 1 位
+                $price = number_format($price, 1, '.', '');
+                break;
+            case 5: // 先四舍五入，不保留小数
+                $price = round($price);
+                break;
+        }
+    }
+    else
+    {
+        $price = number_format($price, 2, '.', '');
+    }
+    return $price;
+    //return sprintf($GLOBALS['_CFG']['currency_format'], $price);
+}
 
 
 

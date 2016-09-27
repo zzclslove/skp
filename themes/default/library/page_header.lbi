@@ -20,6 +20,7 @@ var process_request = "{$lang.process_request}";
           <select id="rate-select" class="rate-select">
             <option value="1">$ - USD</option>
             <option value="2">€ - EUR</option>
+            <option value="3">￥ - RMB</option>
           </select>
           <script>$('#rate-select').val({insert name="get_currency"});</script>
         </span>

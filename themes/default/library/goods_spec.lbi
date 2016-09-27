@@ -1,0 +1,22 @@
+<!-- {* 开始循环所有可选属性 *} -->
+<!-- {foreach from=$specification item=spec key=spec_key} -->
+<li class="padd loop" style="border-top:0;margin-top: 5px;"> <strong style="display: block;padding-bottom:5px;">{$spec.name}:</strong>
+    <!-- {* 判断属性是复选还是单选 *} -->
+    <!-- {if $spec.attr_type eq 1} -->
+    <!-- {foreach from=$spec.values item=value key=key} -->
+    <label class="goods-spec-selector {if $key eq 0}selected{/if}" for="spec_value_{$value.id}">
+        <input label="{$value.label}" type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} />
+        {$value.label}{if $value.price != 0} [ {if $value.price gt 0}+{elseif $value.price lt 0}-{/if}{$value.format_price|abs}]{/if}</label>
+    <!-- {/foreach} -->
+    <input type="hidden" name="spec_list" value="{$key}" />
+    <!-- {else} -->
+    <!-- {foreach from=$spec.values item=value key=key} -->
+    <label class="goods-spec-selector {if $key eq 0}checked{/if}" for="spec_value_{$value.id}">
+        <input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" />
+        {$value.label}{if $value.price != 0} [ {if $value.price gt 0}+{elseif $value.price lt 0}-{/if}{$value.price|abs}]{/if}</label>
+    <!-- {/foreach} -->
+    <input type="hidden" name="spec_list" value="{$key}" />
+    <!-- {/if} -->
+</li>
+<!-- {/foreach} -->
+<!-- {* 结束循环可选属性 *} -->

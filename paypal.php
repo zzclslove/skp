@@ -53,6 +53,30 @@ if(!empty($order))
                 ->setQuantity($good['goods_number'])
                 ->setSku($good['goods_sn']) // Similar to `item_number` in Classic API
                 ->setPrice($good['goods_price']);
+
+            if(isset($_SESSION['currency']) || $_SESSION['currency'] != 0){
+                if($_SESSION['currency'] == 2){
+                    $item->setName(str_replace("Refurbished Original","Used",$good['goods_name']))
+                        ->setCurrency('EUR')
+                        ->setQuantity($good['goods_number'])
+                        ->setSku($good['goods_sn']) // Similar to `item_number` in Classic API
+                        ->setPrice(price_currency($good['goods_price']));
+                }else{
+                    $item->setName(str_replace("Refurbished Original","Used",$good['goods_name']))
+                        ->setCurrency('USD')
+                        ->setQuantity($good['goods_number'])
+                        ->setSku($good['goods_sn']) // Similar to `item_number` in Classic API
+                        ->setPrice($good['goods_price']);
+                }
+            }else{
+                $item->setName(str_replace("Refurbished Original","Used",$good['goods_name']))
+                    ->setCurrency('USD')
+                    ->setQuantity($good['goods_number'])
+                    ->setSku($good['goods_sn']) // Similar to `item_number` in Classic API
+                    ->setPrice($good['goods_price']);
+            }
+
+
             $items[] = $item;
         }
         $itemList->setItems($items);
@@ -67,13 +91,35 @@ if(!empty($order))
 
         $itemList->setShippingAddress($address);
         $details = new Details();
-        $details->setShipping($order['shipping_fee'])
-            ->setTax(0)
-            ->setSubtotal($order['goods_amount']);
-        $amount = new Amount();
-        $amount->setCurrency("USD")
-            ->setTotal($order['order_amount'])
-            ->setDetails($details);
+
+        if(isset($_SESSION['currency']) || $_SESSION['currency'] != 0){
+            if($_SESSION['currency'] == 2){
+                $details->setShipping(price_currency($order['shipping_fee']))
+                    ->setTax(0)
+                    ->setSubtotal(price_currency($order['goods_amount']));
+                $amount = new Amount();
+                $amount->setCurrency("EUR")
+                    ->setTotal(price_currency($order['order_amount']))
+                    ->setDetails($details);
+            }else{
+                $details->setShipping($order['shipping_fee'])
+                    ->setTax(0)
+                    ->setSubtotal($order['goods_amount']);
+                $amount = new Amount();
+                $amount->setCurrency("USD")
+                    ->setTotal($order['order_amount'])
+                    ->setDetails($details);
+            }
+        }else{
+            $details->setShipping($order['shipping_fee'])
+                ->setTax(0)
+                ->setSubtotal($order['goods_amount']);
+            $amount = new Amount();
+            $amount->setCurrency("USD")
+                ->setTotal($order['order_amount'])
+                ->setDetails($details);
+        }
+
         $transaction = new Transaction();
         $transaction->setAmount($amount)
             ->setItemList($itemList)

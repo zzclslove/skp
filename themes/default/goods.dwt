@@ -160,37 +160,7 @@ function reg(str){
             <li style="height:30px;padding-top:4px;"> {$lang.goods_free_shipping}<br />
             </li>
             <!-- {/if} -->
-            <!-- {* 开始循环所有可选属性 *} -->
-            <!-- {foreach from=$specification item=spec key=spec_key} -->
-            <li class="padd loop" style="border-top:0;margin-top: 5px;"> <strong style="display: block;padding-bottom:5px;">{$spec.name}:</strong>
-              <!-- {* 判断属性是复选还是单选 *} -->
-              <!-- {if $spec.attr_type eq 1} -->
-              <!-- {if $cfg.goodsattr_style eq 1} -->
-              <!-- {foreach from=$spec.values item=value key=key} -->
-              <label class="goods-spec-selector {if $key eq 0}selected{/if}" for="spec_value_{$value.id}">
-              <input label="{$value.label}" type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} />
-              {$value.label}{if $value.price != 0} [ {if $value.price gt 0}+{elseif $value.price lt 0}-{/if}{$value.format_price|abs}]{/if}</label>
-              <!-- {/foreach} -->
-              <input type="hidden" name="spec_list" value="{$key}" />
-              <!-- {else} -->
-              <select name="spec_{$spec_key}" onchange="changePrice()">
-                <!-- {foreach from=$spec.values item=value key=key} -->
-                <option label="{$value.label}" value="{$value.id}">{$value.label} {if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if}{if $value.price neq 0}{$value.format_price}{/if}</option>
-                <!-- {/foreach} -->
-              </select>
-              <input type="hidden" name="spec_list" value="{$key}" />
-              <!-- {/if} -->
-              <!-- {else} -->
-              <!-- {foreach from=$spec.values item=value key=key} -->
-              <label class="goods-spec-selector {if $key eq 0}checked{/if}" for="spec_value_{$value.id}">
-              <input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" />
-              {$value.label}{if $value.price != 0} [ {if $value.price gt 0}+{elseif $value.price lt 0}-{/if}{$value.price|abs}]{/if}</label>
-              <!-- {/foreach} -->
-              <input type="hidden" name="spec_list" value="{$key}" />
-              <!-- {/if} -->
-            </li>
-            <!-- {/foreach} -->
-            <!-- {* 结束循环可选属性 *} -->
+            {insert name="get_goods_spe_price" goods_id=$goods.goods_id}
             <li class="clearfix" style="padding-top: 15px;margin-top: 20px;border-top: 1px solid #ccc;">
               <dd style="width:auto;margin-right:15px;height:28px;line-height: 28px"> <strong style="font-size: 14px;color: #0a0a0a;">{$lang.number}：</strong>
                 <input name="number" type="text" id="number" value="1" size="4" onblur="changePrice()" style="border:1px solid #666;padding:3px"/>
