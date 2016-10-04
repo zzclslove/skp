@@ -702,6 +702,22 @@ function order_fee($order, $goods, $consignee)
 
             $total['shipping_fee'] = ($shipping_count == 0 AND $weight_price['free_shipping'] == 1) ?0 :  shipping_fee($shipping_info['shipping_code'],$shipping_info['configure'], $weight_price['weight'], $total['goods_price'], $weight_price['number']);
 
+            if($shipping_info['shipping_code'] == 'dhl'){
+                $sql = "select r.* from " . $GLOBALS['ecs']->table('remote') .
+                    " as r left join " . $GLOBALS['ecs']->table('region') . "as e on r.country = e.region_name where e.region_id = ". $consignee['country'] .
+                    " and r.code = '". $consignee['zipcode'] ."'";
+                $remotes = $GLOBALS['db']->getAll($sql);
+                $mark = 0;
+                foreach ($remotes as $key1 => $value1){
+                    if(strpos($value1['city'], strtoupper($consignee['city'])) >= 0 || strpos($value1['city'], strtoupper($consignee['states'])) >= 0){
+                        $mark = 1;
+                    }
+                }
+                if($mark == 1){
+                    $total['shipping_fee'] = $total['shipping_fee'] + 20;
+                }
+            }
+
             if (!empty($order['need_insure']) && $shipping_info['insure'] > 0)
             {
                 $total['shipping_insure'] = shipping_insure_fee($shipping_info['shipping_code'],

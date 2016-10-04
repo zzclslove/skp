@@ -339,6 +339,8 @@
             {/literal}
         </script>
         <!-- {if $step eq "checkout"} 开始订单确认界面 -->
+        <link rel="stylesheet" href="js/tips/tip-yellowsimple/tip-yellowsimple.css" type="text/css" />
+        <script type="text/javascript" src="js/tips/jquery.poshytip.js"></script>
         <form action="flow.php" method="post" name="theForm" id="theForm" onsubmit="return checkOrderForm(this)">
         <script type="text/javascript">
         var flow_no_payment = "{$lang.flow_no_payment}";
@@ -435,8 +437,8 @@
           <th bgcolor="#ffffff" width="5%">&nbsp;</th>
           <th bgcolor="#ffffff" width="25%">{$lang.name}</th>
           <th bgcolor="#ffffff">{$lang.describe}</th>
-          <th bgcolor="#ffffff" width="15%">{$lang.fee}</th>
-          <th bgcolor="#ffffff" width="15%">{$lang.insure_fee}</th>
+          <th bgcolor="#ffffff" width="15%">Shipping Cost</th>
+          <th bgcolor="#ffffff" width="15%">Remote Cost</th>
         </tr>
         <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
         <tr>
@@ -454,16 +456,31 @@
           </td>
           <td bgcolor="#ffffff" valign="top">{$shipping.shipping_desc}</td>
           <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{$shipping.format_shipping_fee}</td>
-          <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{if $shipping.insure neq 0}{$shipping.insure_formated}{else}{$lang.not_support_insure}{/if}</td>
+          <td class="remote-cost" style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">
+              {if $shipping.remote_cost eq 0}
+                  {$shipping.remote_cost_format}
+              {else}
+                  <span style="color:#E00">{$shipping.remote_cost_format}</span>
+                  <span class="why-icon"></span>
+              {/if}
+          </td>
         </tr>
         <!-- {/foreach} 循环配送方式 -->
-        <tr>
-          <td colspan="6" bgcolor="#ffffff" align="right"><label for="ECS_NEEDINSURE">
-            <input name="need_insure" id="ECS_NEEDINSURE" type="checkbox"  onclick="selectInsure(this.checked)" value="1" {if $order.need_insure}checked="true"{/if} {if $insure_disabled}disabled="true"{/if}  />
-            {$lang.need_insure} </label></td>
-        </tr>
-      </table>
+
+      </table> 
     </div>
+    <script>
+        $('.why-icon').poshytip({
+            content:'Your receiving address is a remote location, and DHL will charge you for additional charges.<br><a style="color:#E00;text-decoration: underline" target="_blank" href="http://raslist.dhl.com/jsp/first_main.jsp">Confirm with DHL.</a>',
+            className: 'tip-yellowsimple',
+            showTimeout: 1,
+            alignTo: 'target',
+            alignX: 'left',
+            alignY: 'center',
+            offsetY: 5,
+            offsetX:5
+        });
+    </script>
     <div class="blank"></div>
         <!--{else}-->
         <input name = "shipping" type="radio" value = "-1" checked="checked"  style="display:none"/>
@@ -682,8 +699,11 @@
             </tr>
             <!-- {/if} -->
             <tr>
-              <td valign="top" bgcolor="#ffffff"><strong>{$lang.order_postscript}:</strong></td>
-              <td bgcolor="#ffffff"><textarea name="postscript" cols="80" rows="3" id="postscript" style="border:1px solid #ccc;">{$order.postscript|escape}</textarea></td>
+              <td width="110" valign="top" bgcolor="#ffffff"><strong>{$lang.order_postscript}:</strong></td>
+              <td bgcolor="#ffffff">
+                  <label style="display: block;padding-bottom: 5px;color: #e00"><input style="vertical-align: middle;" type="checkbox" name="dropshipping" value="1">Drop Shipping</label>
+                  <textarea name="postscript" rows="3" id="postscript" style="width:100%;border:1px solid #ccc;">{$order.postscript|escape}</textarea>
+              </td>
             </tr>
             <!-- {if $how_oos_list} 是否使用缺货处理 -->
             <tr>
@@ -722,6 +742,13 @@
                   <p><span>{$lang.order_amount}: </span><strong>{$total.amount_formated}</strong></p>
               </td>
             </tr>
+              <!-- {if $dropshipping eq '1'} -->
+              <tr>
+                  <td>
+                      <a style="color: #fe0e0e;text-decoration: underline" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$order.order_sn}">Set My Shipment Invoice</a>
+                  </td>
+              </tr>
+              <!-- {/if} -->
             <tr>
               <td align="left" bgcolor="#FFFFFF">
                   <!--{if $order.pay_name eq "BankTransfer"}-->

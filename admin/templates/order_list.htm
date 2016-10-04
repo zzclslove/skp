@@ -62,6 +62,13 @@
         <p>用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：{$order.buyer|escape}</p>
         <p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：{$order.email}</p>
         <p>下单时间：{$order.short_order_time}</p>
+        <p>ID：{$order.order_id}</p>
+        <!--{if $order.drop_shipping eq 1}-->
+        <p>
+            <a style="text-decoration: underline;color:#ff5c26" target="_blank" href="/set_invoice.php?act=set_invoice&order_sn={$order.order_sn}">Set Shipment Invoice</a>
+            &nbsp;&nbsp;<a style="text-decoration: underline;color:#ff5c26" target="_blank" href="/download_invoice.php?order_sn={$order.order_sn}">Download Invoice</a>
+        </p>
+        <!--{/if}-->
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="left" valign="top">
         <p>收货人：{$order.consignee|escape}</p>

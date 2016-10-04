@@ -548,6 +548,22 @@ elseif ($_REQUEST['step'] == 'checkout')
         $shipping_list[$key]['free_money']          = price_format($shipping_cfg['free_money'], false);
         $shipping_list[$key]['insure_formated']     = strpos($val['insure'], '%') === false ?
             price_format($val['insure'], false) : $val['insure'];
+        $shipping_list[$key]['remote_cost_format'] = price_format(0, false);
+        $shipping_list[$key]['remote_cost'] = 0;
+        if($val['shipping_code'] == 'dhl'){
+            $sql = "select r.* from " . $ecs->table('remote') .
+                " as r left join " . $ecs->table('region') . "as e on r.country = e.region_name where e.region_id = ". $consignee['country'] .
+                " and r.code = '". $consignee['zipcode'] ."'";
+            $remotes = $db->getAll($sql);
+            $mark = 0;
+            foreach ($remotes as $key1 => $value1){
+                if(strpos($value1['city'], strtoupper($consignee['city'])) >= 0 || strpos($value1['city'], strtoupper($consignee['states'])) >= 0){
+                    $shipping_list[$key]['remote_cost_format'] = price_format(20, false);
+                    $shipping_list[$key]['remote_cost'] = 20;
+                    $mark = 1;
+                }
+            }
+        }
 
         /* 当前的配送方式是否支持保价 */
         if ($val['shipping_id'] == $order['shipping_id'])
@@ -1376,6 +1392,7 @@ elseif ($_REQUEST['step'] == 'done')
     $_POST['inv_payee'] = isset($_POST['inv_payee']) ? compile_str($_POST['inv_payee']) : '';
     $_POST['inv_content'] = isset($_POST['inv_content']) ? compile_str($_POST['inv_content']) : '';
     $_POST['postscript'] = isset($_POST['postscript']) ? compile_str($_POST['postscript']) : '';
+    $dropshipping = isset($_POST['dropshipping'])?$_POST['dropshipping']:'0';
 
     $order = array(
         'shipping_id'     => intval($_POST['shipping']),
@@ -1399,7 +1416,8 @@ elseif ($_REQUEST['step'] == 'done')
         'order_status'    => OS_UNCONFIRMED,
         'shipping_status' => SS_UNSHIPPED,
         'pay_status'      => PS_UNPAYED,
-        'agency_id'       => get_agency_by_regions(array($consignee['country'], $consignee['states'], $consignee['city']))
+        'agency_id'       => get_agency_by_regions(array($consignee['country'], $consignee['states'], $consignee['city'])),
+        'drop_shipping'   => $dropshipping
         );
 
     /* 扩展信息 */
@@ -1817,6 +1835,8 @@ elseif ($_REQUEST['step'] == 'done')
     {
         $order['shipping_name']=trim(stripcslashes($order['shipping_name']));
     }
+
+    $smarty->assign('dropshipping', $dropshipping);
 
     /* 订单信息 */
     $smarty->assign('order',      $order);

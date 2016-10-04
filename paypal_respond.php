@@ -47,20 +47,14 @@ if (isset($_GET['success']) && $_GET['success'] == 'true') {
             foreach($transactions as $transaction){
                 $order_id = intval($transaction->getInvoiceNumber());
                 $amount = $transaction->getAmount();
-                $sql = "SELECT order_amount FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id = '$order_id'";
-                if ($GLOBALS['db']->getOne($sql) != $amount->getTotal())
-                {
-                    $msg = $_LANG['pay_fail'];
-                }else{
-                    $msg = $_LANG['pay_success'];
-                    $relate_resources = $transaction->getRelatedResources();
-                    foreach($relate_resources as $relate_resource){
-                        $sale = $relate_resource->getSale();
-                        $sale_id = $sale->getId();
-                    }
-                    $sql = "SELECT log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id = '$order_id'";
-                    $log_id = $GLOBALS['db']->getOne($sql);
+                $msg = $_LANG['pay_success'];
+                $relate_resources = $transaction->getRelatedResources();
+                foreach($relate_resources as $relate_resource){
+                    $sale = $relate_resource->getSale();
+                    $sale_id = $sale->getId();
                 }
+                $sql = "SELECT log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id = '$order_id'";
+                $log_id = $GLOBALS['db']->getOne($sql);
             }
         }else{
             $msg = $_LANG['pay_fail'];

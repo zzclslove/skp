@@ -145,7 +145,7 @@ class paypal
             {
                 return false;
             }
-
+            /*****
             // check that receiver_email is your Primary PayPal email
             if ($_POST['receiver_email'] != $payment['paypal_account'])
             {
@@ -162,7 +162,7 @@ class paypal
             {
                 return false;
             }
-
+            *******/
             // process payment
             order_paid($order_sn, PS_PAYED, $action_note);
 

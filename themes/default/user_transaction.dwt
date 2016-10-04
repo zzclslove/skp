@@ -194,16 +194,24 @@
           <tbody>
             <!-- {foreach from=$orders item=item} -->
             <tr align="center">
-              <td><a href="user.php?act=order_detail&order_id={$item.order_id}" class="f6">{$item.order_sn}</a></td>
+              <td>
+                  <a href="user.php?act=order_detail&order_id={$item.order_id}" class="f6">{$item.order_sn}</a>
+                  <!--{if $item.drop_shipping eq 1}-->
+                  <span>[Drop Shipping]</span>
+                  <br /><a style="text-decoration: underline;color:#ff5c26" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$item.order_sn}">Set Shipment Invoice</a>
+                  &nbsp;&nbsp;<a style="text-decoration: underline;color:#ff5c26" target="_blank" href="download_invoice.php?order_sn={$item.order_sn}">Download Invoice</a>
+                  <!--{/if}-->
+              </td>
               <td>{$item.order_time}</td>
               <td>{$item.total_fee}</td>
               <td style="position:relative">{$item.order_status}
               <!-- {if $open_logistics_trace and ($item.shipping_status == 1 or $item.shipping_status == 2)} -->
               <br>
                   {if $item.shipping_name eq 'DHL'}
-                      <a target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$item.invoice_no}&brand=DHL" style="color:#FF5C26;text-decoration: underline">{$item.shipping_name}:{$item.invoice_no}</a>
-                  {else}
-                      <span style="color:#FF5C26;">{$item.shipping_name}:{$item.invoice_no}</span>
+                      <span>DHL:</span>&nbsp;&nbsp;
+                      <!-- {foreach from=$item.invoice_no item=invoice} -->
+                      <a style="text-decoration: underline;color:#ff5c26" target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$invoice}&brand=DHL" style="color:#FF5C26;text-decoration: underline">{$invoice}</a>&nbsp;&nbsp;
+                      <!-- {/foreach} -->
                   {/if}
               <!-- {/if} -->
               </td>
@@ -327,6 +335,12 @@
           <td align="right" bgcolor="#ffffff">{$lang.detail_shipping_status}：</td>
           <td align="left" bgcolor="#ffffff">{$order.shipping_status}&nbsp;&nbsp;&nbsp;&nbsp;{$order.shipping_time}</td>
         </tr>
+         <!-- {if $order.drop_shipping eq 1}-->
+             <tr>
+                 <td align="right" bgcolor="#ffffff">Shipment Invoice：</td>
+                 <td align="left" bgcolor="#ffffff"><a style="text-decoration: underline" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$order.order_sn}">Set My Shipment Invoice</a></td>
+             </tr>
+         <!--{/if}-->
         <!-- {if $order.invoice_no}-->
         <tr>
           <td align="right" bgcolor="#ffffff">{$lang.consignment}：</td>

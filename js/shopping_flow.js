@@ -46,16 +46,7 @@ function selectShipping(obj)
     }
   }
 
-  if (obj.attributes['insure'].value + 0 == 0)
-  {
-    document.getElementById('ECS_NEEDINSURE').checked = false;
-    document.getElementById('ECS_NEEDINSURE').disabled = true;
-  }
-  else
-  {
-    document.getElementById('ECS_NEEDINSURE').checked = false;
-    document.getElementById('ECS_NEEDINSURE').disabled = false;
-  }
+
 
   var now = new Date();
   Ajax.call('flow.php?step=select_shipping', 'shipping=' + obj.value, orderShippingSelectedResponse, 'GET', 'JSON');

@@ -99,7 +99,7 @@ if(!empty($order))
                     ->setSubtotal(price_currency($order['goods_amount']));
                 $amount = new Amount();
                 $amount->setCurrency("EUR")
-                    ->setTotal(price_currency($order['order_amount']))
+                    ->setTotal(price_currency($order['shipping_fee']) + price_currency($order['goods_amount']))
                     ->setDetails($details);
             }else{
                 $details->setShipping($order['shipping_fee'])
