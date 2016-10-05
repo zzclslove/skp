@@ -27,6 +27,7 @@ if (__FILE__ == '')
 
 /* 取得当前ecshop所在的根目录 */
 define('ROOT_PATH', str_replace('includes/init.php', '', str_replace('\\', '/', __FILE__)));
+define('EUR_RATE', 0.8955);
 
 if (!file_exists(ROOT_PATH . 'data/install.lock') && !file_exists(ROOT_PATH . 'includes/install.lock')
     && !defined('NO_CHECK_INSTALL'))
@@ -323,7 +324,7 @@ if($currency_id == 0){
     $_SESSION['currency'] = 2;
     $_SESSION['currency_name'] = 'EUR';
     $_SESSION['currency_code'] = '€';
-    $_SESSION['currency_rate'] = 0.8896;
+    $_SESSION['currency_rate'] = 0.8955;
 }
 else if($currency_id == 3){
     $_SESSION['currency'] = 3;
