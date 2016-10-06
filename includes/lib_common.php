@@ -2920,6 +2920,8 @@ function price_format($price, $change_price = true)
         $_SESSION['currency_rate'] = 1;
     }else if($_SESSION['currency'] == 2){
         $price = $price * EUR_RATE;
+    }else if($_SESSION['currency'] == 3){
+        $price = $price * RMB_RATE;
     }
 
     if ($change_price && defined('ECS_ADMIN') === false)
@@ -2972,6 +2974,8 @@ function price_currency($price, $change_price = true)
         $_SESSION['currency_rate'] = 1;
     }else if($_SESSION['currency'] == 2){
         $price = $price * EUR_RATE;
+    }else if($_SESSION['currency'] == 3){
+        $price = $price * RMB_RATE;
     }
     if ($change_price && defined('ECS_ADMIN') === false)
     {
