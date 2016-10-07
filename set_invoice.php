@@ -44,11 +44,22 @@ if($act == 'set_invoice'){
     $sql = "select * from " . $ecs->table('invoice') . " where order_sn = '" . $order_sn . "'";
     $invoice = $db->getRow($sql);
 
+    $invoice['bill_company_name'] = isset($invoice['bill_company_name']) && str_len($invoice['bill_company_name']) > 0 ? $invoice['bill_company_name']:(isset($_SESSION['bill_company_name'])?$_SESSION['bill_company_name']:'');
+    $invoice['bill_address'] = isset($invoice['bill_address']) && str_len($invoice['bill_address']) > 0 ? $invoice['bill_address']:(isset($_SESSION['bill_address'])?$_SESSION['bill_address']:'');
+    $invoice['bill_contact_person'] = isset($invoice['bill_contact_person']) && str_len($invoice['bill_contact_person']) > 0 ? $invoice['bill_contact_person']:(isset($_SESSION['bill_contact_person'])?$_SESSION['bill_contact_person']:'');
+    $invoice['bill_phone_fax'] = isset($invoice['bill_phone_fax']) && str_len($invoice['bill_phone_fax']) > 0 ? $invoice['bill_phone_fax']:(isset($_SESSION['bill_phone_fax'])?$_SESSION['bill_phone_fax']:'');
+
     $smarty->assign('invoice', $invoice);
     $smarty->assign('datenow', date('M.d, Y', time()));
 
     $smarty->display('set_invoice.dwt');
 }else if($act == 'set_invoice_done'){
+
+    $_SESSION['bill_company_name'] = compile_str($_REQUEST['bill_company_name']);
+    $_SESSION['bill_address'] = compile_str($_REQUEST['bill_address']);
+    $_SESSION['bill_contact_person'] = compile_str($_REQUEST['bill_contact_person']);
+    $_SESSION['bill_phone_fax'] = compile_str($_REQUEST['bill_phone_fax']);
+
     $invoice = array(
     'order_sn'=> compile_str($order_sn),
     'bill_company_name' => compile_str($_REQUEST['bill_company_name']),
