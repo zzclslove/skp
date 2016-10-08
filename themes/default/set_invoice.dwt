@@ -21,7 +21,8 @@
         .invoice_cell_con{border-bottom:1px solid #3c3c3c;width: 100%;line-height: 32px}
         .invoice_cell{border-right:1px solid #3c3c3c;padding: 3px;font-size: 14px;height:32px;line-height:27px}
         .invoice_cell:last-child{border-right:0}
-        .invoice_cell input{border:0px;line-height:24px;font-size: 16px;width:100%}
+        .invoice_cell input{border:0px;line-height:24px;font-size: 16px;width:100%;font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;}
+        .invoice_cell textarea{font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;}
     </style>
 </head>
 <body>
@@ -70,21 +71,9 @@
                     </div>
                 </div>
                 <div class="invoice_cell_con">
-                    <div class="invoice_cell" style="width: 26%;">Company Name 公司名称:</div>
-                    <div class="invoice_cell" style="width: 74%;">
-                        <input name="company_name" type="text" value="{$invoice.company_name|escape:html}"/>
-                    </div>
-                </div>
-                <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 26%;height: 64px;">Address 地址:</div>
                     <div class="invoice_cell" style="width: 74%;height: 64px;">
                         <textarea name="address" style="width: 543px;;border:0;height: 54px;line-height: 27px;font-size: 16px">{$invoice.address|escape:html}</textarea>
-                    </div>
-                </div>
-                <div class="invoice_cell_con">
-                    <div class="invoice_cell" style="width: 26%;">Contact Person 联系人:</div>
-                    <div class="invoice_cell" style="width: 74%;">
-                        <input name="contact_person" type="text" value="{$invoice.contact_person|escape:html}"/>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
@@ -109,9 +98,7 @@
                         <input name="state_country" type="text" value="{$invoice.state_country|escape:html}"/>
                     </div>
                     <div class="invoice_cell" style="width: 25%;">Total Weight 重量:</div>
-                    <div class="invoice_cell" style="width: 25%;">
-                        <input name="total_weight" type="text" value="{$invoice.total_weight|escape:html}"/>
-                    </div>
+                    <div class="invoice_cell" style="width: 25%;"></div>
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 36%;text-align: center;height: 47px;line-height: 20px;">
@@ -133,13 +120,13 @@
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 36%;text-align: center;">Mobile phone</div>
-                    <div class="invoice_cell" style="width: 18%;text-align: center;">{$count}</div>
-                    <div class="invoice_cell" style="width: 18%;text-align: center;">{$danjia}</div>
-                    <div class="invoice_cell" style="width: 28%;text-align: center;">{$total}</div>
+                    <div class="invoice_cell" style="width: 18%;text-align: center;"><input id="count" style="text-align: center" name="count" type="text" value="{$invoice.items_number|escape:html}"/></div>
+                    <div class="invoice_cell" style="width: 18%;text-align: center;"><input id="danjia" style="text-align: center" name="danjia" type="text" value="{$invoice.unit_value|escape:html}"/></div>
+                    <div class="invoice_cell total" style="width: 28%;text-align: center;"></div>
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 72%;text-align: right;">Total Invoice Value 总价:</div>
-                    <div class="invoice_cell" style="width: 28%;text-align: center;">{$total}</div>
+                    <div class="invoice_cell total" style="width: 28%;text-align: center;"></div>
                 </div>
             </div>
             <div style="margin-top: 10px;margin-bottom:10px;font-size:13px;color: #0c0067;line-height: 22px;">
@@ -160,5 +147,24 @@
     </form>
 </div>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<script>
+$('.total').html(parseInt($('#count').val()) * parseInt($('#danjia').val()));
+$('#count').keyup(function(){
+    if(isNaN(parseInt($(this).val()))){
+        $(this).val(1);
+    }else{
+        $(this).val(parseInt($(this).val()));
+    }
+    $('.total').html(parseInt($('#count').val()) * parseInt($('#danjia').val()));
+});
+$('#danjia').keyup(function(){
+    if(isNaN(parseInt($(this).val()))){
+        $(this).val(1);
+    }else{
+        $(this).val(parseInt($(this).val()));
+    }
+    $('.total').html(parseInt($('#count').val()) * parseInt($('#danjia').val()));
+});
+</script>
 </body>
 </html>

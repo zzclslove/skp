@@ -432,27 +432,6 @@ lang=EN-US style=\'color:#002060\'><o:p>&nbsp;</o:p></span></p>
   style=\'mso-spacerun:yes\'>&nbsp;&nbsp; </span>'.$invoice['consignee'].'<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style=\'mso-yfti-irow:7;page-break-inside:avoid;height:21.3pt\'>
-  <td width=187 valign=top style=\'width:140.4pt;border:solid windowtext 1.0pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:21.3pt\'>
-  <p class=MsoNormal style=\'line-height:125%;line-height:16.05pt;\'><span lang=EN-US
-  style=\'mso-bidi-font-size:10.5pt;line-height:125%;font-family:Arial;
-  mso-bidi-font-family:"Times New Roman"\'>Company Name</span><span
-  style=\'mso-bidi-font-size:10.5pt;line-height:125%;font-family:宋体;mso-ascii-font-family:
-  "Times New Roman";mso-hansi-font-family:"Times New Roman"\'>公司名称</span><span
-  lang=EN-US style=\'mso-bidi-font-size:10.5pt;line-height:125%;font-family:
-  Arial;mso-bidi-font-family:"Times New Roman"\'>:<o:p></o:p></span></p>
-  </td>
-  <td width=432 colspan=7 valign=top style=\'width:324.0pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:21.3pt\'>
-  <p class=MsoNormal align=left style=\'text-align:left;line-height:16.05pt;\'><span lang=EN-US
-  style=\'mso-bidi-font-size:10.5pt;font-family:Arial;mso-fareast-font-family:
-  TimesNewRomanPSMT-Identity-H;mso-font-kerning:0pt\'><o:p>'.$invoice['company_name'].'</o:p></span></p>
-  </td>
- </tr>
  <tr style=\'mso-yfti-irow:8;height:46.15pt\'>
   <td width=187 valign=top style=\'width:140.4pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
@@ -474,27 +453,6 @@ lang=EN-US style=\'color:#002060\'><o:p>&nbsp;</o:p></span></p>
   <p class=MsoNormal align=left style=\'text-align:left;line-height:16.05pt;\'><span lang=EN-US
   style=\'mso-bidi-font-size:10.5pt;font-family:"New York";mso-bidi-font-family:
   Arial;mso-font-kerning:0pt\'>'.$invoice['address'].'</span></p>
-  </td>
- </tr>
- <tr style=\'mso-yfti-irow:9;page-break-inside:avoid;height:22.8pt\'>
-  <td width=187 valign=top style=\'width:140.4pt;border:solid windowtext 1.0pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:22.8pt\'>
-  <p class=MsoNormal style=\'line-height:125%;line-height:16.05pt;\'><span lang=EN-US
-  style=\'mso-bidi-font-size:10.5pt;line-height:125%;font-family:Arial;
-  mso-bidi-font-family:"Times New Roman"\'>Contact Person</span><span
-  style=\'mso-bidi-font-size:10.5pt;line-height:125%;font-family:宋体;mso-ascii-font-family:
-  Arial;mso-hansi-font-family:Arial\'>联系人</span><span lang=EN-US
-  style=\'mso-bidi-font-size:10.5pt;line-height:125%;font-family:Arial;
-  mso-bidi-font-family:"Times New Roman"\'>:<o:p></o:p></span></p>
-  </td>
-  <td width=432 colspan=7 valign=top style=\'width:324.0pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:22.8pt\'>
-  <p class=MsoNormal align=left style=\'text-align:left;line-height:16.05pt;
-  mso-pagination:widow-orphan\'><span lang=EN-US style=\'mso-bidi-font-size:10.5pt;
-  font-family:Arial;mso-font-kerning:0pt\'><o:p>'.$invoice['contact_person'].'</o:p></span></p>
   </td>
  </tr>
  <tr style=\'mso-yfti-irow:10;page-break-inside:avoid;height:22.4pt\'>

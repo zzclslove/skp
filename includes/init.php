@@ -27,7 +27,7 @@ if (__FILE__ == '')
 
 /* 取得当前ecshop所在的根目录 */
 define('ROOT_PATH', str_replace('includes/init.php', '', str_replace('\\', '/', __FILE__)));
-define('EUR_RATE', 0.8955);
+define('EUR_RATE', 0.9204);
 define('RMB_RATE', 6.6689);
 
 if (!file_exists(ROOT_PATH . 'data/install.lock') && !file_exists(ROOT_PATH . 'includes/install.lock')
