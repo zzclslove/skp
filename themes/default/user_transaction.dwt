@@ -52,7 +52,6 @@
           {/foreach}
         </script>
       <h5><span>{$lang.profile}</span></h5>
-      <div class="blank"></div>
      <form name="formEdit" action="user.php" method="post" onSubmit="return userEdit()">
       <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                 <tr>
@@ -99,12 +98,48 @@
 		<!-- {/if} -->
 		{/foreach}
                 <tr>
-                  <td colspan="2" align="center" bgcolor="#FFFFFF"><input name="act" type="hidden" value="act_edit_profile" />
-                    <input name="submit" type="submit" value="{$lang.confirm_edit}" class="bnt_blue_1" style="border:none;" />
+                  <td colspan="2" align="center" bgcolor="#FFFFFF">
+                      <input name="act" type="hidden" value="act_edit_profile" />
+                      <input name="submit" type="submit" value="{$lang.confirm_edit}" class="bnt_blue_1" style="border:none;" />
                   </td>
                 </tr>
        </table>
     </form>
+    <div class="blank"></div>
+    <h5><span>For Invoice</span></h5>
+    <form action="user.php" method="post" enctype="multipart/form-data">
+        <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+        {foreach from=$dropshipping_filed_list item=field}
+            <tr>
+                <td width="28%" align="right" bgcolor="#FFFFFF">{$field.reg_field_name}：</td>
+                <!-- {if $field.id eq 9} -->
+                <td width="72%" align="left" bgcolor="#FFFFFF">
+                    <div style="width:50%;">
+                        <input type="file" size="40" name="extend_field{$field.id}">
+                    </div>
+                    <div style="width:50%;">
+                        {if $field.content}
+                        <img src="{$field.content}" width="110">
+                        {/if}
+                    </div>
+                </td>
+                <!-- {else} -->
+                <td width="72%" align="left" bgcolor="#FFFFFF">
+                    <input name="extend_field{$field.id}" type="text" class="inputBg" value="{$field.content}"/>
+                </td>
+                <!-- {/if} -->
+            </tr>
+        {/foreach}
+            <tr>
+                <td colspan="2" align="center" bgcolor="#FFFFFF">
+                    <input name="act" type="hidden" value="act_edit_dropshipping" />
+                    <input name="submit" type="submit" value="{$lang.confirm_edit}" class="bnt_blue_1" style="border:none;" />
+                </td>
+            </tr>
+        </table>
+    </form>
+      <div class="blank"></div>
+      <h5><span>Change Password</span></h5>
      <form name="formPassword" action="user.php" method="post" onSubmit="return editPassword()" >
      <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
         <tr>
@@ -181,7 +216,7 @@
        <!-- {if $action eq 'order_list'} -->
        <h5><span>{$lang.label_order}</span></h5>
        <div class="blank"></div>
-       <table width="100%" border="0" cellpadding="5" cellspacing="1">
+       <table class="order_list_user_table" width="100%" border="0" cellpadding="5" cellspacing="1">
           <thead bgcolor="#757575" style="color:#fff">
             <tr align="center">
               <td>{$lang.order_number}</td>
@@ -197,9 +232,7 @@
               <td>
                   <a href="user.php?act=order_detail&order_id={$item.order_id}" class="f6">{$item.order_sn}</a>
                   <!--{if $item.drop_shipping eq 1}-->
-                  <span>[Drop Shipping]</span>
-                  <br /><a style="text-decoration: underline;color:#ff5c26" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$item.order_sn}">Set Shipment Invoice</a>
-                  &nbsp;&nbsp;<a style="text-decoration: underline;color:#ff5c26" target="_blank" href="download_invoice.php?order_sn={$item.order_sn}">Download Invoice</a>
+                  [<span style="color:#ff5c26">Drop Shipping</span>]
                   <!--{/if}-->
               </td>
               <td>{$item.order_time}</td>
@@ -335,10 +368,17 @@
           <td align="right" bgcolor="#ffffff">{$lang.detail_shipping_status}：</td>
           <td align="left" bgcolor="#ffffff">{$order.shipping_status}&nbsp;&nbsp;&nbsp;&nbsp;{$order.shipping_time}</td>
         </tr>
+         <tr>
+             <td align="right" bgcolor="#ffffff">Bill Invoice：</td>
+             <td align="left" bgcolor="#ffffff"></td>
+         </tr>
          <!-- {if $order.drop_shipping eq 1}-->
              <tr>
                  <td align="right" bgcolor="#ffffff">Shipment Invoice：</td>
-                 <td align="left" bgcolor="#ffffff"><a style="text-decoration: underline" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$order.order_sn}">Set My Shipment Invoice</a></td>
+                 <td align="left" bgcolor="#ffffff">
+                     <a style="text-decoration: underline" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$order.order_sn}">Set My Shipment Invoice</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                     <a style="text-decoration: underline" target="_blank" href="download_invoice.php?order_sn={$order.order_sn}">Download Shipment Invoice</a>
+                 </td>
              </tr>
          <!--{/if}-->
         <!-- {if $order.invoice_no}-->

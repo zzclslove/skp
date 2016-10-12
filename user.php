@@ -16,7 +16,9 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-
+include_once(ROOT_PATH . '/includes/cls_image.php');
+$image = new cls_image($_CFG['bgcolor']);
+$allow_suffix = array('gif', 'jpg', 'png', 'jpeg', 'bmp');
 /* 载入语言文件 */
 require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/user.php');
 
@@ -478,13 +480,63 @@ elseif ($action == 'profile')
         }
     }
 
-    $smarty->assign('extend_info_list', $extend_info_list);
+    //dropshipping
+    $sql = 'SELECT * FROM ' . $ecs->table('reg_fields') . ' WHERE type = 3 ORDER BY dis_order, id';
+    $dropshipping_filed_list = $db->getAll($sql);
 
+    foreach ($dropshipping_filed_list AS $key => $val){
+        $dropshipping_filed_list[$key]['content'] = empty($temp_arr[$val['id']]) ? '' : $temp_arr[$val['id']];
+    }
+
+    $smarty->assign('extend_info_list', $extend_info_list);
+    $smarty->assign('dropshipping_filed_list', $dropshipping_filed_list);
     /* 密码提示问题 */
     $smarty->assign('passwd_questions', $_LANG['passwd_questions']);
 
     $smarty->assign('profile', $user_info);
     $smarty->display('user_transaction.dwt');
+}
+
+/*编辑dropshipping*/
+elseif ($action == 'act_edit_dropshipping')
+{
+    $sql = 'SELECT id FROM ' . $ecs->table('reg_fields') . ' WHERE type = 3 ORDER BY dis_order, id';   //读出所有扩展字段的id
+    $fields_arr = $db->getAll($sql);
+    foreach ($fields_arr AS $val)       //循环更新扩展用户信息
+    {
+        $extend_field_index = 'extend_field' . $val['id'];
+        if(isset($_POST[$extend_field_index]))
+        {
+            $temp_field_content = strlen($_POST[$extend_field_index]) > 100 ? mb_substr(htmlspecialchars($_POST[$extend_field_index]), 0, 99) : htmlspecialchars($_POST[$extend_field_index]);
+            $sql = 'SELECT * FROM ' . $ecs->table('reg_extend_info') . "  WHERE reg_field_id = '$val[id]' AND user_id = '$user_id'";
+            if ($db->getOne($sql))      //如果之前没有记录，则插入
+            {
+                $sql = 'UPDATE ' . $ecs->table('reg_extend_info') . " SET content = '$temp_field_content' WHERE reg_field_id = '$val[id]' AND user_id = '$user_id'";
+            }
+            else
+            {
+                $sql = 'INSERT INTO '. $ecs->table('reg_extend_info') . " (`user_id`, `reg_field_id`, `content`) VALUES ('$user_id', '$val[id]', '$temp_field_content')";
+            }
+            $db->query($sql);
+        }
+    }
+    if (!empty($_FILES['extend_field9']['name'])){
+        $tempimgname = explode('.', $_FILES['extend_field9']['name']);
+        $img_name = $user_id . '.' . end($tempimgname);
+        $original_img = $image->upload_image($_FILES['extend_field9'], 'companylogo', $img_name); // 原始图片
+        $temp_field_content = DATA_DIR. '/companylogo/' . $img_name;
+        $sql = 'SELECT * FROM ' . $ecs->table('reg_extend_info') . "  WHERE reg_field_id = '9' AND user_id = '$user_id'";
+        if ($db->getOne($sql))
+        {
+            $sql = 'UPDATE ' . $ecs->table('reg_extend_info') . " SET content = '$temp_field_content' WHERE reg_field_id = 9 AND user_id = '$user_id'";
+        }
+        else
+        {
+            $sql = 'INSERT INTO '. $ecs->table('reg_extend_info') . " (`user_id`, `reg_field_id`, `content`) VALUES ('$user_id', '9', '$temp_field_content')";
+        }
+        $db->query($sql);
+    }
+    show_message($_LANG['edit_profile_success'], $_LANG['profile_lnk'], 'user.php?act=profile', 'info');
 }
 
 /* 修改个人资料的处理 */

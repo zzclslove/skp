@@ -1436,3 +1436,6 @@ position:absolute; top:0px; right:0px;}
 
 .remote-cost span{display: inline-block;vertical-align: middle;}
 .why-icon{width: 18px;height: 18px;background: url(images/why.jpg);background-size: 20px;cursor: pointer;}
+
+.order_list_user_table{border-collapse: collapse;border-spacing: 0;}
+.order_list_user_table td{border:1px solid #eee}

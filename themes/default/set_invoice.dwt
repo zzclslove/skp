@@ -35,7 +35,7 @@
             <h1 style="text-align: center;width: 100%;line-height: 40px;font-size: 18px">COMMERCIAL INVOICE</h1>
             <div class="invoice_con" style="border:1px solid #3c3c3c;border-bottom:0;width:100%">
                 <div class="invoice_cell_con">
-                    <div class="invoice_cell" style="width: 50%;">订单号:{$order_sn}</div>
+                    <div class="invoice_cell" style="width: 50%;">Invoice NO 单号:{$order_sn}</div>
                     <div class="invoice_cell" style="width: 28%;">Air waybill Number 单号:</div>
                     <div class="invoice_cell" style="width: 22%"></div>
                 </div>

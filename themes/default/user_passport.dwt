@@ -95,12 +95,12 @@
     {insert_scripts files='utils.js'}
 <div class="usBox">
   <div class="usBox_2 clearfix">
-   <div class="regtitle"></div>
+   <div style="margin-left: 33%;margin-bottom: 20px;" class="regtitle"></div>
     <form action="user.php" method="post" name="formUser" onsubmit="return register();">
       <table width="100%"  border="0" align="left" cellpadding="5" cellspacing="3">
         <tr>
-          <td width="13%" align="right">{$lang.label_username}</td>
-          <td width="87%">
+          <td width="33%" align="right">{$lang.label_username}</td>
+          <td width="67%">
           <input name="username" type="text" size="25" id="username" onblur="is_registered(this.value);" class="inputBg"/>
             <span id="username_notice" style="color:#FF0000"> *</span>
           </td>

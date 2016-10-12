@@ -99,7 +99,7 @@ class paypal
         $data_return_url    = $GLOBALS['ecs']->url() . 'paypal_respond.php?success=true';
         $cancel_return      = $GLOBALS['ecs']->url() . 'paypal_respond.php?success=false';
         $sub_fix = preg_replace('/(.*?:\/\/(www\.)?)(.*?)\.(:?.*?)$/','$3',$data_return_url);
-        $invoice = $data_order_id.'-'.$sub_fix;
+        $invoice = $order[order_sn];
         if($payment['sandbox'])
         {
             $mode = 'sandbox';
