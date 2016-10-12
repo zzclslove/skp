@@ -27,13 +27,11 @@ if($act == 'set_invoice'){
     $row = $db->getRow($sql);
     $amount = $row['goods_amount'];
 
-    $sql = "SELECT count(o.goods_id) " .
+    $sql = "SELECT sum(o.goods_number) " .
         "FROM " . $ecs->table('order_goods') . " AS o ".
         "LEFT JOIN " . $ecs->table('order_info') . " AS g ON o.order_id = g.order_id " .
         "WHERE g.order_sn = '". compile_str($order_sn) . "'";
-    $res = $db->getOne($sql);
-
-    $count = (intval($res) / 2) < 1?1:intval(intval($res) / 2);
+    $count = $db->getOne($sql);
     $amount = intval($amount / 10);
     $danjia = intval($amount/$count);
     $total = $danjia * $count;
@@ -44,10 +42,47 @@ if($act == 'set_invoice'){
     $sql = "select * from " . $ecs->table('invoice') . " where order_sn = '" . $order_sn . "'";
     $invoice = $db->getRow($sql);
 
-    $invoice['bill_company_name'] = isset($invoice['bill_company_name']) && str_len($invoice['bill_company_name']) > 0 ? $invoice['bill_company_name']:(isset($_SESSION['bill_company_name'])?$_SESSION['bill_company_name']:'');
-    $invoice['bill_address'] = isset($invoice['bill_address']) && str_len($invoice['bill_address']) > 0 ? $invoice['bill_address']:(isset($_SESSION['bill_address'])?$_SESSION['bill_address']:'');
-    $invoice['bill_contact_person'] = isset($invoice['bill_contact_person']) && str_len($invoice['bill_contact_person']) > 0 ? $invoice['bill_contact_person']:(isset($_SESSION['bill_contact_person'])?$_SESSION['bill_contact_person']:'');
-    $invoice['bill_phone_fax'] = isset($invoice['bill_phone_fax']) && str_len($invoice['bill_phone_fax']) > 0 ? $invoice['bill_phone_fax']:(isset($_SESSION['bill_phone_fax'])?$_SESSION['bill_phone_fax']:'');
+    $sql = 'SELECT * FROM ' . $ecs->table('reg_extend_info') . ' WHERE user_id = '.$_SESSION['user_id'];
+    $extend_info_arr = $db->getAll($sql);
+
+    $temp_arr = array();
+    foreach ($extend_info_arr AS $val)
+    {
+        $temp_arr[$val['reg_field_id']] = $val['content'];
+    }
+
+    $sql = 'SELECT * FROM ' . $ecs->table('reg_fields') . ' WHERE type = 3 ORDER BY dis_order, id';
+    $dropshipping_filed_list = $db->getAll($sql);
+
+    foreach ($dropshipping_filed_list AS $key => $val){
+        $dropshipping_filed_list[$key]['content'] = empty($temp_arr[$val['id']]) ? '' : $temp_arr[$val['id']];
+    }
+
+    $invoice['bill_company_name'] = '';
+    $invoice['bill_address'] = '';
+    $invoice['bill_contact_person'] = '';
+    $invoice['bill_phone_fax'] = '';
+    $datacheck = true;
+    $temp_array = array();
+    foreach ($dropshipping_filed_list AS $key => $val){
+        if($val['id'] != 9 && $val['id'] != 12){
+            if(str_len($val['content']) == 0){
+                $datacheck = false;
+            }
+        }
+        $temp_array[$val['id']] = $val['content'];
+    }
+    if($datacheck){
+        $invoice['bill_company_name'] = $temp_array[8];
+        $invoice['bill_contact_person'] = $temp_array[16];
+        if(str_len($temp_array[12]) > 0){
+            $invoice['bill_address'] = $temp_array[11].', '.$temp_array[12].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
+        }else{
+            $invoice['bill_address'] = $temp_array[11].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
+        }
+
+        $invoice['bill_phone_fax'] = $temp_array[15];
+    }
 
     $invoice['consignee'] = isset($invoice['consignee']) && str_len($invoice['consignee']) > 0 ? $invoice['consignee'] : $row['consignee'];
     $invoice['address'] = isset($invoice['address']) && str_len($invoice['address']) > 0 ? $invoice['address'] : $row['address'] . ', ' . $row['city'] . ', ' . $row['states'];
