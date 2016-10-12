@@ -233,7 +233,7 @@ function get_recommend_goods($type = '', $cats = '')
 
         //取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+                "shop_price, ".
                 "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " .
                 'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
                 "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
@@ -447,7 +447,7 @@ function get_goods_info($goods_id)
     $time = gmtime();
     $sql = 'SELECT g.*, c.measure_unit, b.brand_id, b.brand_name AS goods_brand, m.type_money AS bonus_money, ' .
                 'IFNULL(AVG(r.comment_rank), 0) AS comment_rank, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS rank_price " .
+                "g.shop_price AS rank_price " .
             'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
             'LEFT JOIN ' . $GLOBALS['ecs']->table('category') . ' AS c ON g.cat_id = c.cat_id ' .
             'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON g.brand_id = b.brand_id ' .

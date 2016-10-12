@@ -15,7 +15,7 @@ include_once(ROOT_PATH . 'includes/cls_certificate.php');
 $sql = "SELECT o.order_id, o.order_sn, r.region_name " .
     " FROM " . $GLOBALS['ecs']->table('order_info') . " as o" .
     " left join " . $GLOBALS['ecs']->table('region') . " as r on r.region_id = o.country ".
-    " where o.pay_status = 2 and (o.shipping_status = 0 or o.shipping_status = 4)";
+    " where o.pay_status = 2 and (o.shipping_status = 0 or o.shipping_status = 4 or o.shipping_status = 3)";
 $row = $GLOBALS['db']->getAll($sql);
 $order_goods = array();
 foreach($row as $val){

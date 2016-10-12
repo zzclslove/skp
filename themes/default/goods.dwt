@@ -165,7 +165,11 @@ function reg(str){
               <dd style="width:auto;margin-right:15px;height:28px;line-height: 28px"> <strong style="font-size: 14px;color: #0a0a0a;">{$lang.number}：</strong>
                 <input name="number" type="text" id="number" value="1" size="4" onblur="changePrice()" style="border:1px solid #666;padding:3px"/>
               </dd>
-              <dd style="width:auto;height:28px;line-height: 28px"> <strong style="font-size: 14px;color: #0a0a0a;">{$lang.amount}：</strong><font style="font-size:18px" id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
+              <dd style="width:auto;height:28px;line-height: 28px">
+                <strong style="font-size: 14px;color: #0a0a0a;">{$lang.amount}：</strong>
+                <font style="font-size:18px" id="ECS_GOODS_AMOUNT" class="shop"></font>
+                <font>&nbsp;&nbsp;&nbsp;{$discount}</font>
+              </dd>
             </li>
             <li class="padd" style="padding-top:20px;">
               <table border="0" cellspacing="0" cellpadding="0">

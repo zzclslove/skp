@@ -118,22 +118,7 @@ elseif ($_REQUEST['act'] == 'list')
             $panel_display="block";
         }
         $panel_flag=$is_super_admin==1?1:0;
-        $onclick=$is_super_admin==1?'onclick="showPanel()"':"";
-        $cert = new certificate();
-        if($cert->is_bind_sn('erp','goods_name')){//已经开通绑定了ERP
-            $panel_flag=0;
-            $erp_url="https://account.shopex.cn/product";//erp登录地址
-            $erp_icon_html='<a href="'.$erp_url.'" class="btn-ERP" target="_blank">'.$_LANG['erp_enter'].'<i class="cl-red">ERP</i>'.$_LANG['erp_processing_orders'].'</a>';
-        }elseif($cert->is_open_sn('erp')) {//只开通了ERP未绑定
-            $erpstr=array($_LANG['erp_bind_desc'],$_LANG['erp_bind']);//您已开通ERP，请授权绑定|去绑定
-            $erp_url = "certificate.php?act=list_edit";//绑定erp的地址
-            $url=$is_super_admin==1?'javascript:void(0)':$erp_url;
-            $erp_icon_html='<a href="'.$url.'" class="btn-ERP" '.$onclick.'>'.$_LANG['erp_bind_Auth'].'<i class="cl-red">ERP</i></a>';//授权绑定
-        }else{//未开通ERP
-            $erpstr=array($_LANG['erp_open_desc'],$_LANG['erp_open']);//已有99%的用户使用ERP处理订单|去开通
-            $erp_url = "http://yunqi.shopex.cn/products/erp";//erp登录地址
-            $erp_icon_html='<a href="'.$erp_url.'" target="_blank" onclick="getSnList();" class="btn-ERP" >'.$_LANG['erp_open_details'].'<i class="cl-red">ERP</i></a>';//了解详情开通
-        }
+
     }
     $smarty->assign('panel_flag',  $panel_flag);
     $smarty->assign('panel_display',  $panel_display);
@@ -5211,6 +5196,7 @@ function order_list()
             "(" . order_amount_field('o.') . ") AS total_fee, " .
             "IFNULL(u.user_name, '" .$GLOBALS['_LANG']['anonymous']. "') AS buyer ".
             " FROM " . $GLOBALS['ecs']->table('order_info') . " AS o " .
+            //" INNER JOIN " . $GLOBALS['ecs']->table('order_action') . " AS a ON o.order_id = a.order_id " .
             " LEFT JOIN " . $GLOBALS['ecs']->table('region') . " AS r ON o.country = r.region_id " .
             " LEFT JOIN " .$GLOBALS['ecs']->table('users'). " AS u ON u.user_id=o.user_id ". $where .
             " ORDER BY $filter[sort_by] $filter[sort_order] ".
@@ -5246,6 +5232,8 @@ function order_list()
         {
             $row[$key]['can_remove'] = 0;
         }
+        $sql = "select action_note from " . $GLOBALS['ecs']->table('order_action') . " where order_id =" . $value['order_id'] . " and action_note like 'PayPal交易号：%'";
+        $row[$key]['action_note'] = $GLOBALS['db']->getOne($sql);
     }
     $arr = array('orders' => $row, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 
