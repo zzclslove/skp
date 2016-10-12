@@ -45,7 +45,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true') {
         if($result->getState() == 'approved'){
             $transactions = $result->getTransactions();
             foreach($transactions as $transaction){
-                $order_id = intval($transaction->getInvoiceNumber());
+                $order_sn = $transaction->getInvoiceNumber();
                 $amount = $transaction->getAmount();
                 $msg = $_LANG['pay_success'];
                 $relate_resources = $transaction->getRelatedResources();
@@ -53,7 +53,7 @@ if (isset($_GET['success']) && $_GET['success'] == 'true') {
                     $sale = $relate_resource->getSale();
                     $sale_id = $sale->getId();
                 }
-                $sql = "SELECT log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id = '$order_id'";
+                $sql = "SELECT l.log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " as l left join ". $GLOBALS['ecs']->table('order_info') ." as o on l.order_id = o.order_id WHERE o.order_sn = '$order_sn'";
                 $log_id = $GLOBALS['db']->getOne($sql);
             }
         }else{
