@@ -438,7 +438,9 @@
           <th bgcolor="#ffffff" width="25%">{$lang.name}</th>
           <th bgcolor="#ffffff">{$lang.describe}</th>
           <th bgcolor="#ffffff" width="15%">Shipping Cost</th>
+            <!--{if $user_rank != 3}-->
           <th bgcolor="#ffffff" width="15%">Remote Cost</th>
+            <!--{/if}-->
         </tr>
         <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
         <tr>
@@ -456,6 +458,7 @@
           </td>
           <td bgcolor="#ffffff" valign="top">{$shipping.shipping_desc}</td>
           <td style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">{$shipping.format_shipping_fee}</td>
+            <!--{if $user_rank != 3}-->
           <td class="remote-cost" style="vertical-align: middle;text-align: center" bgcolor="#ffffff" align="right" valign="top">
               {if $shipping.remote_cost eq 0}
                   {$shipping.remote_cost_format}
@@ -464,6 +467,7 @@
                   <span class="why-icon"></span>
               {/if}
           </td>
+            <!--{/if}-->
         </tr>
         <!-- {/foreach} 循环配送方式 -->
 

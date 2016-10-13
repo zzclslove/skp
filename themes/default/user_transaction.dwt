@@ -370,14 +370,14 @@
         </tr>
          <tr>
              <td align="right" bgcolor="#ffffff">Bill Invoice：</td>
-             <td align="left" bgcolor="#ffffff"></td>
+             <td align="left" bgcolor="#ffffff"><a style="text-decoration: underline" target="_blank" href="download_invoice.php?order_sn={$order.order_sn}">Download Invoice</a></td>
          </tr>
          <!-- {if $order.drop_shipping eq 1}-->
              <tr>
                  <td align="right" bgcolor="#ffffff">Shipment Invoice：</td>
                  <td align="left" bgcolor="#ffffff">
                      <a style="text-decoration: underline" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$order.order_sn}">Set My Shipment Invoice</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                     <a style="text-decoration: underline" target="_blank" href="download_invoice.php?order_sn={$order.order_sn}">Download Shipment Invoice</a>
+                     <a style="text-decoration: underline" target="_blank" href="download_shipping_voice.php?order_sn={$order.order_sn}">Download Shipment Invoice</a>
                  </td>
              </tr>
          <!--{/if}-->

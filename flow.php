@@ -426,10 +426,9 @@ elseif ($_REQUEST['step'] == 'checkout')
     /*------------------------------------------------------ */
     //-- 订单确认
     /*------------------------------------------------------ */
-
+    $smarty->assign('user_rank', $_SESSION['user_rank']);
     /* 取得购物类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
-
     /* 团购标志 */
     if ($flow_type == CART_GROUP_BUY_GOODS)
     {
@@ -548,19 +547,22 @@ elseif ($_REQUEST['step'] == 'checkout')
         $shipping_list[$key]['free_money']          = price_format($shipping_cfg['free_money'], false);
         $shipping_list[$key]['insure_formated']     = strpos($val['insure'], '%') === false ?
             price_format($val['insure'], false) : $val['insure'];
+
         $shipping_list[$key]['remote_cost_format'] = price_format(0, false);
         $shipping_list[$key]['remote_cost'] = 0;
-        if($val['shipping_code'] == 'dhl'){
-            $sql = "select r.* from " . $ecs->table('remote') .
-                " as r left join " . $ecs->table('region') . "as e on r.country = e.region_name where e.region_id = ". $consignee['country'] .
-                " and r.code = '". $consignee['zipcode'] ."'";
-            $remotes = $db->getAll($sql);
-            $mark = 0;
-            foreach ($remotes as $key1 => $value1){
-                if(strpos($value1['city'], strtoupper($consignee['city'])) >= 0 || strpos($value1['city'], strtoupper($consignee['states'])) >= 0){
-                    $shipping_list[$key]['remote_cost_format'] = price_format(20, false);
-                    $shipping_list[$key]['remote_cost'] = 20;
-                    $mark = 1;
+        if($_SESSION['user_rank'] != 3){
+            if($val['shipping_code'] == 'dhl'){
+                $sql = "select r.* from " . $ecs->table('remote') .
+                    " as r left join " . $ecs->table('region') . "as e on r.country = e.region_name where e.region_id = ". $consignee['country'] .
+                    " and r.code = '". $consignee['zipcode'] ."'";
+                $remotes = $db->getAll($sql);
+                $mark = 0;
+                foreach ($remotes as $key1 => $value1){
+                    if(strpos($value1['city'], strtoupper($consignee['city'])) >= 0 || strpos($value1['city'], strtoupper($consignee['states'])) >= 0){
+                        $shipping_list[$key]['remote_cost_format'] = price_format(20, false);
+                        $shipping_list[$key]['remote_cost'] = 20;
+                        $mark = 1;
+                    }
                 }
             }
         }

@@ -23,7 +23,7 @@ $clientSecret = 'EP6JougtuSuU2ESdG9vjNKOxcligtC8HvRaT5Zfo4eGejAzzcTeRkXsTrmmqW4H
 //$clientId = 'AV_uLvs2lpwsLgwzjkVg9T8VuYX7Qc0HDJwVJuA0MH-otq-t2A2czfCWaCg3PPZX9WChNHJweZc1h7l4';
 //$clientSecret = 'EJxGJ55nRP3M_KvcfpK-kPSwRMDn8G0ged7tszmmMnnrsszN-wrzfhK-pKb6rZKChgfz874LyDoKsaM0';
 
-
+ 
 /**
  * All default curl options are stored in the array inside the PayPalHttpConfig class. To make changes to those settings
  * for your specific environments, feel free to add them using the code shown below

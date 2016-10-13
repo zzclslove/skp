@@ -17,12 +17,13 @@
     <style>
         .index-body div{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;overflow:hidden}
         .invoice_con div{float:left}
-        .invoice_con{background:#eeeeee}
+        .invoice_con{background:#cccccc}
         .invoice_cell_con{border-bottom:1px solid #3c3c3c;width: 100%;line-height: 32px}
         .invoice_cell{border-right:1px solid #3c3c3c;padding: 3px;font-size: 14px;height:32px;line-height:27px}
         .invoice_cell:last-child{border-right:0}
         .invoice_cell input{border:0px;line-height:24px;font-size: 16px;width:100%;font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;}
         .invoice_cell textarea{font-family: "Montserrat",Helvetica Neue,Helvetica,Arial,sans-serif,STHeiti,Microsoft YaHei;}
+        input,textarea{background: #cccccc;color: #222222;}
     </style>
 </head>
 <body>
@@ -31,7 +32,7 @@
     <form action="set_invoice.php">
         <input type="hidden" name="act" value="set_invoice_done" />
         <input type="hidden" name="order_sn" value="{$order_sn}" />
-        <div style="width: 770px;padding:10px;background: #eeeeee" class="indexpage">
+        <div style="width: 770px;padding:10px;background: #cccccc" class="indexpage">
             <h1 style="text-align: center;width: 100%;line-height: 40px;font-size: 18px">COMMERCIAL INVOICE</h1>
             <div class="invoice_con" style="border:1px solid #3c3c3c;border-bottom:0;width:100%">
                 <div class="invoice_cell_con">
@@ -40,62 +41,62 @@
                     <div class="invoice_cell" style="width: 22%"></div>
                 </div>
                 <div class="invoice_cell_con">
-                    <div class="invoice_cell" style="width: 50%;">Company Name 公司名称:</div>
-                    <div class="invoice_cell" style="width: 50%;">
-                        <input name="bill_company_name" type="text" value="{$invoice.bill_company_name|escape:html}"/>
+                    <div class="invoice_cell" style="width: 26%;">Company Name 公司名称:</div>
+                    <div class="invoice_cell" style="width: 74%;">
+                        <input readonly name="bill_company_name" type="text" value="{$invoice.bill_company_name|escape:html}"/>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
-                    <div class="invoice_cell" style="width: 50%;">Address 地址:</div>
-                    <div class="invoice_cell" style="width: 50%;">
-                        <input name="bill_address" type="text" value="{$invoice.bill_address|escape:html}" />
+                    <div class="invoice_cell" style="width: 26%;height: 64px;">Address 地址:</div>
+                    <div class="invoice_cell" style="width: 74%;height: 64px;">
+                        <textarea readonly name="bill_address" style="width: 543px;;border:0;height: 54px;line-height: 27px;font-size: 16px">{$invoice.bill_address|escape:html}</textarea>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
-                    <div class="invoice_cell" style="width: 50%;">Contact Person 联系人:</div>
-                    <div class="invoice_cell" style="width: 50%;">
-                        <input name="bill_contact_person" type="text" value="{$invoice.bill_contact_person|escape:html}"/>
+                    <div class="invoice_cell" style="width: 26%;">Contact Person 联系人:</div>
+                    <div class="invoice_cell" style="width: 74%;">
+                        <input readonly name="bill_contact_person" type="text" value="{$invoice.bill_contact_person|escape:html}"/>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
-                    <div class="invoice_cell" style="width: 50%;">Phone/Fax 电话/传真:</div>
-                    <div class="invoice_cell" style="width: 50%;">
-                        <input name="bill_phone_fax" type="text" value="{$invoice.bill_phone_fax|escape:html}"/>
+                    <div class="invoice_cell" style="width: 26%;">Phone/Fax 电话/传真:</div>
+                    <div class="invoice_cell" style="width: 74%;">
+                        <input readonly name="bill_phone_fax" type="text" value="{$invoice.bill_phone_fax|escape:html}"/>
                     </div>
                 </div>
                 <div class="invoice_cell_con"><div class="invoice_cell" style="width: 100%;">&nbsp;</div></div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="border-right: 0">Consignee 收件人:</div>
                     <div class="invoice_cell">
-                        <input name="consignee" style="width: 611px;" type="text" value="{$invoice.consignee|escape:html}"/>
+                        <input readonly name="consignee" style="width: 611px;" type="text" value="{$invoice.consignee|escape:html}"/>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 26%;height: 64px;">Address 地址:</div>
                     <div class="invoice_cell" style="width: 74%;height: 64px;">
-                        <textarea name="address" style="width: 543px;;border:0;height: 54px;line-height: 27px;font-size: 16px">{$invoice.address|escape:html}</textarea>
+                        <textarea readonly name="address" style="width: 543px;;border:0;height: 54px;line-height: 27px;font-size: 16px">{$invoice.address|escape:html}</textarea>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 26%;">Phone/Fax 电话/传真:</div>
                     <div class="invoice_cell" style="width: 74%;">
-                        <input name="phone_fax_email" type="text" value="{$invoice.phone_fax_email|escape:html}"/>
+                        <input readonly name="phone_fax_email" type="text" value="{$invoice.phone_fax_email|escape:html}"/>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 26%;">City 城市名:</div>
                     <div class="invoice_cell" style="width: 24%;">
-                        <input name="city" type="text" value="{$invoice.city|escape:html}"/>
+                        <input readonly name="city" type="text" value="{$invoice.city|escape:html}"/>
                     </div>
                     <div class="invoice_cell" style="width: 25%;">Postal Code 邮编:</div>
                     <div class="invoice_cell" style="width: 25%;">
-                        <input name="postal_code" type="text" value="{$invoice.postal_code|escape:html}"/>
+                        <input readonly name="postal_code" type="text" value="{$invoice.postal_code|escape:html}"/>
                     </div>
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 26%;">State/Country 国家名:</div>
                     <div class="invoice_cell" style="width: 24%;">
-                        <input name="state_country" type="text" value="{$invoice.state_country|escape:html}"/>
+                        <input readonly name="state_country" type="text" value="{$invoice.state_country|escape:html}"/>
                     </div>
                     <div class="invoice_cell" style="width: 25%;">Total Weight 重量:</div>
                     <div class="invoice_cell" style="width: 25%;"></div>
@@ -120,8 +121,8 @@
                 </div>
                 <div class="invoice_cell_con">
                     <div class="invoice_cell" style="width: 36%;text-align: center;">Mobile phone</div>
-                    <div class="invoice_cell" style="width: 18%;text-align: center;"><input id="count" style="text-align: center" name="count" type="text" value="{$invoice.items_number|escape:html}"/></div>
-                    <div class="invoice_cell" style="width: 18%;text-align: center;"><input id="danjia" style="text-align: center" name="danjia" type="text" value="{$invoice.unit_value|escape:html}"/></div>
+                    <div class="invoice_cell" style="width: 18%;text-align: center;"><input readonly id="count" style="text-align: center" name="count" type="text" value="{$invoice.items_number|escape:html}"/></div>
+                    <div class="invoice_cell" style="width: 18%;text-align: center;"><input id="danjia" style="text-align: center;background: #fff" name="danjia" type="text" value="{$invoice.unit_value|escape:html}"/></div>
                     <div class="invoice_cell total" style="width: 28%;text-align: center;"></div>
                 </div>
                 <div class="invoice_cell_con">
