@@ -71,28 +71,30 @@ $invoice['bill_contact_person'] = '';
 $invoice['bill_phone_fax'] = '';
 $invoice['bill_vat_number'] = '';
 $invoice['bill_country'] = '';
-$datacheck = true;
 $temp_array = array();
 foreach ($dropshipping_filed_list AS $key => $val){
-    if($val['id'] != 9 && $val['id'] != 12){
-        if(str_len($val['content']) == 0){
-            $datacheck = false;
-        }
-    }
     $temp_array[$val['id']] = $val['content'];
 }
-if($datacheck){
-    $invoice['bill_company_name'] = $temp_array[8];
-    $invoice['bill_contact_person'] = $temp_array[16];
-    if(str_len($temp_array[12]) > 0){
-        $invoice['bill_address'] = $temp_array[11].', '.$temp_array[12].', '.$temp_array[13].', '.$temp_array[14];
+
+$invoice['bill_company_name'] = $temp_array[8];
+$invoice['bill_contact_person'] = $temp_array[16];
+if(str_len($temp_array[12]) > 0){
+    if(str_len($temp_array[14]) > 0){
+        $invoice['bill_address'] = $temp_array[11].', '.$temp_array[12].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
     }else{
-        $invoice['bill_address'] = $temp_array[11].', '.$temp_array[13].', '.$temp_array[14];
+        $invoice['bill_address'] = $temp_array[11].', '.$temp_array[12].', '.$temp_array[13].', '.$temp_array[7];
     }
-    $invoice['bill_phone_fax'] = $temp_array[15];
-    $invoice['bill_vat_number'] = $temp_array[10];
-    $invoice['bill_country'] = $temp_array[7];
+}else{
+    if(str_len($temp_array[14]) > 0){
+        $invoice['bill_address'] = $temp_array[11].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
+    }else{
+        $invoice['bill_address'] = $temp_array[11].', '.$temp_array[13].', '.$temp_array[7];
+    }
 }
+$invoice['bill_phone_fax'] = $temp_array[15];
+$invoice['bill_vat_number'] = $temp_array[10];
+$invoice['bill_country'] = $temp_array[7];
+
 
 $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 $pdf->SetCreator('openskyphone');
@@ -140,20 +142,34 @@ $html .= '<table cellpadding="2" class="ititle">'.
     '</table>';
 $html .= '<h1>COMMERCIAL INVOICE</h1>';
 $html .= '<br />';
-$html .= '<table class="address-table">'.
-    '<tr>'.
-    '<td align="left" width="310">Name:'.$invoice['bill_contact_person'].'</td>'.
-    '<td align="right" width="180">Invoice NO. '.$order['order_sn'].'</td>'.
-    '</tr>'.
-    '<tr>'.
-    '<td align="left">Company: '.$invoice['bill_company_name'].'</td>'.
-    '<td align="right"></td>'.
-    '</tr>'.
-    '<tr>'.
-    '<td align="left">VAT Number: '.$invoice['bill_vat_number'].'</td>'.
-    '<td align="right"></td>'.
-    '</tr>'.
-    '<tr>'.
+$html .= '<table class="address-table">';
+
+if(str_len($invoice['bill_contact_person']) > 0){
+    $html .= '<tr>'.
+        '<td align="left" width="310">Name: '.$invoice['bill_contact_person'].'</td>'.
+        '<td align="right" width="180">Invoice NO. '.$order['order_sn'].'</td>'.
+        '</tr>'.
+        '<tr>'.
+        '<td align="left">Company: '.$invoice['bill_company_name'].'</td>'.
+        '<td align="right"></td>'.
+        '</tr>';
+}else{
+    $html .= '<tr>'.
+        '<td align="left" width="310">Company: '.$invoice['bill_company_name'].'</td>'.
+        '<td align="right" width="180">Invoice NO. '.$order['order_sn'].'</td>'.
+        '</tr>';
+}
+
+
+if(str_len($invoice['bill_vat_number']) > 0){
+    $html .= '<tr>'.
+        '<td align="left">VAT Number: '.$invoice['bill_vat_number'].'</td>'.
+        '<td align="right"></td>'.
+        '</tr>';
+}
+
+
+$html .= '<tr>'.
     '<td align="left">Address: '.$invoice['bill_address'].'</td>'.
     '<td align="right"></td>'.
     '</tr>'.

@@ -1,0 +1,77 @@
+<html>
+<head>
+    <style>
+        *{font-size:12px;}
+        .data-table{margin-bottom:15px;border-top:1px solid #3c3c3c;border-left:1px solid #3c3c3c}
+        .data-table td{padding:2px;border-bottom:1px solid #3c3c3c;border-right:1px solid #3c3c3c}
+        p{padding:1px 0px;margin:0}
+        input[type="button"]{cursor:pointer}
+        p input{border:1px solid #3c3c3c;line-height:18px;font-size:12px;}
+        .product-row td{border:0;border-right:1px solid #3c3c3c;border-bottom:1px solid #3c3c3c;}
+        .product-row td:last-child{border:0;border-bottom:1px solid #3c3c3c;}
+        .product-row:last-child td{border-bottom:0}
+        .order-title td{background:#cccccc}
+        .product-table td{background:#bdebf1;}
+        .unshipping .product-table td{background:#ffe8d3;}
+    </style>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0">
+    {foreach from=$data item=item key=key}
+    <tr>
+        <td>
+            <table cellpadding="0" cellspacing="0" width="100%" class="data-table {if $item.order.shipping_status eq 0}unshipping{/if}">
+                <tr class="order-title">
+                    <td width="192">
+                        <p>单&nbsp;号:{$item.order.order_sn}</p>
+                    </td>
+                    <td>
+                        <p>{$item.order.action_note}</p>
+                    </td>
+                    <td>
+                        <p>原单号:<input style="width:100px" type="text"><input class="updateOraNumber" type="button" value="提交"></p>
+                    </td>
+                    <td>
+                        <p>转单号:<input style="width:100px" type="text"><input class="updateTrackNumber" type="button" value="提交"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="padding:0">
+                        <table class="product-table" width="100%" cellpadding="0" cellspacing="0">
+                        {foreach from=$item.goods item=goods key=key}
+                            <tr class="product-row">
+                                <td><p><span>{$goods.goods_name}</span></p></td>
+                                <td width="155"><p><span>串码:</span><input style="width:120px" type="text" value=""></p></td>
+                                <td width="82"><p><span>当前价格:{$goods.shop_price}</span></p></td>
+                                <td width="148">
+                                    <p>
+                                        <span>采购价:</span>
+                                        <input style="width:50px" type="text" value="{$goods.goods_purchase_price}">
+                                        <input class="submitPurchasePrice" type="button" value="提交">
+                                    </p>
+                                </td>
+                                <td width="82"><p><span>本单售价:{$goods.sale_price}</span></p></td>
+                                <td width="60"><p><span>利润:</span><span class="profit"></span></p></td>
+                                <td width="90"><p><span>利润百分比:</span><span class="profit"></span>%</p></td>
+                            </tr>
+                        {/foreach}
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="right">
+                        <p>
+                            <span>本单收款:</span><span></span>
+                            <span>提现金额:</span><span></span>
+                            <span>运费成本:</span><span></span>
+                            <span>本单净利润:</span><span></span>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    {/foreach}
+</table>
+</body>
+</html>
