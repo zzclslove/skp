@@ -2960,7 +2960,7 @@ function price_format($price, $change_price = true)
     return $_SESSION['currency_code'] . $price;
     //return sprintf($GLOBALS['_CFG']['currency_format'], $price);
 }
-
+ 
 function price_currency($price, $change_price = true)
 {
     if($price==='')
