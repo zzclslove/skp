@@ -1888,4 +1888,4 @@ h1 .btn-quick-goods a:hover{
   vertical-align: bottom;
 }
 /* 授权标识 */
-.order_list_admin tr td p{margin: 0;padding:0;text-align: left;}
+.order_list_admin tr td p{margin: 0;padding:0;text-align: left;line-height: 18px;}

@@ -76,7 +76,7 @@ $invoice['bill_phone_fax'] = '';
 $datacheck = true;
 $temp_array = array();
 foreach ($dropshipping_filed_list AS $key => $val){
-    if($val['id'] != 9 && $val['id'] != 12 && $val['id'] != 12 && $val['id'] != 12 && $val['id'] != 12){
+    if($val['id'] != 9 && $val['id'] != 12){
         if(str_len($val['content']) == 0){
             $datacheck = false;
         }

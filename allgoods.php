@@ -2,8 +2,10 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
+
+
     $html = '<html><head></head><body><table>';
-    $sql = "SELECT g.goods_id, g.seller_note, g.goods_name, g.shop_price ".
+    $sql = "SELECT g.goods_id, g.seller_note, g.goods_name, g.promote_price, g.promote_start_date, g.promote_end_date, g.shop_price ".
         " FROM " .$GLOBALS['ecs']->table('goods'). " AS g ".
         " WHERE g.is_delete = 0 order by cat_id, goods_name asc";
     $goods = $GLOBALS['db']->GetAll($sql);
