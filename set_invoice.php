@@ -65,7 +65,7 @@ if($act == 'set_invoice'){
     $datacheck = true;
     $temp_array = array();
     foreach ($dropshipping_filed_list AS $key => $val){
-        if($val['id'] != 9 && $val['id'] != 12){
+        if($val['id'] == 8 || $val['id'] == 7 || $val['id'] == 11 || $val['id'] == 13 || $val['id'] == 15){
             if(str_len($val['content']) == 0){
                 $datacheck = false;
             }
@@ -74,13 +74,20 @@ if($act == 'set_invoice'){
     }
     if($datacheck){
         $invoice['bill_company_name'] = $temp_array[8];
-        $invoice['bill_contact_person'] = $temp_array[16];
+        $invoice['bill_contact_person'] = str_len($temp_array[16]) == 0 ? '' : $invoice['bill_contact_person'];
         if(str_len($temp_array[12]) > 0){
-            $invoice['bill_address'] = $temp_array[11].', '.$temp_array[12].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
+            if(str_len($temp_array[14]) > 0){
+                $invoice['bill_address'] = $temp_array[11].', '.$temp_array[12].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
+            }else{
+                $invoice['bill_address'] = $temp_array[11].', '.$temp_array[12].', '.$temp_array[13].', '.$temp_array[7];
+            }
         }else{
-            $invoice['bill_address'] = $temp_array[11].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
+            if(str_len($temp_array[14]) > 0){
+                $invoice['bill_address'] = $temp_array[11].', '.$temp_array[13].', '.$temp_array[14].', '.$temp_array[7];
+            }else{
+                $invoice['bill_address'] = $temp_array[11].', '.$temp_array[13].', '.$temp_array[7];
+            }
         }
-
         $invoice['bill_phone_fax'] = $temp_array[15];
     }
 

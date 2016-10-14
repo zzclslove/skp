@@ -370,7 +370,10 @@
         </tr>
          <tr>
              <td align="right" bgcolor="#ffffff">Bill Invoice：</td>
-             <td align="left" bgcolor="#ffffff"><a style="text-decoration: underline" target="_blank" href="download_invoice.php?order_sn={$order.order_sn}">Download Invoice</a></td>
+             <td align="left" bgcolor="#ffffff">
+                 <a style="text-decoration: underline" target="_blank" href="download_invoice.php?order_sn={$order.order_sn}">Download Invoice</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                 <a style="text-decoration: underline" target="_blank" href="user.php?act=profile">Set Company Information</a>
+             </td>
          </tr>
          <!-- {if $order.drop_shipping eq 1}-->
              <tr>
