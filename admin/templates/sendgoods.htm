@@ -1,71 +1,114 @@
 <html>
 <head>
+    <script src="js/jquery-3.1.0.min.js"></script>
     <style>
         *{font-size:12px;}
-        .data-table{margin-bottom:15px;border-top:1px solid #3c3c3c;border-left:1px solid #3c3c3c}
+        .data-table{margin-bottom:15px;border-top:3px solid #000000;border-left:1px solid #3c3c3c}
         .data-table td{padding:2px;border-bottom:1px solid #3c3c3c;border-right:1px solid #3c3c3c}
         p{padding:1px 0px;margin:0}
         input[type="button"]{cursor:pointer}
-        p input{border:1px solid #3c3c3c;line-height:18px;font-size:12px;}
+        p input{border:1px solid #3c3c3c;line-height:18px;font-size:12px;padding:0 2px}
         .product-row td{border:0;border-right:1px solid #3c3c3c;border-bottom:1px solid #3c3c3c;}
         .product-row td:last-child{border:0;border-bottom:1px solid #3c3c3c;}
         .product-row:last-child td{border-bottom:0}
         .order-title td{background:#cccccc}
         .product-table td{background:#bdebf1;}
         .unshipping .product-table td{background:#ffe8d3;}
+        .sending .product-table td{background:#FFD0D0;}
+        .order_real_profit{clor:blue;font-weight: bold}
+        .order_real_profit.alert{color:red}
     </style>
 </head>
 <body>
 <table cellpadding="0" cellspacing="0">
+    <tr>
+        <td style="line-height: 30px">
+            <p>
+                <spa>已付款订单:</spa><span>{$total}</span>&nbsp;&nbsp;
+                <spa>已发货订单:</spa><span>{$shipped}</span>&nbsp;&nbsp;
+                <spa>发货中订单:</spa><span>{$sending}</span>&nbsp;&nbsp;
+                <spa>未发货订单:</spa><span>{$unship}</span>&nbsp;&nbsp;
+            </p>
+        </td>
+    </tr>
     {foreach from=$data item=item key=key}
     <tr>
         <td>
-            <table cellpadding="0" cellspacing="0" width="100%" class="data-table {if $item.order.shipping_status eq 0}unshipping{/if}">
+            <table cellpadding="0" cellspacing="0" width="100%" class="data-table {if $item.order.shipping_status eq 0}unshipping{elseif $item.order.shipping_status eq 5}sending{/if}">
                 <tr class="order-title">
-                    <td width="192">
+                    <td width="130">
                         <p>单&nbsp;号:{$item.order.order_sn}</p>
                     </td>
-                    <td>
+                    <td width="190">
                         <p>{$item.order.action_note}</p>
                     </td>
                     <td>
-                        <p>原单号:<input style="width:100px" type="text"><input class="updateOraNumber" type="button" value="提交"></p>
+                        <p>
+                            <span>备注:</span><input style="width:260px;border-right:0" type="text" value="{$item.order.order_remark}"><input rel="{$item.order.order_id}" class="updateRemark" type="button" value="提交">
+                        </p>
                     </td>
-                    <td>
-                        <p>转单号:<input style="width:100px" type="text"><input class="updateTrackNumber" type="button" value="提交"></p>
+                    <td width="183">
+                        <p>
+                            <span>原单号:</span><input style="width:100px;border-right:0" type="text" value="{$item.order.order_orgnumber}"><input rel="{$item.order.order_id}" class="updateOraNumber" type="button" value="提交">
+                        </p>
+                    </td>
+                    <td width="213">
+                        <p>
+                            <span>转单号:</span><input style="width:100px;border-right:0" type="text" value="{$item.order.invoice_no}"><input rel="{$item.order.order_id}" class="updateTrackNumber" type="button" value="提交">
+                            <a target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$item.order.invoice_no}&brand=DHL"><input type="button" value="跟踪"></a>
+                        </p>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" style="padding:0">
+                    <td colspan="5" style="padding:0">
                         <table class="product-table" width="100%" cellpadding="0" cellspacing="0">
                         {foreach from=$item.goods item=goods key=key}
                             <tr class="product-row">
                                 <td><p><span>{$goods.goods_name}</span></p></td>
-                                <td width="155"><p><span>串码:</span><input style="width:120px" type="text" value=""></p></td>
-                                <td width="82"><p><span>当前价格:{$goods.shop_price}</span></p></td>
-                                <td width="148">
+                                <td width="50"><p>数量:<span class="goods_number">{$goods.buy_number}</span></p></td>
+                                <td width="185"><p><span>串码:</span><input style="width:120px;border-right:0" type="text" value="{$goods.chuanma}"><input goodsid="{$goods.goods_id}" orderid="{$item.order.order_id}" class="update_chuanma" type="button" value="提交"></p></td>
+                                <td width="127"><p><span>网站价格:</span><input style="width:38px;border-right:0" type="text" value="{$goods.shop_price}"><input goodsid="{$goods.goods_id}" class="updatePrice" type="button" value="提交"></p></td>
+                                <td width="133">
                                     <p>
                                         <span>采购价:</span>
-                                        <input style="width:50px" type="text" value="{$goods.goods_purchase_price}">
-                                        <input class="submitPurchasePrice" type="button" value="提交">
+                                        <input class="goods_purchase_price" style="width:50px;border-right:0" type="text" value="{$goods.goods_purchase_price}"><input goodsid="{$goods.goods_id}" orderid="{$item.order.order_id}" class="submitPurchasePrice" type="button" value="提交">
                                     </p>
                                 </td>
-                                <td width="82"><p><span>本单售价:{$goods.sale_price}</span></p></td>
+                                <td width="82"><p><span>本单售价:</span><span class="sale_price">{$goods.sale_price}</span></p></td>
                                 <td width="60"><p><span>利润:</span><span class="profit"></span></p></td>
-                                <td width="90"><p><span>利润百分比:</span><span class="profit"></span>%</p></td>
+                                <td width="90"><p><span>利润百分比:</span><span class="profit_percent"></span>%</p></td>
                             </tr>
                         {/foreach}
                         </table>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" align="right">
-                        <p>
-                            <span>本单收款:</span><span></span>
-                            <span>提现金额:</span><span></span>
-                            <span>运费成本:</span><span></span>
-                            <span>本单净利润:</span><span></span>
-                        </p>
+                    <td style="padding:0" colspan="5" align="right">
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td style="border:0">
+                                    <p>
+                                        <span>申报数量:</span><input rel="{$item.order.order_sn}" class="invoice_goods_number" style="width:25px;" type="text" value="{$item.total_goods_number}">
+                                        <span>申报单价: $</span><input rel="{$item.order.order_sn}" class="invoice_unit_price" style="width:35px;border-right:0" type="text" value="{$item.unit_price}"><a target="_blank" href="download_shipping_voice.php?order_sn={$item.order.order_sn}&invoice_number={$item.total_goods_number}&invoice_price={$item.unit_price}"><input class="printVoice" type="button" value="打印发票"></a>
+                                        {if $item.order.has_print_invoice eq 1}
+                                        &nbsp;<span>已打印发票</span>
+                                        {/if}
+                                        {if $item.order.drop_shipping eq 1}
+                                        &nbsp;<span>客户已设置申报金额</span>
+                                        {/if}
+                                    </p>
+                                </td>
+                                <td align="right" style="border: 0">
+                                    <p>
+                                        <span>本单收款:</span><span>{$item.order.money_paid}</span>&nbsp;
+                                        <span>提现金额:</span><span class="money_get">{$item.order.money_get}</span>&nbsp;
+                                        <span>运费成本:</span><input class="real_shipping_fee" style="width:35px;border-right:0" type="text" value="{$item.order.order_real_shipping_fee}"><input orderid="{$item.order.order_id}" class="updateRealShippingFee" type="button" value="提交">&nbsp;
+                                        <span>售后成本:</span><input class="customer_fee" style="width:35px;border-right:0" type="text" value="{$item.order.order_customer_fee}"><input orderid="{$item.order.order_id}" class="updateCustomerFee" type="button" value="提交">&nbsp;
+                                        <span>本单净利润:</span><span class="order_real_profit"></span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
@@ -73,5 +116,132 @@
     </tr>
     {/foreach}
 </table>
+<div style="width:100%;height:100%;position:absolute;left:0;top:0;display:none" id="loading">
+    <div style="position:absolute;width:100%;height:100%;background:#000;opacity:0.1;z-index:99"></div>
+    <div style="position:absolute;color:#fff;width:90px;height:20px;left:50%;top:50%;margin-left:-45px;margin-top:-10px;text-align:center;line-height:20px;background:#000;opacity:0.6;">
+        加载中...
+    </div>
+</div>
+
+<script>
+$('.invoice_goods_number, .invoice_unit_price').keyup(function(){
+    var parent = $(this).parent();
+    var url = 'download_shipping_voice.php?order_sn='+$(this).attr('rel')+'&invoice_number='+parent.find('.invoice_goods_number').val()+'&invoice_price=' + parent.find('.invoice_unit_price').val();
+    parent.find('a').attr('href',url);
+});
+$('.product-row').each(function(i, n){
+    updateProductProfit($(n));
+});
+$('.data-table').each(function(i, n){
+    updateOrderProfit($(n));
+});
+function updateProductProfit(productRow){
+    var salePrice = parseInt(productRow.find('.sale_price').html());
+    var purchasePrice = parseInt(productRow.find('.goods_purchase_price').val());
+    if(purchasePrice != 0){
+        productRow.find('.profit').html(salePrice - purchasePrice);
+        productRow.find('.profit_percent').html(parseInt((salePrice - purchasePrice)*100/purchasePrice));
+    }
+}
+function updateOrderProfit(orderRow){
+    var mark = 1;
+    var moneyGet = parseInt(orderRow.find('.money_get').html());
+    var realShippingFee = parseInt(orderRow.find('.real_shipping_fee').val());
+    var customerFee = parseInt(orderRow.find('.customer_fee').val());
+    var moneyPurchase = 0;
+    orderRow.find('.product-row').each(function(i,n){
+        if(parseInt($(n).find('.goods_purchase_price').val()) == 0){
+            mark = 0;
+        }
+        moneyPurchase += parseInt($(n).find('.goods_number').html()) * parseInt($(n).find('.goods_purchase_price').val());
+    });
+    if(realShippingFee == 0){
+        mark = 0;
+    }
+    if(mark == 1){
+        var realOrderProfit = moneyGet - moneyPurchase - realShippingFee - customerFee;
+        if(realOrderProfit < 0){
+            orderRow.find('.order_real_profit').addClass('alert');
+        }else{
+            orderRow.find('.order_real_profit').removeClass('alert');
+        }
+        orderRow.find('.order_real_profit').html(realOrderProfit);
+    }
+}
+$('.updateRemark').click(function(){
+    var remark = $(this).prev().val().trim();
+    var order_id = $(this).attr('rel');
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_remark',order_id:order_id,remark:remark},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+    }});
+});
+$('.updateOraNumber').click(function(){
+    var orgnumber = $(this).prev().val().trim();
+    var order_id = $(this).attr('rel');
+    var self = $(this);
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_orgnumber',order_id:order_id,orgnumber:orgnumber},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+        self.parents('.data-table').removeClass('unshipping').addClass('sending');
+    }});
+});
+$('.updateTrackNumber').click(function(){
+    var trackingnumber = $(this).prev().val().trim();
+    var order_id = $(this).attr('rel');
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_tracknumber',order_id:order_id,trackingnumber:trackingnumber},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+    }});
+});
+$('.update_chuanma').click(function(){
+    var chuanma = $(this).prev().val().trim();
+    var order_id = $(this).attr('orderid');
+    var goods_id = $(this).attr('goodsid');
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_chuanma',order_id:order_id,chuanma:chuanma,goods_id:goods_id},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+    }});
+});
+$('.updatePrice').click(function(){
+    var price = $(this).prev().val().trim();
+    var goods_id = $(this).attr('goodsid');
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_price',price:price,goods_id:goods_id},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+    }});
+});
+$('.submitPurchasePrice').click(function(){
+    var price = $(this).prev().val().trim();
+    var goods_id = $(this).attr('goodsid');
+    var order_id = $(this).attr('orderid');
+    var self = $(this);
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_purchase_price',price:price,goods_id:goods_id,order_id:order_id},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+        updateProductProfit(self.parents('.product-row'));
+    }});
+});
+$('.updateRealShippingFee').click(function(){
+    var shippingFee = $(this).prev().val().trim();
+    var order_id = $(this).attr('orderid');
+    var self = $(this);
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_shippingfee',order_id:order_id,shippingFee:shippingFee},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+        updateOrderProfit(self.parents('.data-table'));
+    }});
+});
+$('.updateCustomerFee').click(function(){
+    var customerFee = $(this).prev().val().trim();
+    var order_id = $(this).attr('orderid');
+    var self = $(this);
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'update_customer_fee',order_id:order_id,customerFee:customerFee},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+        updateOrderProfit(self.parents('.data-table'));
+    }});
+});
+</script>
 </body>
 </html>
