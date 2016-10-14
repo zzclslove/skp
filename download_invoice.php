@@ -260,6 +260,17 @@ $html .= '<div class="conditions">'.
     '<span>Address: 2/F, Tong Jian Building (No.) 3, Shen Nan Zhong Road, Futian District, Shenzhen </span>'.
     '</div>';
 
+
+
+
+
+
+
+
+
+
+
+
 $html .= '<p class="signature">Authorized Signature: '.$order['signature'].' '.$order['invoice_date'].'</p>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Output('example_061.pdf', 'I');
