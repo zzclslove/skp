@@ -28,7 +28,7 @@ if($act == 'update_remark')
 else if($act == 'update_orgnumber')
 {
     $orgnumber = isset($_REQUEST['orgnumber']) ? $_REQUEST['orgnumber'] : '';
-    $sql = "update ecs_order_info set order_status = 5, shipping_status = 5, order_orgnumber = '" . $orgnumber . "' where order_id = " . $order_id;
+    $sql = "update ecs_order_info set order_orgnumber = '" . $orgnumber . "' where order_id = " . $order_id;
     $GLOBALS['db']->query($sql);
     $result['status'] = true;
     $res= json_encode($result);
@@ -92,7 +92,22 @@ else if($act == 'update_customer_fee')
     $res= json_encode($result);
     echo $callback . '(' . $res .')';
 }
-
+else if($act == 'set_sending')
+{
+    $sql = "update ecs_order_info set order_status = 5, shipping_status = 5 where order_id = " . $order_id;
+    $GLOBALS['db']->query($sql);
+    $result['status'] = true;
+    $res= json_encode($result);
+    echo $callback . '(' . $res .')';
+}
+else if($act == 'set_shipped')
+{
+    $sql = "update ecs_order_info set order_status = 5, shipping_status = 1 where order_id = " . $order_id;
+    $GLOBALS['db']->query($sql);
+    $result['status'] = true;
+    $res= json_encode($result);
+    echo $callback . '(' . $res .')';
+}
 
 
 

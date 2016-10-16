@@ -58,16 +58,23 @@
                             <a target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$item.order.invoice_no}&brand=DHL"><input type="button" value="跟踪"></a>
                         </p>
                     </td>
+                    <td width="92">
+                        <p>
+                            <input orderid="{$item.order.order_id}" class="setSending" type="button" value="发货中">
+                            <input orderid="{$item.order.order_id}" class="setShipped" type="button" value="已发货">
+                        </p>
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="padding:0">
+                    <td colspan="6" style="padding:0">
                         <table class="product-table" width="100%" cellpadding="0" cellspacing="0">
                         {foreach from=$item.goods item=goods key=key}
                             <tr class="product-row">
                                 <td><p><span>{$goods.goods_name}</span></p></td>
                                 <td width="50"><p>数量:<span class="goods_number">{$goods.buy_number}</span></p></td>
                                 <td width="185"><p><span>串码:</span><input style="width:120px;border-right:0" type="text" value="{$goods.chuanma}"><input goodsid="{$goods.goods_id}" orderid="{$item.order.order_id}" class="update_chuanma" type="button" value="提交"></p></td>
-                                <td width="127"><p><span>网站价格:</span><input style="width:38px;border-right:0" type="text" value="{$goods.shop_price}"><input goodsid="{$goods.goods_id}" class="updatePrice" type="button" value="提交"></p></td>
+                                <td width="126"><p><span>原始价格:</span><input style="width:38px;border-right:0" type="text" value="{$goods.shop_price}"><input goodsid="{$goods.goods_id}" class="updatePrice" type="button" value="提交"></p></td>
+                                <td width="80"><p><span>型号附加:{$goods.goods_add_price}</span></p></td>
                                 <td width="133">
                                     <p>
                                         <span>采购价:</span>
@@ -83,7 +90,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding:0" colspan="5" align="right">
+                    <td style="padding:0" colspan="6" align="right">
                         <table width="100%" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td style="border:0">
@@ -179,11 +186,10 @@ $('.updateRemark').click(function(){
 $('.updateOraNumber').click(function(){
     var orgnumber = $(this).prev().val().trim();
     var order_id = $(this).attr('rel');
-    var self = $(this);
     $('#loading').show();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_orgnumber',order_id:order_id,orgnumber:orgnumber},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
-        self.parents('.data-table').removeClass('unshipping').addClass('sending');
+
     }});
 });
 $('.updateTrackNumber').click(function(){
@@ -242,6 +248,25 @@ $('.updateCustomerFee').click(function(){
         updateOrderProfit(self.parents('.data-table'));
     }});
 });
+$('.setSending').click(function(){
+    var orderid = $(this).attr('orderid');
+    var self = $(this);
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'set_sending',order_id:orderid},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+        self.parents('.data-table').removeClass('unshipping').addClass('sending');
+    }});
+});
+$('.setShipped').click(function(){
+    var orderid = $(this).attr('orderid');
+    var self = $(this);
+    $('#loading').show();
+    $.ajax({url:'sendgoods_option.php',data:{act:'set_shipped',order_id:orderid},dataType:"jsonp",jsonp:'callback',success: function(result){
+        $('#loading').hide();
+        self.parents('.data-table').removeClass('unshipping').removeClass('sending');
+    }});
+});
+
 </script>
 </body>
 </html>
