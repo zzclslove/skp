@@ -811,7 +811,7 @@ position:absolute; top:0px; right:0px;}
 /*商品详情页*/
 .goods-home{}
 .category-body #ur_here .path div a{color: #666;}
-#goodsInfo .imgInfo{width: 485px;height:485px;}
+#goodsInfo .imgInfo{width: 485px;height:485px;position:relative}
 #goodsInfo .textInfo{width: 668px; background: #fff;}
 .goods_style_name{font-size: 18px; color: #333; font-weight: normal; padding: 10px 0px;}
 #goodsInfo .textInfo li{padding: 0;}
@@ -1436,3 +1436,5 @@ position:absolute; top:0px; right:0px;}
 
 .remote-cost span{display: inline-block;vertical-align: middle;}
 .why-icon{width: 18px;height: 18px;background: url(images/why.jpg);background-size: 20px;cursor: pointer;}
+
+.discountimg{text-align:right;width:53px;height:66px;position:absolute;top:2px;left:415px;z-index: 9999;background: url(images/goodsdiscount.png);padding-right:17px;color:#fff;font-size:20px;font-weight:bold;padding-top:4px;}

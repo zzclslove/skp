@@ -55,7 +55,8 @@ function reg(str){
     <!--商品详情start-->
     <div id="goodsInfo" class="clearfix">
       <!--商品图片和相册 start-->
-      <div style="overflow: hidden">
+      <div style="overflow: hidden;position:relative">
+      {insert name="get_discount_img"}
       <div id="product_detail_img" class="imgInfo">
         <img src="" alt="{$goods.goods_name|escape:html}"/>
       </div>
@@ -168,7 +169,7 @@ function reg(str){
               <dd style="width:auto;height:28px;line-height: 28px">
                 <strong style="font-size: 14px;color: #0a0a0a;">{$lang.amount}：</strong>
                 <font style="font-size:18px" id="ECS_GOODS_AMOUNT" class="shop"></font>
-                <font>&nbsp;&nbsp;&nbsp;{$discount}</font>
+                {insert name="get_discount_text"}
               </dd>
             </li>
             <li class="padd" style="padding-top:20px;">

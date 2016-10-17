@@ -308,6 +308,29 @@ else
 {
     ob_start();
 }
+
+if($_SESSION['user_id'] > 0){
+    if(!isset($_SESSION['discount']) ||  $_SESSION['discount'] == 1.00){
+        $sql = "select sum(money_paid) from ".$ecs->table('order_info')." where pay_status = 2 and user_id = " . $_SESSION['user_id'] . " and add_time > " . (time() - 60*24*3600);
+        $totalAmount = $db->GetOne($sql);
+        if($totalAmount >= 1000){
+            $_SESSION['discount'] = 0.98;
+        }
+        if($totalAmount >= 2000){
+            $_SESSION['discount'] = 0.96;
+        }
+        if($totalAmount >= 5000){
+            $_SESSION['discount'] = 0.94;
+        }
+        if($totalAmount >= 20000){
+            $_SESSION['discount'] = 0.92;
+        }
+        if($totalAmount >= 50000){
+            $_SESSION['discount'] = 0.90;
+        }
+    }
+}
+
 $currency_id = !empty($_GET['currency']) ? intval($_GET['currency']) : 0;
 if($currency_id == 0){
     if(!isset($_SESSION['currency'])){

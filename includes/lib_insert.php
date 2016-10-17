@@ -231,7 +231,25 @@ function insert_member_info()
 
     if ($_SESSION['user_id'] > 0)
     {
-        $GLOBALS['smarty']->assign('user_info', get_user_info());
+        $user_info = get_user_info();
+        $uesr_leavel = '';
+        if(isset($_SESSION['discount']) && $_SESSION['discount'] < 1){
+            $uesr_leavel = ' (Pre-VIP)';
+            if($_SESSION['discount'] < 0.98){
+                $uesr_leavel = ' (VIP)';
+            }
+            if($_SESSION['discount'] < 0.96){
+                $uesr_leavel = ' (VIP Silver)';
+            }
+            if($_SESSION['discount'] < 0.94){
+                $uesr_leavel = ' (VIP Gold)';
+            }
+            if($_SESSION['discount'] < 0.92){
+                $uesr_leavel = ' (VIP Diamond)';
+            }
+        }
+        $user_info['username'] .= $uesr_leavel;
+        $GLOBALS['smarty']->assign('user_info', $user_info);
     }
     else
     {
@@ -389,4 +407,18 @@ function insert_get_goods_spe_price($arr){
     return $val;
 }
 
+function insert_get_discount_img(){
+    if(isset($_SESSION['discount']) && $_SESSION['discount'] < 1){
+        return '<div class="discountimg">' . (1 - $_SESSION['discount']) * 100 . '</div>';
+    }else{
+        return '';
+    }
+}
+function insert_get_discount_text(){
+    if(isset($_SESSION['discount']) && $_SESSION['discount'] < 1){
+        return '<font>&nbsp;&nbsp;&nbsp;' . (1 - $_SESSION['discount']) * 100 . '% off</font>';
+    }else{
+        return '';
+    }
+}
 ?>
