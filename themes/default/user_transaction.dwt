@@ -216,39 +216,39 @@
        <!-- {if $action eq 'order_list'} -->
        <h5><span>{$lang.label_order}</span></h5>
        <div class="blank"></div>
-       <table class="order_list_user_table" width="100%" border="0" cellpadding="5" cellspacing="1">
+       <table class="order_list_user_table" width="100%" border="0" cellpadding="0" cellspacing="0">
           <thead bgcolor="#757575" style="color:#fff">
             <tr align="center">
-              <td>{$lang.order_number}</td>
-              <td>{$lang.order_addtime}</td>
+              <td width="200">{$lang.order_number}</td>
+              <td>consignee</td>
+              <td width="145">{$lang.order_addtime}</td>
               <td>{$lang.order_money}</td>
-              <td>{$lang.order_status}</td>
-              <td>{$lang.handle}</td>
+              <td width="150">{$lang.order_status}</td>
+              <td width="160">{$lang.handle}</td>
             </tr>
           </thead>
           <tbody>
             <!-- {foreach from=$orders item=item} -->
-            <tr align="center">
+            <tr align="center" class="data-row">
               <td>
                   <a href="user.php?act=order_detail&order_id={$item.order_id}" class="f6">{$item.order_sn}</a>
                   <!--{if $item.drop_shipping eq 1}-->
                   [<span style="color:#ff5c26">Drop Shipping</span>]
                   <!--{/if}-->
               </td>
+              <td>{$item.consignee}</td>
               <td>{$item.order_time}</td>
               <td>{$item.total_fee}</td>
-              <td style="position:relative">{$item.order_status}
+              <td style="position:relative;">
+                  <p><span>{$item.order_status}</span>
               <!-- {if $open_logistics_trace and ($item.shipping_status == 1 or $item.shipping_status == 2)} -->
-              <br>
                   {if $item.shipping_name eq 'DHL'}
-                      <span>DHL:</span>&nbsp;&nbsp;
-                      <!-- {foreach from=$item.invoice_no item=invoice} -->
-                      <a style="text-decoration: underline;color:#ff5c26" target="_blank" href="http://www.cn.dhl.com/zh/express/tracking.html?AWB={$invoice}&brand=DHL" style="color:#FF5C26;text-decoration: underline">{$invoice}</a>&nbsp;&nbsp;
-                      <!-- {/foreach} -->
+                      <a style="text-decoration: underline;color:#ff5c26" target="_blank" href="http://www.cn.dhl.com/en/express/tracking.html?AWB=<!-- {foreach from=$item.invoice_no item=invoice} -->{$invoice},<!-- {/foreach} -->&brand=DHL" style="color:#FF5C26;text-decoration: underline"><img style="width:25px;vertical-align:middle" src="images/dhl.png"></a>&nbsp;&nbsp;
                   {/if}
               <!-- {/if} -->
+                  </p>
               </td>
-              <td><font class="f6">{$item.handler}</font><br><a href="javascript:;" onclick="repurchase({$item.order_id})">{$lang.repurchase}</a></td>
+              <td class="option"><font class="f6">{$item.handler}</font>&nbsp;&nbsp;<a href="javascript:;" onclick="repurchase({$item.order_id})">{$lang.repurchase}</a></td>
             </tr>
             <!-- {/foreach} -->
           </tbody>
@@ -325,6 +325,8 @@
     <!--#包裹状态查询界面 end-->
      <!-- ==========订单详情页面,包括：订单状态，商品列表，费用总计，收货人信息，支付方式，其它信息========== -->
       <!--{if $action eq order_detail} -->
+      <link rel="stylesheet" href="js/tips/tip-yellowsimple/tip-yellowsimple.css" type="text/css" />
+      <script type="text/javascript" src="js/tips/jquery.poshytip.js"></script>
         <h5><span>{$lang.order_status}</span></h5>
         <div class="blank"></div>
          <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
@@ -387,7 +389,7 @@
         <!-- {if $order.invoice_no}-->
         <tr>
           <td align="right" bgcolor="#ffffff">{$lang.consignment}：</td>
-          <td align="left" bgcolor="#ffffff"><a href="user.php?act=delivery_info&order_sn={$order.order_sn}" target="_blank">{$order.invoice_no}</a></td>
+          <td align="left" bgcolor="#ffffff"><a href="http://www.cn.dhl.com/en/express/tracking.html?AWB={$order.invoice_no}&brand=DHL" target="_blank">{$order.invoice_no}</a></td>
         </tr>
         <!--{/if}-->
         <!--{if $order.to_buyer}-->
@@ -421,8 +423,8 @@
         <div class="blank"></div>
          <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
           <tr>
-            <th width="23%" align="center" bgcolor="#ffffff">{$lang.goods_name}</th>
-            <th width="29%" align="center" bgcolor="#ffffff">{$lang.goods_attr}</th>
+            <th width="33%" align="center" bgcolor="#ffffff">{$lang.goods_name}</th>
+            <th width="19%" align="center" bgcolor="#ffffff">{$lang.goods_attr}</th>
             <!--<th>{$lang.market_price}</th>-->
             <th width="26%" align="center" bgcolor="#ffffff">{$lang.goods_price}<!-- {if $order.extension_code eq "group_buy"} -->{$lang.gb_deposit}<!-- {/if} --></th>
             <th width="9%" align="center" bgcolor="#ffffff">{$lang.number}</th>
@@ -447,7 +449,12 @@
                 </div>
               <!-- {/if} -->
               </td>
-            <td align="left" bgcolor="#ffffff">{$goods.goods_attr|nl2br}</td>
+            <td align="left" bgcolor="#ffffff">
+                {$goods.goods_attr|nl2br}
+                <!--{if $goods.chuanma}-->
+                IMEI:<img imei="{$goods.chuanma}" class="show-imei" style="vertical-align: middle;margin-left:5px;width:30px;cursor:pointer" src="images/imei.png">
+                <!--{/if}-->
+            </td>
             <!--<td align="right">{$goods.market_price}</td>-->
             <td align="right" bgcolor="#ffffff">{$goods.goods_price}</td>
             <td align="center" bgcolor="#ffffff">{$goods.goods_number}</td>
@@ -460,6 +467,27 @@
             </td>
           </tr>
         </table>
+          <style>.tip-yellowsimple{background-color:#edeee9;}</style>
+          <script>
+              $('.show-imei').poshytip({
+                  content:function(){
+                      var html = '<div><img style="width:310px;height:157px" src="images/IMEI_label.png"></div><ul>';
+                      var imeis = $(this).attr('imei').split(',');
+                      for(var i = 0; i < imeis.length; i++){
+                          html += '<li style="float:left;padding:4px 8px;font-weight:bold;font-size:16px;">' + imeis[i] + '</li>';
+                      }
+                      html += '</ul>';
+                      return html;
+                  },
+                  className: 'tip-yellowsimple',
+                  showTimeout: 1,
+                  alignTo: 'target',
+                  alignX: 'right',
+                  alignY: 'center',
+                  offsetY: 5,
+                  offsetX:5
+              });
+          </script>
          <div class="blank"></div>
         <h5><span>{$lang.fee_total}</span></h5>
         <div class="blank"></div>
