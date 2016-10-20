@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="{$keywords}" />
+    <meta name="Description" content="{$description}" />
+    <!-- TemplateBeginEditable name="doctitle" -->
+    <title>{$page_title}</title>
+    <!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="animated_favicon.gif" type="image/gif" />
+    <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+    <link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
+    {* 包含脚本文件 *}
+    {insert_scripts files='common.js,index.js'}
+    <style>
+        .wholesa_tab{
+            width:1000px;
+            margin:0 auto 15px; padding:4px;
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #d3d3d3;
+            border-collapse: collapse;
+        }
+
+        .wholesa_tab th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #d3d3d3;
+            background-color: #dcddc0;
+        }
+        .wholesa_tab td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #c3c1c2;
+            background-color: #ffffff;
+            font-weight: bold;
+        }
+        .wholesa_tab .e6d { background-color:#e6dbf3}
+        .wholesa_tab  h3 { font-size:16px; font-weight:bold; }
+        .wholesa_tab  .bold { font-size:11px;  font-weight:bold; background-color:#373737;color:#ffffff}
+        .wholesa_tab a { color:#165dac; text-decoration:none;}
+        h2{font-size: 16px;color: #3c3c3c;line-height: 40px;}
+        .returns-tab td{padding:5px;font-size:13px}
+    </style>
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="indexpage clearfix">
+    <h2>For OPENSKYPHONE customers, there are 6 kinds of VIP Levels</h2>
+    <table class="wholesa_tab" style="width:90%;margin-left:0;" border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr>
+            <td class="bold" align="center"><strong>VIP Level</strong></td>
+            <td class="bold" align="center"><strong>sum-up of all paid orders amount in last 60 days</strong></td>
+            <td class="bold" align="center"><strong>Discount from Display Price</strong></td>
+        </tr>
+        <tr>
+            <td align="center">Register Member</td>
+            <td align="center">0 - 999.99 USD</td>
+            <td align="center"><br></td>
+        </tr>
+        <tr>
+            <td align="center">Pre-VIP</td>
+            <td align="center">1,000 - 1,999.99 USD</td>
+            <td align="center"><span style="color: #ab0000;">2%</span> Off</td>
+        </tr>
+        <tr>
+            <td align="center">VIP</td>
+            <td align="center">2,000 - 4,999.99 USD</td>
+            <td align="center"><span style="color: #ab0000;">4%</span> Off</td>
+        </tr>
+        <tr>
+            <td align="center">VIP Silver</td>
+            <td align="center">5,000 - 19,999.99 USD</td>
+            <td align="center"><span style="color: #ab0000;">6%</span> Off</td>
+        </tr>
+        <tr>
+            <td align="center">VIP Gold</td>
+            <td align="center">20,000 - 49999.99 USD</td>
+            <td align="center"><span style="color: #ab0000;">8%</span> Off</td>
+        </tr>
+        <tr>
+            <td align="center">VIP Diamond</td>
+            <td align="center">50,000 USD+</td>
+            <td align="center"><span style="color: #ab0000;">10%</span> Off</td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>The Dropship Model</h2>
+    <div style="width: 100%;overflow: hidden"><img style="width:820px;display:block;margin:0 auto;" src="images/dropshipping.png"></div>
+    <h2>Warranty & Returns</h2>
+    <p>We believe that you will be pleased with your purchase from OPENSKYPHONE. However, there might be chances when you need to return items to us. So what can we do when we meet this situation?</p>
+    <table class="returns-tab" width="100%" cellpadding="1" cellspacing="1" bgcolor="#000000" border="0">
+        <tbody><tr bgcolor="#ffffff">
+            <td style="background:#cccccc"><strong>Type of repair </strong><br></td>
+            <td style="background:#cccccc" width="200"><strong>Applicable charges (Buyer)</strong><br></td>
+            <td style="background:#cccccc"><strong>What to do </strong></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+            <td>Repairable situation(warranty repairment)<br></td>
+            <td rowspan="2" valign="top">Return shipping fees<br></td>
+            <td rowspan="2">Return your defective OPENSKYPHONE items, free of damage and in
+                its original condition,
+                <p style="color:#ab0000;">please return the items to below address : <br>
+                    Attn: PENG YANGCHAO<br>
+                    Address: 1/F, No.1058 GuangBoXianDaiZhiChuang Building, Huaqiang North Road, Futian District, Shenzhen<br>
+                    中国深圳市福田区华强北路1058号广博现代之窗大厦1层<br>
+                    City: Shenzhen<br>
+                    Zipcode: 518000<br>
+                    Country: China<br>
+                    Tel: +86-13923413120 <br>
+                </p>
+            </td>
+        </tr>
+        <tr bgcolor="#ffffff">
+            <td>1.DOA (Dead on Arrival) Item
+                <p>2.Defective Item, such as phones can not turn on, can not charge battery,
+                    touch screen stops touch function, Sim card can not be recognized.</p>
+                <p>3.Incorrect Item Received <br>
+                </p></td>
+        </tr>
+        <tr bgcolor="#ffffff">
+            <td>Un-repairable Situation<br></td>
+            <td rowspan="2" valign="top">Return and reship fees<br></td>
+            <td rowspan="2" valign="top">The OPENSKYPHONE Shop will send your items for repairing
+                and will provide you with an estimate for additional costs when repairing</td>
+        </tr>
+        <tr bgcolor="#ffffff">
+            <td>1.Unsatisfactory Products
+                <p>2.Expired warranty or issues not covered by the Manufacturer’s Warranty.</p>
+                <p>3.Un-normal defective: <br>
+                    <br>Water Damage<br>
+                    1) Being dropped in water<br>
+                    2) Rain, fog or mist droplets <br>
+                    3) Spilling liquid on the phone</p>
+                <p><br>Physical Damage<br>
+                    1) Broken LCD screen<br>
+                    2) Damage to housing<br>
+                    3) Broken charging port<br>
+                    4) Warped internal components Man-made damage, such as<br>
+                    a) Irregular operation<br>
+                    b) Dropped from high place </p></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<script>
+
+</script>
+</body>
+</html>

@@ -18,6 +18,7 @@ if (!isset($_REQUEST['order_sn']))
 }
 
 $act = empty($_REQUEST['act'])?'':$_REQUEST['act'];
+$user_id = empty($_REQUEST['user_id'])?'':$_REQUEST['user_id'];
 $order_sn = $_REQUEST['order_sn'];
 if($act == 'set_invoice'){
 
@@ -41,8 +42,10 @@ if($act == 'set_invoice'){
 
     $sql = "select * from " . $ecs->table('invoice') . " where order_sn = '" . $order_sn . "'";
     $invoice = $db->getRow($sql);
-
-    $sql = 'SELECT * FROM ' . $ecs->table('reg_extend_info') . ' WHERE user_id = '.$_SESSION['user_id'];
+    if(str_len($user_id) == 0){
+        $user_id = $_SESSION['user_id'];
+    }
+    $sql = 'SELECT * FROM ' . $ecs->table('reg_extend_info') . ' WHERE user_id = ' . $user_id;
     $extend_info_arr = $db->getAll($sql);
 
     $temp_arr = array();

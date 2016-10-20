@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <style>
+        .outer{border-top:1px solid #3c3c3c;}
+        td{border-left:1px solid #3c3c3c;border-bottom:1px solid #3c3c3c; padding:5px;font-size: 0.7em}
+        td:last-child{border-right:1px solid #3c3c3c}
+    </style>
+</head>
+<body>
+<table width="100%" class="outer" border="0" cellspacing="0" cellpadding="0" align="left">
+    <tr>
+        <td style="padding: 0;border-right: 0;border-bottom: 0;border-left:0">
+            {foreach from=$sales_goods item=goods key=key}
+                <table class="contentt" width="100%" class="outer" border="0" cellspacing="0" cellpadding="0" align="left">
+                    <tr>
+                        <td style="background: #eee">{$goods.goods_name} [{$goods.goods_attr_name}]</td>
+                        <td style="background: #eee" width="70">数量：{$goods.sales_number} 个</td>
+                    </tr>
+                </table>
+            {/foreach}
+        </td>
+    </tr>
+</table>
+</body>
+</html>

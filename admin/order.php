@@ -5191,7 +5191,7 @@ function order_list()
         $filter['page_count']     = $filter['record_count'] > 0 ? ceil($filter['record_count'] / $filter['page_size']) : 1;
 
         /* 查询 */
-        $sql = "SELECT o.order_id, o.invoice_no, o.shipping_name, o.order_sn, o.add_time, o.order_status, o.shipping_status, o.order_amount, o.money_paid, o.callback_status,o.drop_shipping," .
+        $sql = "SELECT o.order_id, o.user_id, o.invoice_no, o.shipping_name, o.order_sn, o.add_time, o.order_status, o.shipping_status, o.order_amount, o.money_paid, o.callback_status,o.drop_shipping," .
             "o.pay_status, o.consignee, o.address, o.city, o.states, o.email, o.tel, o.zipcode, o.extension_code, o.extension_id, IFNULL(r.region_name, '') AS region, " .
             "(" . order_amount_field('o.') . ") AS total_fee, " .
             "IFNULL(u.user_name, '" .$GLOBALS['_LANG']['anonymous']. "') AS buyer ".
