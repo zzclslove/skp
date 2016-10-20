@@ -57,11 +57,60 @@ foreach($orders as $key=>$order){
         $goods[$key]['goods_name'] = str_len($good['seller_note']) > 0 ? $good['seller_note'] : $good['goods_name'];
         $goods_attr_ids = explode(',', $good['goods_attr_id']);
         $goods[$key]['goods_add_price'] = 0;
+        $attr_str = '';
         foreach($goods_attr_ids as $val){
             $sql = "select ga.attr_id, ga.attr_value, a.attr_name, ga.attr_price from ecs_goods_attr as ga left join ecs_attribute as a on ga.attr_id = a.attr_id where ga.goods_attr_id = ". $val;
             $attr = $GLOBALS['db']->getRow($sql);
+            $attr['attr_name'] = $attr['attr_name'] == 'ROM' ? '容量' : ($attr['attr_name'] == 'Color' ? '颜色' : $attr['attr_name']);
+            $color = $attr['attr_value'];
+            switch($attr['attr_value']){
+                case 'White':
+                    $color = '白色';
+                    break;
+                case 'Black':
+                    $color = '黑色';
+                    break;
+                case 'Gold':
+                    $color = '金色';
+                    break;
+                case 'Grey':
+                    $color = '灰色';
+                    break;
+                case 'Silver':
+                    $color = '银色';
+                    break;
+                case 'Rose Gold':
+                    $color = '玫瑰金';
+                    break;
+                case 'Blue':
+                    $color = '蓝色';
+                    break;
+                case 'Green':
+                    $color = '绿色';
+                    break;
+                case 'Pink':
+                    $color = '粉红';
+                    break;
+                case 'Yellow':
+                    $color = '黄色';
+                    break;
+                case 'Red':
+                    $color = '红色';
+                    break;
+                case 'Orange':
+                    $color = '橙色';
+                    break;
+                case 'Magenta':
+                    $color = '品红';
+                    break;
+                case 'Purple':
+                    $color = '紫色';
+                    break;
+            }
+            $attr_str .= $attr['attr_name'] . ':' . $color . ' ';
             $goods[$key]['goods_add_price'] += intval($attr['attr_price'] * RMB_RATE_ADMIN);
         }
+        $goods[$key]['goods_name'] .= ' [' . $attr_str . ']';
     }
 
     $sql = "select * from " . $ecs->table('invoice') . " where order_sn = '" . $order['order_sn'] . "'";

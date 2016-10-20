@@ -4,6 +4,9 @@
     <style>
         *{font-size:12px;}
         .data-table{margin-bottom:15px;border-top:3px solid #000000;border-left:1px solid #3c3c3c}
+        .product-table-con{padding-left:2px;padding-right:3px;padding-bottom:3px}
+        .product-table-con:hover{padding:0}
+        .product-table-con:hover .data-table{border:3px solid red}
         .data-table td{padding:2px;border-bottom:1px solid #3c3c3c;border-right:1px solid #3c3c3c}
         p{padding:1px 0px;margin:0}
         input[type="button"]{cursor:pointer}
@@ -15,8 +18,9 @@
         .product-table td{background:#bdebf1;}
         .unshipping .product-table td{background:#ffe8d3;}
         .sending .product-table td{background:#FFD0D0;}
-        .order_real_profit{clor:blue;font-weight: bold}
-        .order_real_profit.alert{color:red}
+        .order_real_profit{clor:blue;font-weight: bold;font-size:14px}
+        .order_real_profit.alert{color:red;font-size:14px}
+        .profit_percent{font-weight:bold;font-size:14px}
     </style>
 </head>
 <body>
@@ -33,11 +37,11 @@
     </tr>
     {foreach from=$data item=item key=key}
     <tr>
-        <td>
+        <td class="product-table-con">
             <table cellpadding="0" cellspacing="0" width="100%" class="data-table {if $item.order.shipping_status eq 0}unshipping{elseif $item.order.shipping_status eq 5}sending{/if}">
                 <tr class="order-title">
                     <td width="130">
-                        <p>单&nbsp;号:{$item.order.order_sn}</p>
+                        <p>单 号:<span style="font-weight:bold">{$item.order.order_sn}</span></p>
                     </td>
                     <td width="190">
                         <p>{$item.order.action_note}</p>
