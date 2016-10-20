@@ -281,12 +281,12 @@ function add_bonus($user_id, $bouns_sn)
  * @param   int         $start          列表起始位置
  * @return  array       $order_list     订单列表
  */
-function get_user_orders($user_id, $num = 10, $start = 0)
+function get_user_orders($user_id, $num = 60, $start = 0)
 {
     /* 取得订单列表 */
     $arr    = array();
 
-    $sql = "SELECT order_id, order_sn, order_status, shipping_status, pay_status, add_time,invoice_no,shipping_name,drop_shipping, " .
+    $sql = "SELECT order_id, consignee, order_sn, order_status, shipping_status, pay_status, add_time,invoice_no,shipping_name,drop_shipping, " .
            "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount - goods_discount_fee) AS total_fee ".
            " FROM " .$GLOBALS['ecs']->table('order_info') .
            " WHERE user_id = '$user_id' ORDER BY add_time DESC";
@@ -328,10 +328,11 @@ function get_user_orders($user_id, $num = 10, $start = 0)
         }
 
         $row['shipping_status'] = ($row['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $row['shipping_status'];
-        $row['order_status'] = $GLOBALS['_LANG']['os'][$row['order_status']] . ',' . $GLOBALS['_LANG']['ps'][$row['pay_status']] . ',' . $GLOBALS['_LANG']['ss'][$row['shipping_status']];
+        $row['order_status'] = '<span class="'.$GLOBALS['_LANG']['ps'][$row['pay_status']].'">'.$GLOBALS['_LANG']['ps'][$row['pay_status']] . '</span> , <span class="'.$GLOBALS['_LANG']['ss'][$row['shipping_status']].'">' . $GLOBALS['_LANG']['ss'][$row['shipping_status']].'</span>';
         $invoicenum = isset($row['invoice_no'])?$row['invoice_no']:'';
         $order_invoice = explode('<br>', $invoicenum);
         $arr[] = array('order_id'       => $row['order_id'],
+                       'consignee'      => $row['consignee'],
                        'drop_shipping'  => $row['drop_shipping'],
                        'invoice_no'     => $order_invoice,
                        'shipping_name'  => $row['shipping_name'],

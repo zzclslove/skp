@@ -857,7 +857,7 @@ elseif ($action == 'order_list')
 
     $record_count = $db->getOne("SELECT COUNT(*) FROM " .$ecs->table('order_info'). " WHERE user_id = '$user_id'");
 
-    $pager  = get_pager('user.php', array('act' => $action), $record_count, $page);
+    $pager  = get_pager('user.php', array('act' => $action), $record_count, $page, 60);
 
     $orders = get_user_orders($user_id, $pager['size'], $pager['start']);
     $merge  = get_user_merge($user_id);
@@ -946,6 +946,9 @@ elseif ($action == 'order_detail')
     $order['order_status'] = $_LANG['os'][$order['order_status']];
     $order['pay_status'] = $_LANG['ps'][$order['pay_status']];
     $order['shipping_status'] = $_LANG['ss'][$order['shipping_status']];
+    if(isset($order['invoice_no']) && str_len($order['invoice_no']) > 0){
+        $order['invoice_no'] = str_replace('<br>',',',$order['invoice_no']);
+    }
     $smarty->assign('order',      $order);
     $smarty->assign('goods_list', $goods_list);
     $smarty->display('user_transaction.dwt');

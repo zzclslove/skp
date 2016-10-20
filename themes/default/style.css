@@ -1438,3 +1438,17 @@ position:absolute; top:0px; right:0px;}
 .why-icon{width: 18px;height: 18px;background: url(images/why.jpg);background-size: 20px;cursor: pointer;}
 
 .discountimg{text-align:right;width:53px;height:66px;position:absolute;top:2px;left:415px;z-index: 9999;background: url(images/goodsdiscount.png);padding-right:17px;color:#fff;font-size:20px;font-weight:bold;padding-top:4px;}
+
+.order_list_user_table{border-left:1px solid #3c3c3c;border-top:1px solid #3c3c3c;font-family: arial,sans-serif;}
+.order_list_user_table td{border-right:1px solid #3c3c3c;border-bottom:1px solid #3c3c3c;line-height:16px;padding:6px 3px}
+.order_list_user_table tr.data-row:nth-of-type(odd){background:#eee}
+.order_list_user_table .Shipped, .order_list_user_table .Payed, .order_list_user_table .Received{color: #0D7CF3;}
+.order_list_user_table .option a{text-decoration: underline}
+
+
+
+
+
+
+
+
