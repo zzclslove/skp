@@ -701,7 +701,7 @@ function order_fee($order, $goods, $consignee)
             $shipping_count = $GLOBALS['db']->getOne($sql);
 
             $total['shipping_fee'] = ($shipping_count == 0 AND $weight_price['free_shipping'] == 1) ?0 :  shipping_fee($shipping_info['shipping_code'],$shipping_info['configure'], $weight_price['weight'], $total['goods_price'], $weight_price['number']);
-            if($_SESSION['user_rank'] != 3){
+            if($_SESSION['user_id'] != 10){
                 if($shipping_info['shipping_code'] == 'dhl'){
                     $sql = "select r.* from " . $GLOBALS['ecs']->table('remote') .
                         " as r left join " . $GLOBALS['ecs']->table('region') . "as e on r.country = e.region_name where e.region_id = ". $consignee['country'] .

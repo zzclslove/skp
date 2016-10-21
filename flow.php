@@ -426,7 +426,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     /*------------------------------------------------------ */
     //-- 订单确认
     /*------------------------------------------------------ */
-    $smarty->assign('user_rank', $_SESSION['user_rank']);
+    $smarty->assign('user_id', $_SESSION['user_id']);
     /* 取得购物类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
     /* 团购标志 */
