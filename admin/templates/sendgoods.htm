@@ -28,10 +28,10 @@
     <tr>
         <td style="line-height: 30px">
             <p>
-                <spa>已付款订单:</spa><span>{$total}</span>&nbsp;&nbsp;
-                <spa>已发货订单:</spa><span>{$shipped}</span>&nbsp;&nbsp;
-                <spa>发货中订单:</spa><span>{$sending}</span>&nbsp;&nbsp;
-                <spa>未发货订单:</spa><span>{$unship}</span>&nbsp;&nbsp;
+                <span>已付款订单:</span><span>{$total}</span>&nbsp;&nbsp;
+                <span>已发货订单:</span><a href="sendgoods.php?order_status=2">{$shipped}</a>&nbsp;&nbsp;
+                <span>发货中订单:</span><a href="sendgoods.php?order_status=1">{$sending}</a>&nbsp;&nbsp;
+                <span>未发货订单:</span><a href="sendgoods.php?order_status=0">{$unship}</a>&nbsp;&nbsp;
             </p>
         </td>
     </tr>
@@ -179,10 +179,16 @@ function updateOrderProfit(orderRow){
         orderRow.find('.order_real_profit').html(realOrderProfit);
     }
 }
+function showLoading(){
+    var width = $(window).width();
+    var height = document.body.clientHeight;
+    $('#loading').css('width', width + 'px').css('height', height).css('top', $(window).scrollTop() + 'px');
+    $('#loading').show();
+}
 $('.updateRemark').click(function(){
     var remark = $(this).prev().val().trim();
     var order_id = $(this).attr('rel');
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_remark',order_id:order_id,remark:remark},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
     }});
@@ -190,7 +196,7 @@ $('.updateRemark').click(function(){
 $('.updateOraNumber').click(function(){
     var orgnumber = $(this).prev().val().trim();
     var order_id = $(this).attr('rel');
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_orgnumber',order_id:order_id,orgnumber:orgnumber},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
 
@@ -199,7 +205,7 @@ $('.updateOraNumber').click(function(){
 $('.updateTrackNumber').click(function(){
     var trackingnumber = $(this).prev().val().trim();
     var order_id = $(this).attr('rel');
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_tracknumber',order_id:order_id,trackingnumber:trackingnumber},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
     }});
@@ -208,7 +214,7 @@ $('.update_chuanma').click(function(){
     var chuanma = $(this).prev().val().trim();
     var order_id = $(this).attr('orderid');
     var goods_id = $(this).attr('goodsid');
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_chuanma',order_id:order_id,chuanma:chuanma,goods_id:goods_id},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
     }});
@@ -216,7 +222,7 @@ $('.update_chuanma').click(function(){
 $('.updatePrice').click(function(){
     var price = $(this).prev().val().trim();
     var goods_id = $(this).attr('goodsid');
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_price',price:price,goods_id:goods_id},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
     }});
@@ -226,7 +232,7 @@ $('.submitPurchasePrice').click(function(){
     var goods_id = $(this).attr('goodsid');
     var order_id = $(this).attr('orderid');
     var self = $(this);
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_purchase_price',price:price,goods_id:goods_id,order_id:order_id},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
         updateProductProfit(self.parents('.product-row'));
@@ -236,7 +242,7 @@ $('.updateRealShippingFee').click(function(){
     var shippingFee = $(this).prev().val().trim();
     var order_id = $(this).attr('orderid');
     var self = $(this);
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_shippingfee',order_id:order_id,shippingFee:shippingFee},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
         updateOrderProfit(self.parents('.data-table'));
@@ -246,7 +252,7 @@ $('.updateCustomerFee').click(function(){
     var customerFee = $(this).prev().val().trim();
     var order_id = $(this).attr('orderid');
     var self = $(this);
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'update_customer_fee',order_id:order_id,customerFee:customerFee},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
         updateOrderProfit(self.parents('.data-table'));
@@ -255,7 +261,7 @@ $('.updateCustomerFee').click(function(){
 $('.setSending').click(function(){
     var orderid = $(this).attr('orderid');
     var self = $(this);
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'set_sending',order_id:orderid},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
         self.parents('.data-table').removeClass('unshipping').addClass('sending');
@@ -264,7 +270,7 @@ $('.setSending').click(function(){
 $('.setShipped').click(function(){
     var orderid = $(this).attr('orderid');
     var self = $(this);
-    $('#loading').show();
+    showLoading();
     $.ajax({url:'sendgoods_option.php',data:{act:'set_shipped',order_id:orderid},dataType:"jsonp",jsonp:'callback',success: function(result){
         $('#loading').hide();
         self.parents('.data-table').removeClass('unshipping').removeClass('sending');

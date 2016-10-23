@@ -1445,6 +1445,7 @@ position:absolute; top:0px; right:0px;}
 .order_list_user_table .Shipped, .order_list_user_table .Payed, .order_list_user_table .Received{color: #0D7CF3;}
 .order_list_user_table .option a{text-decoration: underline}
 
+.order-search-tab td{padding-right:5px}
 
 
 

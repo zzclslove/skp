@@ -281,7 +281,7 @@ function add_bonus($user_id, $bouns_sn)
  * @param   int         $start          列表起始位置
  * @return  array       $order_list     订单列表
  */
-function get_user_orders($user_id, $num = 60, $start = 0)
+function get_user_orders($user_id, $num = 60, $start = 0, $consignee = '', $order_sn = '')
 {
     /* 取得订单列表 */
     $arr    = array();
@@ -289,7 +289,13 @@ function get_user_orders($user_id, $num = 60, $start = 0)
     $sql = "SELECT order_id, consignee, order_sn, order_status, shipping_status, pay_status, add_time,invoice_no,shipping_name,drop_shipping, " .
            "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount - goods_discount_fee) AS total_fee ".
            " FROM " .$GLOBALS['ecs']->table('order_info') .
-           " WHERE user_id = '$user_id' ORDER BY add_time DESC";
+           " WHERE user_id = '$user_id'";
+    if(str_len($order_sn) > 0){
+        $sql .= " and order_sn = '" . $order_sn . "' ";
+    }else if(str_len($consignee) > 0){
+        $sql .= " and consignee = '" . $consignee . "' ";
+    }
+    $sql .= "ORDER BY add_time DESC";
     $res = $GLOBALS['db']->SelectLimit($sql, $num, $start);
 
     while ($row = $GLOBALS['db']->fetchRow($res))

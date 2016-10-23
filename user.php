@@ -853,19 +853,32 @@ elseif ($action == 'order_list')
 {
     include_once(ROOT_PATH . 'includes/lib_transaction.php');
 
+    $consignee = isset($_REQUEST['consignee']) && str_len($_REQUEST['consignee']) ? $_REQUEST['consignee'] : '';
+    $order_sn = isset($_REQUEST['order_sn']) && str_len($_REQUEST['order_sn']) ? $_REQUEST['order_sn'] : '';
+    if(str_len($order_sn) > 0){
+        $consignee = '';
+    }
+
     $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 
-    $record_count = $db->getOne("SELECT COUNT(*) FROM " .$ecs->table('order_info'). " WHERE user_id = '$user_id'");
+    $record_count = $db->getOne("SELECT COUNT(*) FROM " . $ecs->table('order_info') . " WHERE user_id = '$user_id'");
 
     $pager  = get_pager('user.php', array('act' => $action), $record_count, $page, 60);
 
-    $orders = get_user_orders($user_id, $pager['size'], $pager['start']);
+    $orders = get_user_orders($user_id, $pager['size'], $pager['start'], $consignee, $order_sn);
     $merge  = get_user_merge($user_id);
+
+    $sql = "select distinct consignee from " . $ecs->table('order_info') . " where user_id = " . $_SESSION['user_id'];
+    $consignees = $db->getAll($sql);
+
+    $smarty->assign('consignees',  $consignees);
 
     include_once(ROOT_PATH . 'includes/cls_certificate.php');
     $cert = new certificate();
     $cert->is_bind_sn('erp','goods_name')?$smarty->assign('no_bind_erp',  0):$smarty->assign('no_bind_erp',  1);
 
+    $smarty->assign('consignee',  $consignee);
+    $smarty->assign('order_sn', $order_sn);
     $smarty->assign('open_logistics_trace',is_open_logistics_trace());
     $smarty->assign('merge',  $merge);
     $smarty->assign('pager',  $pager);

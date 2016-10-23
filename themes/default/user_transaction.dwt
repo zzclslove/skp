@@ -10,7 +10,7 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="http://fonts.googleapis.com/css?family=Open+Sans|Cardo|Montserrat" rel="stylesheet">
-<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+<link href="{$ecs_css_path}?v=20161022" rel="stylesheet" type="text/css" />
 <link href="js/chosen/chosen.min.css" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
 {insert_scripts files='common.js,user.js'}
@@ -216,6 +216,33 @@
        <!-- {if $action eq 'order_list'} -->
        <h5><span>{$lang.label_order}</span></h5>
        <div class="blank"></div>
+      <form action="user.php?act=order_list">
+          <input type="hidden" name="act" value="order_list"/>
+          <table class="order-search-tab" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                  <td>Order Number:</td>
+                  <td>
+                      <input name="order_sn" style="width:170px;line-height:17px" type="text" value="{$order_sn}"/>
+                  </td>
+                  <td>Consignee:</td>
+                  <td>
+                      <select name="consignee" style="width: 170px" id="consignee-chosen">
+                          <option value="">Please select</option>
+                          <!--{foreach from=$consignees item=item}-->
+                          <option <!--{if $consignee eq $item.consignee}-->selected<!--{/if}--> value="{$item.consignee}">{$item.consignee}</option>
+                          <!--{/foreach}-->
+                      </select>
+                  </td>
+                  <td>
+                      <input style="border:1px solid #3c3c3c;line-height: 22px;padding: 0 10px;cursor: pointer;margin-left: 8px;" type="submit" value="Search"/>
+                  </td>
+              </tr>
+          </table>
+      </form>
+      <script>
+      $('#consignee-chosen').chosen();
+      </script>
+       <div class="blank"></div>
        <table class="order_list_user_table" width="100%" border="0" cellpadding="0" cellspacing="0">
           <thead bgcolor="#757575" style="color:#fff">
             <tr align="center">
@@ -255,42 +282,6 @@
           </table>
         <div class="blank5"></div>
        <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
-       <!-- {if $no_bind_erp == 1} -->
-       <div class="blank5"></div>
-       <h5><span>{$lang.merge_order}</span></h5>
-       <div class="blank"></div>
-        <script type="text/javascript">
-        {foreach from=$lang.merge_order_js item=item key=key}
-          var {$key} = "{$item}";
-        {/foreach}
-        </script>
-        <form action="user.php" method="post" name="formOrder" onsubmit="return mergeOrder()">
-          <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
-            <tr>
-              <td width="22%" align="right" bgcolor="#ffffff">{$lang.first_order}:</td>
-              <td width="12%" align="left" bgcolor="#ffffff"><select name="to_order">
-              <option value="0">{$lang.select}</option>
-
-                  {html_options options=$merge}
-
-                </select></td>
-              <td width="19%" align="right" bgcolor="#ffffff">{$lang.second_order}:</td>
-              <td width="11%" align="left" bgcolor="#ffffff"><select name="from_order">
-              <option value="0">{$lang.select}</option>
-
-                  {html_options options=$merge}
-
-                </select></td>
-              <td width="36%" bgcolor="#ffffff">&nbsp;<input name="act" value="merge_order" type="hidden" />
-              <input type="submit" name="Submit"  class="bnt_blue_1" style="border:none;width:120px;" value="{$lang.merge_order}" /></td>
-            </tr>
-            <tr>
-              <td bgcolor="#ffffff">&nbsp;</td>
-              <td colspan="4" align="left" bgcolor="#ffffff">{$lang.merge_order_notice}</td>
-            </tr>
-          </table>
-        </form>
-        <!-- {/if} -->
        <!--{/if}-->
       <!--#订单列表界面 end-->
        <!--#包裹状态查询界面 start-->
@@ -334,12 +325,12 @@
           <td width="15%" align="right" bgcolor="#ffffff">{$lang.detail_order_sn}：</td>
           <td align="left" bgcolor="#ffffff">{$order.order_sn}
           <!-- {if $order.extension_code eq "group_buy"} -->
-					<a href="./group_buy.php?act=view&id={$order.extension_id}" class="f6"><strong>{$lang.order_is_group_buy}</strong></a>
-					<!-- {elseif $order.extension_code eq "exchange_goods"} -->
-					<a href="./exchange.php?act=view&id={$order.extension_id}" class="f6"><strong>{$lang.order_is_exchange}</strong></a>
-					<!--{/if}-->  
-					<a href="user.php?act=message_list&order_id={$order.order_id}" class="f6">[{$lang.business_message}]</a>
-					</td>
+            <a href="./group_buy.php?act=view&id={$order.extension_id}" class="f6"><strong>{$lang.order_is_group_buy}</strong></a>
+            <!-- {elseif $order.extension_code eq "exchange_goods"} -->
+            <a href="./exchange.php?act=view&id={$order.extension_id}" class="f6"><strong>{$lang.order_is_exchange}</strong></a>
+            <!--{/if}-->
+            <a href="user.php?act=message_list&order_id={$order.order_id}" class="f6">[{$lang.business_message}]</a>
+          </td>
         </tr>
         <tr>
           <td align="right" bgcolor="#ffffff">{$lang.detail_order_status}：</td>
@@ -632,34 +623,21 @@
           <!-- {else} -->
           <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
             <tr>
-              <td width="15%" align="right" bgcolor="#ffffff">{$lang.consignee_name}：</td>
-              <td width="35%" align="left" bgcolor="#ffffff">{$order.consignee}</td>
-              <td width="15%" align="right" bgcolor="#ffffff" >{$lang.email_address}：</td>
-              <td width="35%" align="left" bgcolor="#ffffff">{$order.email}</td>
+              <td width="100" align="right" bgcolor="#ffffff">Consignee：</td>
+              <td align="left" bgcolor="#ffffff">{$order.consignee}</td>
             </tr>
-            <!-- {if $order.exist_real_goods} -->
             <tr>
               <td align="right" bgcolor="#ffffff">{$lang.detailed_address}：</td>
-              <td colspan="3" align="left" bgcolor="#ffffff">{$order.address}
-                <!-- {if $order.zipcode} -->
-                [{$lang.postalcode}: {$order.zipcode}]
-                <!-- {/if} --></td>
+              <td colspan="3" align="left" bgcolor="#ffffff">{$order.address}, {$order.city}, {$order.states}</td>
             </tr>
-            <!-- {/if}-->
+            <tr>
+              <td align="right" bgcolor="#ffffff">{$lang.postalcode}：</td>
+              <td align="left" bgcolor="#ffffff">{$order.zipcode}</td>
+            </tr>
             <tr>
               <td align="right" bgcolor="#ffffff">{$lang.phone}：</td>
               <td align="left" bgcolor="#ffffff">{$order.tel} </td>
-              <td align="right" bgcolor="#ffffff">{$lang.backup_phone}：</td>
-              <td align="left" bgcolor="#ffffff">{$order.mobile}</td>
             </tr>
-            <!-- {if $order.exist_real_goods} -->
-            <tr>
-              <td align="right" bgcolor="#ffffff" >{$lang.sign_building}：</td>
-              <td align="left" bgcolor="#ffffff">{$order.sign_building} </td>
-              <td align="right" bgcolor="#ffffff" >{$lang.deliver_goods_time}：</td>
-              <td align="left" bgcolor="#ffffff">{$order.best_time}</td>
-            </tr>
-            <!--{/if}-->
           </table>
           <!-- {/if} -->
           <div class="blank"></div>

@@ -95,6 +95,19 @@
     <div style="width: 100%;overflow: hidden"><img style="width:820px;display:block;margin:0 auto;" src="images/dropshipping.png"></div>
     <h2>Warranty & Returns</h2>
     <p>We believe that you will be pleased with your purchase from OPENSKYPHONE. However, there might be chances when you need to return items to us. So what can we do when we meet this situation?</p>
+    <p>Before you return, you can use the following method to confirm whether the damaged phone is the one we send you.</p>
+    <table>
+        <tr>
+            <td style="line-height: 30px;font-weight: bold"><p>First, find out the IMEI code of the damaged phone.</p></td>
+            <td style="padding-left: 50px;line-height: 30px;font-weight: bold"><p>Then, find out the IMEI code of that phone we have sent to you on the order detail page.</p></td>
+        </tr>
+        <tr>
+            <td><p><img src="images/getimeicode.jpg"></p></td>
+            <td style="padding-left: 50px"><p><img style="border:1px solid #000000" src="images/getimeicodeinsystem.png"></p></td>
+        </tr>
+    </table>
+    <p style="line-height: 30px;padding-bottom: 25px;">If the IMEI codes are not the same, the damaged phone may not be the one we sent you.</p>
+
     <table class="returns-tab" width="100%" cellpadding="1" cellspacing="1" bgcolor="#000000" border="0">
         <tbody><tr bgcolor="#ffffff">
             <td style="background:#cccccc"><strong>Type of repair </strong><br></td>

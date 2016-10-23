@@ -11,34 +11,66 @@ require(dirname(__FILE__) . '/includes/init.php');
 require_once(ROOT_PATH . 'includes/lib_order.php');
 require_once(ROOT_PATH . 'includes/lib_goods.php');
 
+$order_status = isset($_REQUEST['order_status']) ? $_REQUEST['order_status'] : -1;
+
 $data = array();
-
-$sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
-    "where o.pay_status = 2 and o.shipping_status = 0 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
-$orders_unship = $GLOBALS['db']->getAll($sql);
-
-$sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
-    "where o.pay_status = 2 and o.shipping_status = 5 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
-$orders_sending = $GLOBALS['db']->getAll($sql);
-
-$sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
-    "where o.pay_status = 2 and (o.shipping_status = 1 or o.shipping_status = 2) and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
-$orders_shipped = $GLOBALS['db']->getAll($sql);
-
-$unship = count($orders_unship);
-$sending = count($orders_sending);
-$shipped = count($orders_shipped);
-$total = $unship + $sending + $shipped;
-
 $orders = array();
-foreach($orders_unship as $order){
-    array_push($orders, $order);
-}
-foreach($orders_sending as $order){
-    array_push($orders, $order);
-}
-foreach($orders_shipped as $order){
-    array_push($orders, $order);
+$unship = 0;
+$sending = 0;
+$shipped = 0;
+if($order_status == 0){
+    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+        "where o.pay_status = 2 and o.shipping_status = 0 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
+    $orders_unship = $GLOBALS['db']->getAll($sql);
+    foreach($orders_unship as $order){
+        array_push($orders, $order);
+    }
+    $unship = count($orders_unship);
+    $total = $unship;
+}else if($order_status == 1){
+    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+        "where o.pay_status = 2 and o.shipping_status = 5 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
+    $orders_sending = $GLOBALS['db']->getAll($sql);
+    foreach($orders_sending as $order){
+        array_push($orders, $order);
+    }
+    $sending = count($orders_sending);
+    $total = $sending;
+}else if($order_status == 2){
+    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+        "where o.pay_status = 2 and (o.shipping_status = 1 or o.shipping_status = 2) and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
+    $orders_shipped = $GLOBALS['db']->getAll($sql);
+    foreach($orders_shipped as $order){
+        array_push($orders, $order);
+    }
+    $shipped = count($orders_shipped);
+    $total = $shipped;
+}else{
+    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+        "where o.pay_status = 2 and o.shipping_status = 0 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
+    $orders_unship = $GLOBALS['db']->getAll($sql);
+
+    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+        "where o.pay_status = 2 and o.shipping_status = 5 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
+    $orders_sending = $GLOBALS['db']->getAll($sql);
+
+    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+        "where o.pay_status = 2 and (o.shipping_status = 1 or o.shipping_status = 2) and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
+    $orders_shipped = $GLOBALS['db']->getAll($sql);
+
+    $unship = count($orders_unship);
+    $sending = count($orders_sending);
+    $shipped = count($orders_shipped);
+    $total = $unship + $sending + $shipped;
+    foreach($orders_unship as $order){
+        array_push($orders, $order);
+    }
+    foreach($orders_sending as $order){
+        array_push($orders, $order);
+    }
+    foreach($orders_shipped as $order){
+        array_push($orders, $order);
+    }
 }
 
 foreach($orders as $key=>$order){
