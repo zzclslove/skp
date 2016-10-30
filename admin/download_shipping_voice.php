@@ -96,7 +96,8 @@ if($datacheck){
 
 $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 $pdf->SetCreator('openskyphone');
-$pdf->SetFont('droidsansfallback', '', 10);
+//$pdf->SetFont('droidsansfallback', '', 10);
+$pdf->SetFontSize(10);
 $pdf->SetMargins(PDF_MARGIN_LEFT, 20,PDF_MARGIN_RIGHT);
 $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
@@ -117,68 +118,70 @@ $html .= '<h1>COMMERCIAL INVOICE</h1>';
 $html .= '<p></p>';
 $html .= '<table cellpadding="3" class="table">'.
     '<tr>'.
-    '<td width="252" colspan="2" align="left"><span class="title">Invoice NO 单号: </span><span class="content">'.$order['order_sn'].'</span></td>'.
-    '<td width="126" align="right" class="title">Air waybill Number 单号:</td>'.
+    '<td width="252" colspan="2" align="left"><span class="title">Invoice NO: </span><span class="content">'.$order['order_sn'].'</span></td>'.
+    '<td width="126" align="right" class="title">Air waybill Number:</td>'.
     '<td width="126" align="center"></td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">Company Name 公司名称:</td>'.
+    '<td width="126" align="right" class="title">Company Name:</td>'.
     '<td width="378" colspan="3" align="left">'.$invoice['bill_company_name'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">Address 地址:</td>'.
+    '<td width="126" align="right" class="title">Address:</td>'.
     '<td width="378" colspan="3" align="left">'.$invoice['bill_address'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">Contact Person 联系人:</td>'.
+    '<td width="126" align="right" class="title">Contact Person:</td>'.
     '<td width="378" colspan="3" align="left">'.$invoice['bill_contact_person'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">Phone/Fax 电话/传真:</td>'.
+    '<td width="126" align="right" class="title">Phone/Fax:</td>'.
     '<td width="378" colspan="3" align="left">'.$invoice['bill_phone_fax'].'</td>'.
     '</tr>'.
     '<tr>'.
     '<td width="504" colspan="4" align="right"></td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">Consignee 收件人:</td>'.
+    '<td width="126" align="right" class="title">Consignee:</td>'.
     '<td width="378" colspan="3" align="left">'.$order['consignee'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">Address 地址:</td>'.
+    '<td width="126" align="right" class="title">Address:</td>'.
     '<td width="378" colspan="3" align="left">'.$order['address'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">Phone/Fax 电话/传真:</td>'.
+    '<td width="126" align="right" class="title">Phone/Fax:</td>'.
     '<td width="378" colspan="3" align="left">'.$order['tel'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">City 城市名:</td>'.
+    '<td width="126" align="right" class="title">City:</td>'.
     '<td width="126" align="left">'.$order['city'].'</td>'.
-    '<td width="126" align="right" class="title">Postal Code 邮编:</td>'.
+    '<td width="126" align="right" class="title">Postal Code:</td>'.
     '<td width="126" align="left">'.$order['zipcode'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="right" class="title">State/Country 国家名:</td>'.
+    '<td width="126" align="right" class="title">State/Country:</td>'.
     '<td width="126" align="left">'.$order['country'].'</td>'.
-    '<td width="126" align="right" class="title">Total Weight 重量:</td>'.
+    '<td width="126" align="right" class="title">Total Weight:</td>'.
     '<td width="126" align="left"></td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="center" class="title">Description Of Goods<br />货 物 名 称</td>'.
-    '<td width="126" align="center" class="title">No. of Items<br />数 量</td>'.
-    '<td width="126" align="center" class="title">Unit Value<br />(USD)单价</td>'.
-    '<td width="126" align="center" class="title">Total Value<br />(USD)总价</td>'.
+    '<td width="104" align="center" class="title">Description</td>'.
+    '<td width="100" align="center" class="title">HS Code</td>'.
+    '<td width="100" align="center" class="title">No. of Items</td>'.
+    '<td width="100" align="center" class="title">Unit Value(USD)</td>'.
+    '<td width="100" align="center" class="title">Total Value(USD)</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="126" align="center">Mobile Phone</td>'.
-    '<td width="126" align="center">'.$order['goods_num'].'</td>'.
-    '<td width="126" align="center">'.$order['unit_price'].'</td>'.
-    '<td width="126" align="center">'.$order['goods_amount'].'</td>'.
+    '<td width="104" align="center">Handset</td>'.
+    '<td width="100" align="center">8529909090</td>'.
+    '<td width="100" align="center">'.$order['goods_num'].'</td>'.
+    '<td width="100" align="center">'.$order['unit_price'].'</td>'.
+    '<td width="100" align="center">'.$order['goods_amount'].'</td>'.
     '</tr>'.
     '<tr>'.
-    '<td width="378" colspan="3" align="right" class="title">Total Invoice Value 总价:</td>'.
-    '<td width="126" align="center">'.$order['goods_amount'].'</td>'.
+    '<td width="404" colspan="3" align="right" class="title">Total Invoice Value(USD):</td>'.
+    '<td width="100" align="center">'.$order['goods_amount'].'</td>'.
     '</tr>'.
     '</table>';
 $html .= '<p></p>';
@@ -189,10 +192,10 @@ $html .= '<div class="conditions">'.
     '<span>Delivery time: Within 5 days after payment.</span>'.
     '</div>';
 $html .= '<div class="conditions">I declare that the above information is true and correct to the best of my knowledge,
-And that the goods are origin china<br />本人认为以上提供的资料属实和正确，货物原产地是：中国</div>';
+And that the goods are origin china</div>';
 $html .= '<p class="signature">Authorized Signature: '.$order['signature'].' '.$order['invoice_date'].'</p>';
 $pdf->writeHTML($html, true, false, true, false, '');
-$pdf->Output('example_061.pdf', 'I');
+$pdf->Output($order['order_sn'] . '.pdf', 'I');
 
 
 

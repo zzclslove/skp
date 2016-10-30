@@ -16,7 +16,7 @@
     </select>
     <input type="submit" value="{$lang.button_search}" class="button" />
     <span class="btn-search cl-link" style="padding-left: 20px" onclick="detailSearch()">{$lang.advanced_search}</span>
-    <a target="_blank" class="btn-search cl-link" style="padding-left: 20px" href="unshipgoods.php">所有未发货产品</a>
+    <a target="_blank" class="btn-search cl-link" style="padding-left: 20px" href="unshipgoods.php">采购单</a>
     <a target="_blank" class="btn-search cl-link" style="padding-left: 20px" href="sendgoods.php">去发货</a>
     <a target="_blank" class="btn-search cl-link" style="padding-left: 20px" href="sales_tongji.php">产品销售统计</a>
     <!--ERP link-->
@@ -65,12 +65,7 @@
         <p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：{$order.email}</p>
         <p>下单时间：{$order.short_order_time}</p>
         <p>ID：{$order.order_id}, {$order.action_note}</p>
-        <!--{if $order.drop_shipping eq 1}-->
-        <p>
-            <a style="text-decoration: underline;color:#ff5c26" target="_blank" href="/set_invoice.php?act=set_invoice&order_sn={$order.order_sn}&user_id={$order.user_id}">Set Shipment Invoice</a>
-            &nbsp;&nbsp;<a style="text-decoration: underline;color:#ff5c26" target="_blank" href="/download_invoice.php?order_sn={$order.order_sn}">Download Invoice</a>
-        </p>
-        <!--{/if}-->
+        <p>快递：{$order.shipping_name}</p>
     </td>
     <td {if $order.pay_status == 2 and $order.shipping_status != 1 and $order.shipping_status != 2}style="background:#ffe2b8" {elseif $order.pay_status == 2 and ($order.shipping_status == 1 or $order.shipping_status == 2)}style="background:#7fdce6;" {/if} align="left" valign="top">
         <p>收货人：{$order.consignee|escape}</p>

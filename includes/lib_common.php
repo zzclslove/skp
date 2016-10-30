@@ -2357,13 +2357,28 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
 
     //取得商品促销价格列表
     /* 取得商品信息 */
+
     $sql = "SELECT g.promote_price, g.promote_start_date, g.promote_end_date, ".
-                "IFNULL(mp.user_price, g.shop_price * '" . $_SESSION['discount'] . "') AS shop_price ".
-           " FROM " .$GLOBALS['ecs']->table('goods'). " AS g ".
-           " LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                   "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . $_SESSION['user_rank']. "' ".
-           " WHERE g.goods_id = '" . $goods_id . "'" .
-           " AND g.is_delete = 0";
+        "IFNULL(mp.user_price, g.shop_price * '" . $_SESSION['discount'] . "') AS shop_price ".
+        " FROM " .$GLOBALS['ecs']->table('goods'). " AS g ".
+        " LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+        "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . $_SESSION['user_rank']. "' ".
+        " WHERE g.goods_id = '" . $goods_id . "'" .
+        " AND g.is_delete = 0";
+
+    if($goods_id == 10){
+        if((in_array('371', $spec) && in_array('373', $spec)) || (in_array('371', $spec) && in_array('374', $spec))){
+            $sql = "SELECT g.promote_price, g.promote_start_date, g.promote_end_date, ".
+                "IFNULL(mp.user_price, g.shop_price) AS shop_price ".
+                " FROM " .$GLOBALS['ecs']->table('goods'). " AS g ".
+                " LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+                "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . $_SESSION['user_rank']. "' ".
+                " WHERE g.goods_id = '" . $goods_id . "'" .
+                " AND g.is_delete = 0";
+        }
+    }
+
+
     $goods = $GLOBALS['db']->getRow($sql);
 
     /* 计算商品的促销价格 */
@@ -2412,6 +2427,13 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
         {
             $spec_price   = spec_price($spec);
             $final_price += $spec_price;
+        }
+    }
+
+    //单个产品设置优惠折扣，暂时写死
+    if($goods_id == 10){
+        if((in_array('371', $spec) && in_array('373', $spec)) || (in_array('371', $spec) && in_array('374', $spec))){
+            $final_price = $final_price * 0.797;
         }
     }
 

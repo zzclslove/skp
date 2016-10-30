@@ -19,7 +19,7 @@ $unship = 0;
 $sending = 0;
 $shipped = 0;
 if($order_status == 0){
-    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+    $sql = "select o.*,a.action_note, r.region_name from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id left join ecs_region as r on r.region_id = o.country ".
         "where o.pay_status = 2 and o.shipping_status = 0 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
     $orders_unship = $GLOBALS['db']->getAll($sql);
     foreach($orders_unship as $order){
@@ -28,7 +28,7 @@ if($order_status == 0){
     $unship = count($orders_unship);
     $total = $unship;
 }else if($order_status == 1){
-    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+    $sql = "select o.*,a.action_note, r.region_name from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id left join ecs_region as r on r.region_id = o.country ".
         "where o.pay_status = 2 and o.shipping_status = 5 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
     $orders_sending = $GLOBALS['db']->getAll($sql);
     foreach($orders_sending as $order){
@@ -37,7 +37,7 @@ if($order_status == 0){
     $sending = count($orders_sending);
     $total = $sending;
 }else if($order_status == 2){
-    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+    $sql = "select o.*,a.action_note, r.region_name from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id left join ecs_region as r on r.region_id = o.country ".
         "where o.pay_status = 2 and (o.shipping_status = 1 or o.shipping_status = 2) and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
     $orders_shipped = $GLOBALS['db']->getAll($sql);
     foreach($orders_shipped as $order){
@@ -46,15 +46,15 @@ if($order_status == 0){
     $shipped = count($orders_shipped);
     $total = $shipped;
 }else{
-    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+    $sql = "select o.*,a.action_note, r.region_name from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id left join ecs_region as r on r.region_id = o.country ".
         "where o.pay_status = 2 and o.shipping_status = 0 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
     $orders_unship = $GLOBALS['db']->getAll($sql);
 
-    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+    $sql = "select o.*,a.action_note, r.region_name from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id left join ecs_region as r on r.region_id = o.country ".
         "where o.pay_status = 2 and o.shipping_status = 5 and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
     $orders_sending = $GLOBALS['db']->getAll($sql);
 
-    $sql = "select o.*,a.action_note from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id ".
+    $sql = "select o.*,a.action_note, r.region_name from ecs_order_info as o left join ecs_order_action as a on a.order_id = o.order_id left join ecs_region as r on r.region_id = o.country ".
         "where o.pay_status = 2 and (o.shipping_status = 1 or o.shipping_status = 2) and a.order_status = 1 and a.shipping_status = 0 and a.pay_status = 2 order by order_sn desc";
     $orders_shipped = $GLOBALS['db']->getAll($sql);
 

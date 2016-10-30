@@ -368,7 +368,7 @@
                  <a style="text-decoration: underline" target="_blank" href="user.php?act=profile">Set Company Information</a>
              </td>
          </tr>
-         <!-- {if $order.drop_shipping eq 1}-->
+         <!-- {if $order.drop_shipping eq 1111}-->
              <tr>
                  <td align="right" bgcolor="#ffffff">Shipment Invoice：</td>
                  <td align="left" bgcolor="#ffffff">

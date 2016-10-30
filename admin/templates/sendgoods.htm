@@ -32,6 +32,7 @@
                 <span>已发货订单:</span><a href="sendgoods.php?order_status=2">{$shipped}</a>&nbsp;&nbsp;
                 <span>发货中订单:</span><a href="sendgoods.php?order_status=1">{$sending}</a>&nbsp;&nbsp;
                 <span>未发货订单:</span><a href="sendgoods.php?order_status=0">{$unship}</a>&nbsp;&nbsp;
+                <a target="_blank" id="printorder" href="printorder.php"><b>打印发货单</b></a>&nbsp;&nbsp;
             </p>
         </td>
     </tr>
@@ -46,11 +47,7 @@
                     <td width="190">
                         <p>{$item.order.action_note}</p>
                     </td>
-                    <td>
-                        <p>
-                            <span>备注:</span><input style="width:260px;border-right:0" type="text" value="{$item.order.order_remark}"><input rel="{$item.order.order_id}" class="updateRemark" type="button" value="提交">
-                        </p>
-                    </td>
+                    <td><p>发往国家：<b>{$item.order.region_name}</b></p></td>
                     <td width="183">
                         <p>
                             <span>原单号:</span><input style="width:100px;border-right:0" type="text" value="{$item.order.order_orgnumber}"><input rel="{$item.order.order_id}" class="updateOraNumber" type="button" value="提交">
@@ -77,7 +74,7 @@
                                 <td><p><span>{$goods.goods_name}</span></p></td>
                                 <td width="50"><p>数量:<span class="goods_number">{$goods.buy_number}</span></p></td>
                                 <td width="185"><p><span>串码:</span><input style="width:120px;border-right:0" type="text" value="{$goods.chuanma}"><input goodsid="{$goods.goods_id}" orderid="{$item.order.order_id}" class="update_chuanma" type="button" value="提交"></p></td>
-                                <td width="126"><p><span>原始价格:</span><input style="width:38px;border-right:0" type="text" value="{$goods.shop_price}"><input goodsid="{$goods.goods_id}" class="updatePrice" type="button" value="提交"></p></td>
+                                <td width="126"><p><span>原始价格:</span><span>{$goods.shop_price}</span></p></td>
                                 <td width="80"><p><span>型号附加:{$goods.goods_add_price}</span></p></td>
                                 <td width="133">
                                     <p>
@@ -94,19 +91,33 @@
                     </td>
                 </tr>
                 <tr>
+                    <td style="padding:0" colspan="6" align="left">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td style="border-bottom: 0"><p>发往地址</p></td>
+                                <td style="border-bottom: 0"><p>{$item.order.address},{$item.order.city},{$item.order.states}</p></td>
+                                <td style="border-bottom: 0"><p>邮编</p></td>
+                                <td style="border: 0"><p>{$item.order.zipcode}</p></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
                     <td style="padding:0" colspan="6" align="right">
                         <table width="100%" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td style="border:0">
                                     <p>
                                         <span>申报数量:</span><input rel="{$item.order.order_sn}" class="invoice_goods_number" style="width:25px;" type="text" value="{$item.total_goods_number}">
-                                        <span>申报单价: $</span><input rel="{$item.order.order_sn}" class="invoice_unit_price" style="width:35px;border-right:0" type="text" value="{$item.unit_price}"><a target="_blank" href="download_shipping_voice.php?order_sn={$item.order.order_sn}&invoice_number={$item.total_goods_number}&invoice_price={$item.unit_price}"><input class="printVoice" type="button" value="打印发票"></a>
+                                        <span>申报单价: $</span><input rel="{$item.order.order_sn}" class="invoice_unit_price" style="width:35px;border-right:0" type="text" value="31"><a target="_blank" href="download_shipping_voice.php?order_sn={$item.order.order_sn}&invoice_number={$item.total_goods_number}&invoice_price=31"><input class="printVoice" type="button" value="打印发票"></a>
                                         {if $item.order.has_print_invoice eq 1}
                                         &nbsp;<span>已打印发票</span>
                                         {/if}
-                                        {if $item.order.drop_shipping eq 1}
-                                        &nbsp;<span>客户已设置申报金额</span>
-                                        {/if}
+                                    </p>
+                                </td>
+                                <td style="border:0">
+                                    <p>
+                                        <span>订单备注:</span><input style="width:160px;border-right:0" type="text" value="{$item.order.order_remark}"><input rel="{$item.order.order_id}" class="updateRemark" type="button" value="提交">
                                     </p>
                                 </td>
                                 <td align="right" style="border: 0">
@@ -123,6 +134,15 @@
                     </td>
                 </tr>
             </table>
+        </td>
+        <td>
+            {if $item.order.shipping_status neq 1}
+            {if $item.order.has_print_sender eq 1}
+            <label style="display: block;padding: 15px;background-color:#dedede;"><input disabled value="{$item.order.order_id}" class="has_print_check" name="has_print_check" {if $item.order.has_print_sender eq 1} disabled {/if}type="checkbox"></label>
+            {else}
+            <label style="display: block;padding: 15px;"><input value="{$item.order.order_id}" class="has_print_check" name="has_print_check" {if $item.order.has_print_sender eq 1} disabled {/if}type="checkbox"></label>
+            {/if}
+            {/if}
         </td>
     </tr>
     {/foreach}
@@ -276,7 +296,30 @@ $('.setShipped').click(function(){
         self.parents('.data-table').removeClass('unshipping').removeClass('sending');
     }});
 });
-
+$('.printVoice').click(function(){
+    if($(this).parent().next().length == 0){
+        $(this).parent().after('<span>&nbsp;&nbsp;&nbsp;已打印发票</span>');
+    }
+});
+$('.has_print_check').change(function(){
+    var printorderhref = 'printorder.php';
+    var hrefarr = [];
+    $('.has_print_check').each(function(i, n){
+        if($(n).prop('checked')){
+            hrefarr.push($(n).val());
+        }else{
+        }
+    });
+    if(hrefarr.length > 0){
+        printorderhref += '?orderid=' + hrefarr.join(',');
+    }
+    $('#printorder').attr('href', printorderhref);
+    if($(this).prop('checked')){
+        $(this).parent().css('background', '#009cda');
+    }else{
+        $(this).parent().css('background', '#ffffff');
+    }
+});
 </script>
 </body>
 </html>

@@ -449,6 +449,8 @@
           <td style="vertical-align: middle;text-align: left;padding-left: 20px" bgcolor="#ffffff" valign="top">
               <!--{if $shipping.shipping_code eq 'dhl'}-->
               <span style="display:inline-block;width: 80px;height:40px;vertical-align: middle;"><img style="border:1px solid #ccc;" src="images/dhl.gif"></span>
+              <!--{elseif $shipping.shipping_code eq 'ems'}-->
+              <span style="display:inline-block;width: 80px;height:40px;vertical-align: middle;"><img style="border:1px solid #ccc;" src="images/ems.png"></span>
               <!--{elseif $shipping.shipping_code eq 'ruishi'}-->
               <span style="display:inline-block;width: 80px;height:40px;vertical-align: middle;"><img style="border:1px solid #ccc;" src="images/swedenpost.jpg"></span>
               <!--{elseif $shipping.shipping_code eq 'xinjiapo'}-->
@@ -746,7 +748,7 @@
                   <p><span>{$lang.order_amount}: </span><strong>{$total.amount_formated}</strong></p>
               </td>
             </tr>
-              <!-- {if $dropshipping eq '1'} -->
+              <!-- {if $dropshipping eq '1111'} -->
               <tr>
                   <td>
                       <a style="color: #fe0e0e;text-decoration: underline" target="_blank" href="set_invoice.php?act=set_invoice&order_sn={$order.order_sn}">Set My Shipment Invoice</a>

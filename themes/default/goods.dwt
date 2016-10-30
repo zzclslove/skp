@@ -315,10 +315,25 @@ $('.goods-spec-selector input').click(function(){
 /**
  * 点选可选属性或改变数量时修改商品价格的函数
  */
+var dispic = $('#product_detail_img').prev();
+var distxt = $('#ECS_GOODS_AMOUNT').next();
 function changePrice()
 {
   var attr = getSelectedAttributes(document.forms['ECS_FORMBUY']);
   var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
+
+  //单个产品优惠，暂时写死
+  if(goodsId == 10){
+    $('#product_detail_img').prev().remove()
+    $('#ECS_GOODS_AMOUNT').next().remove();
+    if((jQuery.inArray('371', attr) != -1 && jQuery.inArray('373', attr) != -1)||(jQuery.inArray('371', attr) != -1 && jQuery.inArray('374', attr) != -1)){
+      $('#product_detail_img').before('<div class="discountimg">20</div>');
+      $('#ECS_GOODS_AMOUNT').after('<font>&nbsp;&nbsp;&nbsp;20% off</font>');
+    }else{
+      $('#product_detail_img').before(dispic);
+      $('#ECS_GOODS_AMOUNT').after(distxt);
+    }
+  }
   Ajax.call('goods.php', 'act=price&id=' + goodsId + '&attr=' + attr + '&number=' + qty, changePriceResponse, 'GET', 'JSON');
 }
 

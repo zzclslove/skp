@@ -69,6 +69,8 @@
 <script>
     var swiper = new Swiper('.swiper1', {
         pagination: '.swiper-pagination',
-        paginationClickable: true
+        paginationClickable: true,
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next'
     });
 </script>
