@@ -19,7 +19,7 @@ if (!defined('IN_ECS'))
 }
 
 define('ECS_ADMIN', true);
-define('RMB_RATE_ADMIN', 6.7258);
+define('RMB_RATE_ADMIN', 6.7758);
 
 error_reporting(E_ALL);
 

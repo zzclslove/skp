@@ -36,6 +36,17 @@ if (Object.prototype.toJSONString){
 </div>
 
 <div class="index-body">
+    <div class="indexpage">
+        <div class="body-goods">
+            <h4 class="widget-header index-hot-h4"><span>This Week's Clearance Products</span>Clearance</h4>
+            <div class="clearfix goods-wrap hot-goods">
+                {insert name="index_clean_goods"}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="index-body">
   <div class="indexpage">
     <div class="body-goods">
       <h4 class="widget-header index-hot-h4"><span>This Week's Hot Products</span>Hot & Recommend</h4>

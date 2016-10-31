@@ -21,24 +21,26 @@
       <!-- start for specifications -->
       {foreach from=$attribute item=attribute_value}
         <td scope="col"><div align="center"><strong>{$attribute_value.attr_name}</strong></div></td>
-      {foreachelse}
+        {foreachelse}
         <td scope="col">&nbsp;</td>
       {/foreach}
       <!-- end for specifications -->
       <td class="label_2">{$lang.goods_sn}</td>
       <td class="label_2">{$lang.goods_number}</td>
+      <td class="label_2">清仓折扣</td>
       <td class="label_2">&nbsp;</td>
     </tr>
 
     {foreach from=$product_list item=product}
-    <tr>
-      {foreach from=$product.goods_attr item=goods_attr}
-      <td scope="col"><div align="center">{$goods_attr}</div></td>
-      {/foreach}
-      <td class="td_1"><span onclick="listTable.edit(this, 'edit_product_sn', {$product.product_id})">{$product.product_sn|default:$lang.n_a}</span></td>
-      <td class="td_1"><span onclick="listTable.edit(this, 'edit_product_number', {$product.product_id})">{$product.product_number}</span></td>
-      <td><input type="button" class="button" value=" - " onclick="listTable.remove({$product.product_id}, '{$lang.trash_product_confirm}', 'product_remove')"/></td>
-    </tr>
+      <tr>
+        {foreach from=$product.goods_attr item=goods_attr}
+          <td scope="col"><div align="center">{$goods_attr}</div></td>
+        {/foreach}
+        <td class="td_1"><span onclick="listTable.edit(this, 'edit_product_sn', {$product.product_id})">{$product.product_sn|default:$lang.n_a}</span></td>
+        <td class="td_1"><span onclick="listTable.edit(this, 'edit_product_number', {$product.product_id})">{$product.product_number}</span></td>
+        <td class="td_1"><span onclick="listTable.edit(this, 'edit_product_cleandiscount', {$product.product_id})">{$product.product_cleandiscount}</span></td>
+        <td><input type="button" class="button" value=" - " onclick="listTable.remove({$product.product_id}, '{$lang.trash_product_confirm}', 'product_remove')"/></td>
+      </tr>
     {/foreach}
 
     <tr id="attr_row">
@@ -57,6 +59,7 @@
 
       <td class="label_2"><input type="text" name="product_sn[]" value="" size="20"/></td>
       <td class="label_2"><input type="text" name="product_number[]" value="{$product_number}" size="10"/></td>
+      <td class="label_2"><input type="text" name="product_cleandiscount[]" value="{$product_cleandiscount}" size="10"/></td>
       <td><input type="button" class="button" value=" + " onclick="javascript:add_attr_product();"/></td>
     </tr>
 

@@ -55,7 +55,7 @@ function reg(str){
     <!--商品详情start-->
     <div id="goodsInfo" class="clearfix">
       <!--商品图片和相册 start-->
-      <div style="overflow: hidden;position:relative">
+      <div id="product_main_con" style="overflow: hidden;position:relative">
       {insert name="get_discount_img"}
       <div id="product_detail_img" class="imgInfo">
         <img src="" alt="{$goods.goods_name|escape:html}"/>
@@ -161,7 +161,7 @@ function reg(str){
             <li style="height:30px;padding-top:4px;"> {$lang.goods_free_shipping}<br />
             </li>
             <!-- {/if} -->
-            {insert name="get_goods_spe_price" goods_id=$goods.goods_id}
+            {insert name="get_goods_spe_price_new" goods_id=$goods.goods_id goods_attrs=$goods_attrs}
             <li class="clearfix" style="padding-top: 15px;margin-top: 20px;border-top: 1px solid #ccc;">
               <dd style="width:auto;margin-right:15px;height:28px;line-height: 28px"> <strong style="font-size: 14px;color: #0a0a0a;">{$lang.number}：</strong>
                 <input name="number" type="text" id="number" value="1" size="4" onblur="changePrice()" style="border:1px solid #666;padding:3px"/>
@@ -321,20 +321,7 @@ function changePrice()
 {
   var attr = getSelectedAttributes(document.forms['ECS_FORMBUY']);
   var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
-
-  //单个产品优惠，暂时写死
-  if(goodsId == 10){
-    $('#product_detail_img').prev().remove()
-    $('#ECS_GOODS_AMOUNT').next().remove();
-    if((jQuery.inArray('371', attr) != -1 && jQuery.inArray('373', attr) != -1)||(jQuery.inArray('371', attr) != -1 && jQuery.inArray('374', attr) != -1)){
-      $('#product_detail_img').before('<div class="discountimg">20</div>');
-      $('#ECS_GOODS_AMOUNT').after('<font>&nbsp;&nbsp;&nbsp;20% off</font>');
-    }else{
-      $('#product_detail_img').before(dispic);
-      $('#ECS_GOODS_AMOUNT').after(distxt);
-    }
-  }
-  Ajax.call('goods.php', 'act=price&id=' + goodsId + '&attr=' + attr + '&number=' + qty, changePriceResponse, 'GET', 'JSON');
+  Ajax.call('goods.php', 'act=goodspage_price&id=' + goodsId + '&attr=' + attr + '&number=' + qty, changePriceResponse, 'GET', 'JSON');
 }
 
 /**
@@ -342,6 +329,7 @@ function changePrice()
  */
 function changePriceResponse(res)
 {
+  console.log(res);
   if (res.err_msg.length > 0)
   {
     alert(res.err_msg);
@@ -349,9 +337,25 @@ function changePriceResponse(res)
   else
   {
     document.forms['ECS_FORMBUY'].elements['number'].value = res.qty;
+    if (document.getElementById('ECS_GOODS_AMOUNT')){
+      document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result.total;
+      $('#user_discount').show();
+      $('#user_discountimg').show();
+      $('#clean_discount').remove();
+      $('#org_total_price').remove();
+      $('#clean_qty_left').remove();
+      $('#clean_discountimg').remove();
+      if(res.result.is_clean == 1){
+        $('#user_discount').hide();
+        $('#user_discountimg').hide();
+        var resstr = '<label id="org_total_price">&nbsp;&nbsp;&nbsp;<font style="text-decoration: line-through;">' + res.result.org_total + '</font></label>'+
+                '<label id="clean_discount">&nbsp;&nbsp;&nbsp;' + (100 - res.result.discount) + '% off</label>'+
+                '<label style="padding-left: 15px;color:#E80500;font-size: 16px" id="clean_qty_left">'+ res.result.qty_left +' Left</label>';
+        $('#ECS_GOODS_AMOUNT').after(resstr);
+        $('#product_main_con').append('<div id="clean_discountimg" class="discountimg">'+ (100 - res.result.discount) +'</div>');
 
-    if (document.getElementById('ECS_GOODS_AMOUNT'))
-      document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
+      }
+    }
   }
 }
 

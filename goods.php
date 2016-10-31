@@ -30,6 +30,7 @@ $smarty->assign('affiliate', $affiliate);
 /*------------------------------------------------------ */
 
 $goods_id = isset($_REQUEST['id'])  ? intval($_REQUEST['id']) : 0;
+$goods_attrs = isset($_REQUEST['attr'])  ? $_REQUEST['attr'] : '';
 
 /*------------------------------------------------------ */
 //-- 改变属性、数量时重新计算商品价格
@@ -64,7 +65,43 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
         $shop_price  = get_final_price($goods_id, $number, true, $attr_id);
         $res['result'] = price_format($shop_price * $number);
     }
+    die($json->encode($res));
+}
 
+if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'goodspage_price')
+{
+    include('includes/cls_json.php');
+
+    $json   = new JSON;
+    $res    = array('err_msg' => '', 'result' => '', 'qty' => 1);
+
+    $attr_id    = isset($_REQUEST['attr']) ? explode(',', $_REQUEST['attr']) : array();
+    $number     = (isset($_REQUEST['number'])) ? intval($_REQUEST['number']) : 1;
+
+    if ($goods_id == 0)
+    {
+        $res['err_msg'] = $_LANG['err_change_attr'];
+        $res['err_no']  = 1;
+    }
+    else
+    {
+        if ($number == 0)
+        {
+            $res['qty'] = $number = 1;
+        }
+        else
+        {
+            $res['qty'] = $number;
+        }
+
+        $result_price  = get_final_price_goodspage($goods_id, $number, true, $attr_id);
+        $result_price['total'] = price_format($result_price['final_price'] * $number);
+        $result_price['org_total'] = price_format($result_price['final_org_price'] * $number);
+        $result_price['final_price'] = price_format($result_price['final_price']);
+        $result_price['final_org_price'] = price_format($result_price['final_org_price']);
+
+        $res['result'] = $result_price;
+    }
     die($json->encode($res));
 }
 
@@ -137,7 +174,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
 //-- PROCESSOR
 /*------------------------------------------------------ */
 
-$cache_id = $goods_id . '-' . $_SESSION['user_rank'].'-'.$_CFG['lang'];
+$cache_id = $goods_id . '-'. $goods_attrs . '-' . $_SESSION['user_rank'].'-'.$_CFG['lang'];
 $cache_id = sprintf('%X', crc32($cache_id));
 if (!$smarty->is_cached('goods.dwt', $cache_id))
 {
@@ -145,6 +182,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
     $smarty->assign('image_height', $_CFG['image_height']);
     $smarty->assign('helps',        get_shop_help()); // 网店帮助
     $smarty->assign('id',           $goods_id);
+    $smarty->assign('goods_attrs',  $goods_attrs);
     $smarty->assign('type',         0);
     $smarty->assign('cfg',          $_CFG);
     $smarty->assign('promotion',       get_promotion_info($goods_id));//促销信息

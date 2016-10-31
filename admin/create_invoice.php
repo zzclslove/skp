@@ -691,7 +691,7 @@ lang=EN-US style=\'color:#002060\'><o:p>&nbsp;</o:p></span></p>
   padding:0cm 5.4pt 0cm 5.4pt;height:22.5pt\'>
   <p class=tgt2 style=\'background:#FAFAFA\'><span lang=EN-US style=\'font-size:
   13.5pt;line-height:150%;font-family:Arial;color:#2B2B2B;background:#F8F8F8;
-  font-weight:normal\'>Mobile phone</span><span lang=EN-US style=\'font-size:
+  font-weight:normal\'>Handset</span><span lang=EN-US style=\'font-size:
   10.5pt;line-height:150%;font-family:Arial;mso-bidi-font-family:宋体;font-weight:
   normal;mso-bidi-font-weight:bold\'><o:p></o:p></span></p>
   </td>

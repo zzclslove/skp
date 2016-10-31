@@ -389,6 +389,12 @@ function insert_index_hot_goods(){
     return $val;
 }
 
+function insert_index_clean_goods(){
+    $GLOBALS['smarty']->assign('clean_products', get_recommend_goods('clean'));     // 热点文章
+    $val = $GLOBALS['smarty']->fetch('library/index_clean_goods.lbi');
+    return $val;
+}
+
 function insert_show_goods_format_price($arr){
     $sql = 'select shop_price from ' . $GLOBALS['ecs']->table('goods') . ' where goods_id = ' . $arr['goods_id'];
     $price = $GLOBALS['db']->getOne($sql);
@@ -407,16 +413,39 @@ function insert_get_goods_spe_price($arr){
     return $val;
 }
 
+function insert_get_goods_spe_price_new($arr){
+    $goods_attr_list = explode(',', $arr['goods_attrs']);
+    $properties = get_goods_properties($arr['goods_id']);
+    $specs = $properties['spe'];
+    foreach($specs as $key=>$spec){
+        $mark = 0;
+        foreach($spec['values'] as $key2=>$value){
+            if(in_array($value['id'], $goods_attr_list)){
+                $specs[$key]['values'][$key2]['selected'] = 1;
+                $mark = 1;
+            }else{
+                $specs[$key]['values'][$key2]['selected'] = 0;
+            }
+        }
+        if($mark == 0){
+            $specs[$key]['values'][0]['selected'] = 1;
+        }
+    }
+    $GLOBALS['smarty']->assign('specification', $specs);
+    $val = $GLOBALS['smarty']->fetch('library/goods_spec_new.lbi');
+    return $val;
+}
+
 function insert_get_discount_img(){
     if(isset($_SESSION['discount']) && $_SESSION['discount'] < 1){
-        return '<div class="discountimg">' . (1 - $_SESSION['discount']) * 100 . '</div>';
+        return '<div id="user_discountimg" class="discountimg">' . (1 - $_SESSION['discount']) * 100 . '</div>';
     }else{
         return '';
     }
 }
 function insert_get_discount_text(){
     if(isset($_SESSION['discount']) && $_SESSION['discount'] < 1){
-        return '<font>&nbsp;&nbsp;&nbsp;' . (1 - $_SESSION['discount']) * 100 . '% off</font>';
+        return '<font id="user_discount">&nbsp;&nbsp;&nbsp;' . (1 - $_SESSION['discount']) * 100 . '% off</font>';
     }else{
         return '';
     }

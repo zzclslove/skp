@@ -1,0 +1,21 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div id="show_hot_area" class="clearfix goodsBox all_mid all_ms">
+    <!--{foreach from=$clean_products item=product}-->
+    <a class="goodsItem" href="{$product.url}&attr={$product.goods_attr}" target="_blank">
+        <div class="discountimg" style="top:1px;right:1px;left:inherit;">{$product.discount}</div>
+        <div class="img-box"><img src="{$product.thumb}" alt="{$product.name|escape:html}" class="goodsimg" /></div>
+        <span style="top: 75px;" class="pricecsg"><i>{$product.shop_price}</i><span></span></span>
+        <div class="goods-brief" style="height: 54px">
+            <span>{$product.name|escape:html}</span>
+            <span style="margin-left:-5px;">
+                <!--{foreach from=$product.attr_list item=attr}-->
+                <label style="padding-left:5px">{$attr.attr_name}:{$attr.attr_value}</label>
+                <!--{/foreach}-->
+                <label style="padding-left:5px;color: #ff1d00;font-size: 14px;">{$product.product_number} Left</label>
+            </span>
+        </div>
+    </a>
+    <!--{/foreach}-->
+    <div class="clear0"></div>
+</div> <div class="clear10"></div>
+

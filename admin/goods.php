@@ -2405,6 +2405,22 @@ elseif ($_REQUEST['act'] == 'edit_product_number')
     }
 }
 
+elseif ($_REQUEST['act'] == 'edit_product_cleandiscount')
+{
+    check_authz_json('goods_manage');
+
+    $product_id       = intval($_POST['id']);
+    $product_cleandiscount       = intval($_POST['val']);
+
+    /* 货品库存 */
+    $product = get_product_info($product_id, 'product_number, goods_id');
+
+    /* 修改货品库存 */
+    $sql = "UPDATE " . $ecs->table('products') . " SET product_cleandiscount = '$product_cleandiscount' WHERE product_id = '$product_id'";
+    $result = $db->query($sql);
+    make_json_result($product_cleandiscount);
+}
+
 /*------------------------------------------------------ */
 //-- 货品添加 执行
 /*------------------------------------------------------ */
@@ -2416,6 +2432,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
     $product['attr']            = $_POST['attr'];
     $product['product_sn']      = $_POST['product_sn'];
     $product['product_number']  = $_POST['product_number'];
+    $product['product_cleandiscount']  = $_POST['product_cleandiscount'];
 
     /* 是否存在商品id */
     if (empty($product['goods_id']))
@@ -2486,7 +2503,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
         }
 
         /* 插入货品表 */
-        $sql = "INSERT INTO " . $GLOBALS['ecs']->table('products') . " (goods_id, goods_attr, product_sn, product_number)  VALUES ('" . $product['goods_id'] . "', '$goods_attr', '$value', '" . $product['product_number'][$key] . "')";
+        $sql = "INSERT INTO " . $GLOBALS['ecs']->table('products') . " (goods_id, goods_attr, product_sn, product_number, product_cleandiscount)  VALUES ('" . $product['goods_id'] . "', '$goods_attr', '$value', '" . $product['product_number'][$key] . "', ". $product['product_cleandiscount'][$key] .")";
         if (!$GLOBALS['db']->query($sql))
         {
             continue;

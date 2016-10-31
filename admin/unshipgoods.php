@@ -23,9 +23,9 @@ foreach($row as $val){
     $order_good['order_number'] = $val['order_sn'];
     $order_good['region_name'] = $val['region_name'];
     $order_good['goods'] = array();
-    $sql = "select g.goods_name, g.seller_note, o.goods_attr_id, o.goods_number - o.send_number as num from " . $GLOBALS['ecs']->table('order_goods') . "as o".
+    $sql = "select g.goods_name, g.seller_note, o.goods_attr_id, o.goods_number as num from " . $GLOBALS['ecs']->table('order_goods') . "as o".
         " left join " . $GLOBALS['ecs']->table('goods') . " as g on o.goods_id = g.goods_id ".
-        "where o.goods_number > o.send_number and o.order_id = " . $val['order_id'];
+        "where o.order_id = " . $val['order_id'];
     $products = $GLOBALS['db']->getAll($sql);
     foreach($products as $product){
         $sql = " select a.attr_name, ga.attr_value from " . $GLOBALS['ecs']->table('goods_attr') . " as ga ".
